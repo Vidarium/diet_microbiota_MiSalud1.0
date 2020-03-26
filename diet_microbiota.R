@@ -1217,6 +1217,72 @@ Anova(lm(alpha_div$Shannon~microbio.meta$ciudad+
            IMCcat+
            pca_fg$x[,3]))
 
+Anova(lm(alpha_div$Shannon~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Lacteos.g))
+
+Anova(lm(alpha_div$Shannon~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Carnes.g))
+
+Anova(lm(alpha_div$Shannon~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Huevos.g))
+
+Anova(lm(alpha_div$Shannon~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Leguminosas.g))
+
+Anova(lm(alpha_div$Shannon~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Nueces.g))
+
+Anova(lm(alpha_div$Shannon~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Frutas.g))
+
+Anova(lm(alpha_div$Shannon~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Verduras.g))
+
+Anova(lm(alpha_div$Shannon~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Cerales.g))
+
+Anova(lm(alpha_div$Shannon~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Tuberculos.g))
+
+Anova(lm(alpha_div$Shannon~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Grasas.g))
+
+Anova(lm(alpha_div$Shannon~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Dulces.g))
+
 # OTU richness
 Anova(lm(alpha_div$richness~microbio.meta$ciudad+
            microbio.meta$sexo+
@@ -1236,6 +1302,72 @@ Anova(lm(alpha_div$richness~microbio.meta$ciudad+
            IMCcat+
            pca_fg$x[,3]))
 
+Anova(lm(alpha_div$richness~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Lacteos.g))
+
+Anova(lm(alpha_div$richness~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Carnes.g))
+
+Anova(lm(alpha_div$richness~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Huevos.g))
+
+Anova(lm(alpha_div$richness~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Leguminosas.g))
+
+Anova(lm(alpha_div$richness~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Nueces.g))
+
+Anova(lm(alpha_div$richness~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Frutas.g))
+
+Anova(lm(alpha_div$richness~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Verduras.g))
+
+Anova(lm(alpha_div$richness~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Cerales.g))
+
+Anova(lm(alpha_div$richness~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Tuberculos.g))
+
+Anova(lm(alpha_div$richness~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Grasas.g))
+
+Anova(lm(alpha_div$richness~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Dulces.g))
+
 # Evenness
 Anova(lm(alpha_div$Jevenness~microbio.meta$ciudad+
            microbio.meta$sexo+
@@ -1254,6 +1386,72 @@ Anova(lm(alpha_div$Jevenness~microbio.meta$ciudad+
            microbio.meta$rango_edad+
            IMCcat+
            pca_fg$x[,3]))
+
+Anova(lm(alpha_div$Jevenness~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Lacteos.g))
+
+Anova(lm(alpha_div$Jevenness~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Carnes.g))
+
+Anova(lm(alpha_div$Jevenness~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Huevos.g))
+
+Anova(lm(alpha_div$Jevenness~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Leguminosas.g))
+
+Anova(lm(alpha_div$Jevenness~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Nueces.g))
+
+Anova(lm(alpha_div$Jevenness~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Frutas.g))
+
+Anova(lm(alpha_div$Jevenness~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Verduras.g))
+
+Anova(lm(alpha_div$Jevenness~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Cerales.g))
+
+Anova(lm(alpha_div$Jevenness~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Tuberculos.g))
+
+Anova(lm(alpha_div$Jevenness~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Grasas.g))
+
+Anova(lm(alpha_div$Jevenness~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           zfg_441$Dulces.g))
 
 
 -----------------------------------------
