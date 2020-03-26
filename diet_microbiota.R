@@ -25,7 +25,10 @@
 -------------------------
 ### Initial commands ----
 -------------------------
-  
+
+# Load saved environment
+load('d:/Vidarium/Publicaciones/Dieta_ASGV/scripts/JSE/diet-microbiota_env.RData')
+
 # Clean the workspace
 #rm(list=ls())
 
@@ -180,7 +183,6 @@ radar_nutri441<-data.frame(
 
 # Set graphic colors
 coul <- brewer.pal(3, "BrBG")
-coul <- c("blue", "red")
 colors_border <- coul
 colors_in <- alpha(coul,0.3)
 
@@ -694,6 +696,12 @@ Anova(lm(alpha_div$Shannon~microbio.meta$ciudad+
            IMCcat+
            pca_nutr$x[,3]))
 
+Anova(lm(alpha_div$Shannon~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           nutri441$FD))
+
 shannon_pca1nutr = ggplot(alpha_div, aes(x=pca_nutr$x[,1], y=Shannon, color=microbio.meta$sexo)) +
   geom_point() +
   geom_smooth(method='lm') +
@@ -708,6 +716,11 @@ shannon_pca3nutr = ggplot(alpha_div, aes(x=pca_nutr$x[,3], y=Shannon, color=micr
   geom_point() +
   geom_smooth(method='lm') +
   labs(x="Nutrient PCA3", y="Shannon diversity index")
+
+shannon_fd = ggplot(alpha_div, aes(x=nutri441$FD, y=Shannon, color=microbio.meta$sexo)) +
+  geom_point() +
+  geom_smooth(method='lm') +
+  labs(x="Dietary fiber (g)", y="Shannon diversity index")
 
 # OTU richness
 Anova(lm(alpha_div$richness~microbio.meta$ciudad+
@@ -728,6 +741,12 @@ Anova(lm(alpha_div$richness~microbio.meta$ciudad+
            IMCcat+
            pca_nutr$x[,3]))
 
+Anova(lm(alpha_div$richness~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           nutri441$FD))
+
 rich_pca1nutr = ggplot(alpha_div, aes(x=pca_nutr$x[,1], y=richness, color=microbio.meta$sexo)) +
   geom_point() +
   geom_smooth(method='lm') +
@@ -742,6 +761,11 @@ rich_pca3nutr = ggplot(alpha_div, aes(x=pca_nutr$x[,3], y=richness, color=microb
   geom_point() +
   geom_smooth(method='lm') +
   labs(x="Nutrient PCA3", y="OTU richness")
+
+rich_fd = ggplot(alpha_div, aes(x=nutri441$FD, y=richness, color=microbio.meta$sexo)) +
+  geom_point() +
+  geom_smooth(method='lm') +
+  labs(x="Dietary fiber (g)", y="OTU richness")
 
 # Evenness
 Anova(lm(asin(sqrt(alpha_div$Jevenness))~microbio.meta$ciudad+
@@ -762,6 +786,12 @@ Anova(lm(asin(sqrt(alpha_div$Jevenness))~microbio.meta$ciudad+
            IMCcat+
            pca_nutr$x[,3]))
 
+Anova(lm(asin(sqrt(alpha_div$Jevenness))~microbio.meta$ciudad+
+           microbio.meta$sexo+
+           microbio.meta$rango_edad+
+           IMCcat+
+           nutri441$FD))
+
 even_pca1nutr = ggplot(alpha_div, aes(x=pca_nutr$x[,1], y=Jevenness, color=microbio.meta$sexo)) +
   geom_point() +
   geom_smooth(method='lm') +
@@ -776,6 +806,11 @@ even_pca3nutr = ggplot(alpha_div, aes(x=pca_nutr$x[,3], y=Jevenness, color=micro
   geom_point() +
   geom_smooth(method='lm') +
   labs(x="Nutrient PCA3", y="Pielou's evenness")
+
+even_fd = ggplot(alpha_div, aes(x=nutri441$FD, y=Jevenness, color=microbio.meta$sexo)) +
+  geom_point() +
+  geom_smooth(method='lm') +
+  labs(x="Dietary fiber (g)", y="Pielou's evenness")
 
 # Figure X
 plot_grid(shannon_pca2nutr, rich_pca2nutr, even_pca2nutr,
@@ -796,14 +831,14 @@ plot_grid(shannon_pca2nutr, rich_pca2nutr, even_pca2nutr,
 
 # Build random forest with the most abundant OTUs;
 # the dependent variables are microbiota abundance
-get_forest <- function(rabund, dependent, n_trees=10000){
+get_forest <- function(rabund, dependent, n_trees=50000){
     #build random forest model where we predict 'dependent' based on the
     #rabund data using 'n_trees'
     randomForest(dependent ~ ., data=rabund, importance=TRUE, ntree=n_trees)
   }
 
 # extract the rsquared value from the forest
-get_rsq <- function(forest, n_trees=10000){
+get_rsq <- function(forest, n_trees=50000){
   forest$rsq[n_trees]
 }
 
@@ -829,9 +864,9 @@ simplify_model <- function(dependent, forest, rabund, max_features){
     simple_rabund <- rabund[,colnames(rabund) %in% rownames(sorted_importance)[1:i]]
     #build the model
     rf_simplify <- randomForest(dependent ~ ., data=simple_rabund,
-                                importance=TRUE, ntree=10000)
+                                importance=TRUE, ntree=50000)
     #get the Rsquared values
-    rf_simplify_rsq[i] <- rf_simplify$rsq[10000] #percent variance explained
+    rf_simplify_rsq[i] <- rf_simplify$rsq[50000] #percent variance explained
   }
   return(rf_simplify_rsq)
 }
@@ -864,14 +899,14 @@ rabund_top_features_pca1_nutr <- abundant_100otus[,as.character(top_features_pca
 
 # Model with no adjustment
 #rf_top_features_forest_pca1_nutr<-get_forest(rabund=rabund_top_features_pca1_nutr,
-#                                              dependent=pca_nutr$x[,1], n_trees=10000)
+#                                              dependent=pca_nutr$x[,1], n_trees=50000)
 
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_top_features_forest_pca1_nutr <- get_forest(rabund=rabund_top_features_pca1_nutr,
-                                              dependent=res_pca1_nutr, n_trees=10000)
+                                              dependent=res_pca1_nutr, n_trees=50000)
 
-all_rsq_pca1_nutr <- rf_pca1_nutr$rsq[10000]
-top_rsq_pca1_nutr <- rf_top_features_forest_pca1_nutr$rsq[10000]
+all_rsq_pca1_nutr <- rf_pca1_nutr$rsq[50000]
+top_rsq_pca1_nutr <- rf_top_features_forest_pca1_nutr$rsq[50000]
 
 plot(rf_simplify_rsq_pca1_nutr, xlab="Number of features",
      ylab="Variance explained (%)", pch=19)
@@ -939,14 +974,14 @@ rabund_top_features_pca2_nutr <- abundant_100otus[,as.character(top_features_pca
 
 # Model with no adjustment
 #rf_top_features_forest_pca2_nutr <- get_forest(rabund=rabund_top_features_pca2_nutr,
-#                                              dependent=pca_nutr$x[,2], n_trees=10000)
+#                                              dependent=pca_nutr$x[,2], n_trees=50000)
 
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_top_features_forest_pca2_nutr <- get_forest(rabund=rabund_top_features_pca2_nutr,
-                                              dependent=res_pca2_nutr, n_trees=10000)
+                                              dependent=res_pca2_nutr, n_trees=50000)
 
-all_rsq_pca2_nutr <- rf_pca2_nutr$rsq[10000]
-top_rsq_pca2_nutr <- rf_top_features_forest_pca2_nutr$rsq[10000]
+all_rsq_pca2_nutr <- rf_pca2_nutr$rsq[50000]
+top_rsq_pca2_nutr <- rf_top_features_forest_pca2_nutr$rsq[50000]
 
 plot(rf_simplify_rsq_pca2_nutr, xlab="Number of features",
      ylab="Variance explained (%)", pch=19)
@@ -1003,10 +1038,10 @@ rabund_top_features_fd <- abundant_100otus[,as.character(top_features_fd)]
 
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_top_features_forest_fd <- get_forest(rabund=rabund_top_features_fd,
-                                              dependent=res_zfd, n_trees=10000)
+                                              dependent=res_zfd, n_trees=50000)
 
-all_rsq_fd <- rf_fd$rsq[10000]
-top_rsq_fd <- rf_top_features_forest_fd$rsq[10000]
+all_rsq_fd <- rf_fd$rsq[50000]
+top_rsq_fd <- rf_top_features_forest_fd$rsq[50000]
 
 plot(rf_simplify_rsq_fd, xlab="Number of features",
      ylab="Variance explained (%)", pch=19)
@@ -1256,14 +1291,14 @@ rabund_top_features_pca1_fg <- abundant_100otus[,as.character(top_features_pca1_
 
 # Model with no adjustment
 #rf_top_features_forest_pca1_fg <- get_forest(rabund=rabund_top_features_pca1_fg,
-#                                            dependent=pca_fg$x[,1], n_trees=10000)
+#                                            dependent=pca_fg$x[,1], n_trees=50000)
 
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_top_features_forest_pca1_fg <- get_forest(rabund=rabund_top_features_pca1_fg,
-                                             dependent=res_pca1_fg, n_trees=10000)
+                                             dependent=res_pca1_fg, n_trees=50000)
 
-all_rsq_pca1_fg <- rf_pca1_fg$rsq[10000]
-top_rsq_pca1_fg <- rf_top_features_forest_pca1_fg$rsq[10000]
+all_rsq_pca1_fg <- rf_pca1_fg$rsq[50000]
+top_rsq_pca1_fg <- rf_top_features_forest_pca1_fg$rsq[50000]
 
 plot(rf_simplify_rsq_pca1_fg, xlab="Number of features",
      ylab="Variance explained (%)", pch=19)
@@ -1336,14 +1371,14 @@ rabund_top_features_pca2_fg <- abundant_100otus[,as.character(top_features_pca2_
 
 # Model with no adjustment
 #rf_top_features_forest_pca2_fg <- get_forest(rabund=rabund_top_features_pca2_fg,
-#                                            dependent=pca_fg$x[,2], n_trees=10000)
+#                                            dependent=pca_fg$x[,2], n_trees=50000)
 
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_top_features_forest_pca2_fg <- get_forest(rabund=rabund_top_features_pca2_fg,
-                                             dependent=res_pca2_fg, n_trees=10000)
+                                             dependent=res_pca2_fg, n_trees=50000)
 
-all_rsq_pca2_fg <- rf_pca2_fg$rsq[10000]
-top_rsq_pca2_fg <- rf_top_features_forest_pca2_fg$rsq[10000]
+all_rsq_pca2_fg <- rf_pca2_fg$rsq[50000]
+top_rsq_pca2_fg <- rf_top_features_forest_pca2_fg$rsq[50000]
 
 plot(rf_simplify_rsq_pca2_fg, xlab="Number of features",
      ylab="Variance explained (%)", pch=19)
@@ -1402,14 +1437,14 @@ rabund_top_features_pca3_fg <- abundant_100otus[,as.character(top_features_pca3_
 
 # Model with no adjustment
 #rf_top_features_forest_pca3_fg <- get_forest(rabund=rabund_top_features_pca3_fg,
-#                                            dependent=pca_fg$x[,3], n_trees=10000)
+#                                            dependent=pca_fg$x[,3], n_trees=50000)
 
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_top_features_forest_pca3_fg <- get_forest(rabund=rabund_top_features_pca3_fg,
-                                             dependent=res_pca3_fg, n_trees=10000)
+                                             dependent=res_pca3_fg, n_trees=50000)
 
-all_rsq_pca3_fg <- rf_pca3_fg$rsq[10000]
-top_rsq_pca3_fg <- rf_top_features_forest_pca3_fg$rsq[10000]
+all_rsq_pca3_fg <- rf_pca3_fg$rsq[50000]
+top_rsq_pca3_fg <- rf_top_features_forest_pca3_fg$rsq[50000]
 
 plot(rf_simplify_rsq_pca3_fg, xlab="Number of features",
      ylab="Variance explained (%)", pch=19)
@@ -1909,3 +1944,10 @@ sugar_rfmat<-data.frame(rho=rho_sugar, IncMSE=rf_top_features_forest_sugar$impor
 
 # Heatmap
 aheatmap(as.matrix(sugar_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(sugar_rfmat$IncMSE,2)), labRow=rownames(sugar_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="Sugar")
+
+
+-----------------------------
+### Save the environment ----
+-----------------------------
+
+save.image(file='d:/Vidarium/Publicaciones/Dieta_ASGV/scripts/JSE/diet-microbiota_env.RData')
