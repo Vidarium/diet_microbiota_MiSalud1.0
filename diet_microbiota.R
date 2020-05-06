@@ -1,20 +1,20 @@
-# Code for the analysis of cardiometabolic heatlh, diet and gut microbiota
+# Code for the analysis of diet and gut microbiota
 # Angela S. Garcia-Vega, Alejandro Reyes, Juan S. Escobar
 # (c) 2020
 
-#Aim: determine whether which diet component(s) explain gut microbiota diversity and abundance.
+# Aim: determine whether which diet component(s) explain gut microbiota diversity and abundance.
 
-#1. Describe diet features in the studied population:
-#  a. Nutrient adequacy and amounts.
+# 1. Describe diet features in the studied population:
+#  a. Nutrient adequacy and amounts
 #  b. Food-group intake
 #  c. Diet quality
 
-#2. Describe gut microbiota in the studied population:
+# 2. Describe gut microbiota in the studied population:
 #  a. Alpha diversity
-#  b. Most-abundant OTUs.
+#  b. Most-abundant OTUs
 #  c. Beta diversity (?)
 
-#3. Microbiota-diet associations:
+# 3. Microbiota-diet associations:
 #  a. Nutrients and alpha diversity
 #  b. Nutrients and OTU abundance
 #  c. Food-group intake and alpha diversity
@@ -26,11 +26,18 @@
 ### Initial commands ----
 -------------------------
 
-# Load saved environment
-load('d:/Vidarium/Publicaciones/Dieta_ASGV/scripts/JSE/diet-microbiota_env.RData')
-
 # Clean the workspace
 #rm(list=ls())
+
+# Load saved environments
+# Nutrients and OTU abundance
+load('d:/Vidarium/Publicaciones/Dieta_ASGV/scripts/JSE/nutrients_OTUabun_env.RData')
+
+# Food groups, diet quality and OTU abundance
+# Part 1
+load('d:/Vidarium/Publicaciones/Dieta_ASGV/scripts/JSE/fg_qual_OTUabun_env.RData')
+# Part 2
+load('d:/Vidarium/Publicaciones/Dieta_ASGV/scripts/JSE/fg_qual_OTUabun_env2.RData')
 
 # Set the seed to replicate analyses with random sampling
 set.seed(12345)
@@ -42,48 +49,55 @@ write.excel <- function(x,row.names=TRUE,col.names=TRUE,...) {
 
 # Libraries
 library(GUniFrac) # Unifrac
-library(phytools) #read.newick
+library(phytools) # read.newick
 library(car) # Anova
 library(reshape2) # melt
 library(NMF) # Heatmap
 library(table1) # table1
-library(MASS) # negative binomial: glm.nb
-library(rsq) # R^2 for GLMs
-library(purrr) # possibly & safely
-library(qvalue) # FDR-adjusted p-values
 library(BiodiversityR) # alpha diversity
-library(ggfortify) # PCAs
-library(mosaic) # PCAs
 library(factoextra) # PCAs
-library(Boruta) # random-forest regression
 library(data.table)
 library(yarrr) # pirate plots
-library(plotly) # 3D graphs
-library(rgl) # 3D graphs
+#library(plotly) # 3D graphs
+#library(rgl) # 3D graphs
 library(randomForest) # random forest regressions
 library(cowplot) #manipulating graphs
 library(fmsb) # radar (spider) chart
 library(RColorBrewer)
 library(scales)
 library(stringr)
+library(gplots)
+library(gridExtra)
+library(DESeq2) # DESeq2 fold-change calculation
+library(EnhancedVolcano) # Volcano plots
+
+# Color palettes -----
+# Color-blind-friendly palette
+cbPalette = c("#E69F00","#56B4E9","#009E73","#F0E442","#0072B2","#D55E00","#CC79A7","white","#999999","#000000")
+
+# Spectral palette
+specPalette = c("#9E0142","#D53E4F","#F46D43","#FDAE61","#FEE08B","#E6F598","#ABDDA4","#66C2A5","#3288BD","#5E4FA2")
+
+# Paired palette with 15 colors
+paired15 = c("#000000","#A6CEE3","#1F78B4","#B2DF8A","#33A02C","#FB9A99","#E31A1C","#FDBF6F","#FF7F00","#CAB2D6","#6A3D9A","#FFFF99","#B15928","#FFFF33","#999999")
 
 -------------------------
 ### Load data -----------
 -------------------------
 
 # Metadata table
-microbio.meta<-read.table(file=".../microbio_selected.meta",
-                          header=T, sep="\t", row.names=1)
+microbio.meta<-read.table(file="d:/Vidarium/Publicaciones/Dieta_ASGV/scripts/JSE/microbio_selected.meta",
+                          header=T, dec=",", sep="\t", row.names=1)
 
 # OTU table
-microbio.otus<-read.table(file=".../microbio_selected.otus",
+microbio.otus<-read.table(file="D:/Vidarium/Publicaciones/CAGs/reproducibility/analisis/microbio_selected.otus",
                           header=T, sep="\t", row.names=1)
 
 # Phylogenetic tree (rooted)
-microbio.tree<-read.newick(file=".../microbio_selected_rooted_archaea.tre")
+microbio.tree<-read.newick(file="d:/Vidarium/Publicaciones/Dieta_ASGV/scripts/JSE/microbio_selected_rooted_archaea.tre")
 
 # Taxonomy table
-microbio.taxonomy<-read.table(".../microbio_selected.taxonomy",
+microbio.taxonomy<-read.table("D:/Vidarium/Publicaciones/CAGs/reproducibility/analisis/microbio_selected.taxonomy",
                               sep="\t",row.names=1, header=T)
 
 # Five samples were sequenced twice
@@ -102,19 +116,21 @@ microbio.rare<-Rarefy(microbio.otus)$otu.tab.rff
 microbio.relative<-microbio.otus/rowSums(microbio.otus) 
 
 # Nutrients table
-nutri<-read.table("d:/Vidarium/Publicaciones/Dieta_ASGV/scripts/JSE/Total nutrientes mi salud normalizados.txt",
+#nutri<-read.table("d:/Vidarium/Publicaciones/Dieta_ASGV/scripts/JSE/Total nutrientes mi salud normalizados.txt",
+#                  header=T, dec=".", row.names=1)
+nutri<-read.table("d:/Vidarium/Publicaciones/Dieta_ASGV/scripts/JSE/nutrients.txt",
                   header=T, dec=".", row.names=1)
 
-nutri<-read.table(".../nutrients.txt", header=T, dec=".", row.names=1)
-
 # Food-groups table
-FG<-read.csv("d:/Vidarium/Publicaciones/Dieta_ASGV/scripts/JSE/Grupo de alimentos Mi salud.csv", 
+#FG<-read.csv("d:/Vidarium/Publicaciones/Dieta_ASGV/scripts/JSE/Grupo de alimentos Mi salud.csv", 
+#             header=T, dec=".", sep=",")
+#FG<-read.csv("d:/Vidarium/Publicaciones/Dieta_ASGV/scripts/JSE/food_groups.csv", 
+#            header=T, dec=".", sep=",")
+FG<-read.csv("d:/Vidarium/Publicaciones/Dieta_ASGV/scripts/JSE/food_groups_quality.csv", 
              header=T, dec=".", sep=",")
 
-FG<-read.csv(".../food_groups_quality.csv", header=T, dec=".", sep=",")
-
 # 24-h dietary recalls with quality classification by the NOVA system
-nova<-read.table(".../nova.txt", header=T)
+nova<-read.table("d:/Vidarium/Publicaciones/Dieta_ASGV/scripts/JSE/nova.txt", header=T)
 nova$r24h = as.factor(nova$r24h)
 nova$NOVA_optimistic = as.factor(nova$NOVA_optimistic)
 nova$NOVA_pessimistic = as.factor(nova$NOVA_pessimistic)
@@ -129,10 +145,131 @@ ncol(abundant_137otus)
 abundant_100otus=microbio.relative[,median_abund>=0.0001]
 ncol(abundant_100otus)
 
+-----------------------------
+### Sensitivity analysis ----
+-----------------------------
+
+# Reducing metadata to samples with >15,000 reads
+microbio.rare_15k<-Rarefy(microbio.otus, 15000)$otu.tab.rff
+microbio.meta_15k<-microbio.meta[rownames(microbio.meta) %in% rownames(microbio.rare_15k),]
+
+# Reducing the nutritional table to samples with >15,000 reads
+nutri410<-nutri[rownames(nutri) %in% rownames(microbio.rare_15k),]
+
+# Verify that the nutritional and metadata and rarefied tables are sorted in the same way
+identical(rownames(nutri410), rownames(microbio.rare_15k))
+identical(rownames(microbio.meta_15k), rownames(microbio.rare_15k))
+
+# Select only lean individuals
+lean.meta<-microbio.meta[microbio.meta$bmi_class=="Lean",]
+lean.otus<-microbio.otus[rownames(microbio.meta) %in% rownames(lean.meta),]
+lean.rare<-microbio.rare[rownames(microbio.meta) %in% rownames(lean.meta),]
+lean.relative<-microbio.relative[rownames(microbio.meta) %in% rownames(lean.meta),]
+lean.nutri<-nutri441[rownames(microbio.meta) %in% rownames(lean.meta),]
+lean.fg_441<-fg_441[rownames(microbio.meta) %in% rownames(lean.meta),]
+lean.abundant_100otus<-abundant_100otus[rownames(microbio.meta) %in% rownames(lean.meta),]
+
+# Medication
+nomed.meta<-microbio.meta[microbio.meta$medicament=="No",]
+nomed.otus<-microbio.otus[rownames(microbio.meta) %in% rownames(nomed.meta),]
+nomed.rare<-microbio.rare[rownames(microbio.meta) %in% rownames(nomed.meta),]
+nomed.relative<-microbio.relative[rownames(microbio.meta) %in% rownames(nomed.meta),]
+nomed.nutri<-nutri441[rownames(microbio.meta) %in% rownames(nomed.meta),]
+nomed.fg_441<-fg_441[rownames(microbio.meta) %in% rownames(nomed.meta),]
+nomed.abundant_100otus<-abundant_100otus[rownames(microbio.meta) %in% rownames(nomed.meta),]
+
 -------------------------
 ### 1. Diet -------------
 -------------------------
-  
+
+# Reproducibility between 1st and 2nd 24-h dietary recalls ----
+
+# Reproducibility by food groups ----
+# Subset samples with two r24h recalls
+fg_2recalls<-subset(FG, subset=FG$r24h=="2")
+fg_2recalls<-FG[FG$Codalt %in% fg_2recalls$Codalt,]
+fg_2recalls<-setorder(fg_2recalls, Codalt, r24h)
+
+fg_2recalls_1<-fg_2recalls[fg_2recalls$r24h==1,]
+fg_2recalls_2<-fg_2recalls[fg_2recalls$r24h==2,]
+identical(fg_2recalls_1$Codalt, fg_2recalls_2$Codalt)
+
+fg_2recalls_1_sum<-aggregate(cbind(Dairy.g, Meats.g, Eggs.g, Beans.g, Nuts.g, Fruits.g, Vegetables.g, Cereals.g, Tubers.g, Fats.g, Sugars.g)~Codalt, data=fg_2recalls_1, FUN=sum)
+fg_2recalls_2_sum<-aggregate(cbind(Dairy.g, Meats.g, Eggs.g, Beans.g, Nuts.g, Fruits.g, Vegetables.g, Cereals.g, Tubers.g, Fats.g, Sugars.g)~Codalt, data=fg_2recalls_2, FUN=sum)
+fg_2recalls_repro<-merge(fg_2recalls_1_sum, fg_2recalls_2_sum, by="Codalt")
+
+cor.test(fg_2recalls_repro$Dairy.g.x, fg_2recalls_repro$Dairy.g.y)
+cor.test(fg_2recalls_repro$Meats.g.x, fg_2recalls_repro$Meats.g.y)
+cor.test(fg_2recalls_repro$Eggs.g.x, fg_2recalls_repro$Eggs.g.y)
+cor.test(fg_2recalls_repro$Beans.g.x, fg_2recalls_repro$Beans.g.y)
+cor.test(fg_2recalls_repro$Nuts.g.x, fg_2recalls_repro$Nuts.g.y)
+cor.test(fg_2recalls_repro$Fruits.g.x, fg_2recalls_repro$Fruits.g.y)
+cor.test(fg_2recalls_repro$Vegetables.g.x, fg_2recalls_repro$Vegetables.g.y)
+cor.test(fg_2recalls_repro$Cereals.g.x, fg_2recalls_repro$Cereals.g.y)
+cor.test(fg_2recalls_repro$Tubers.g.x, fg_2recalls_repro$Tubers.g.y)
+cor.test(fg_2recalls_repro$Fats.g.x, fg_2recalls_repro$Fats.g.y)
+cor.test(fg_2recalls_repro$Sugars.g.x, fg_2recalls_repro$Sugars.g.y)
+
+# Clean the workspace
+rm(fg_2recalls,fg_2recalls_1,fg_2recalls_2,fg_2recalls_1_sum,fg_2recalls_2_sum,fg_2recalls_repro)
+
+
+# Reproducibility by diet quality (NOVA) ----
+# Subset samples with two r24h recalls
+nova_2recalls = subset(nova, subset=nova$r24h=="2")
+nova_2recalls = nova[nova$id %in% nova_2recalls$id,]
+
+nova_2recalls_1<-nova_2recalls[nova_2recalls$r24h==1,]
+nova_2recalls_2<-nova_2recalls[nova_2recalls$r24h==2,]
+
+# Subsets with the optimistic calculation
+nova_opt_up_1 = subset(nova_2recalls_1, subset=nova_2recalls_1$NOVA_optimistic=="4")
+nova_opt_notup_1 = subset(nova_2recalls_1, subset=nova_2recalls_1$NOVA_optimistic!="4")
+nova_opt_up_2 = subset(nova_2recalls_2, subset=nova_2recalls_2$NOVA_optimistic=="4")
+nova_opt_notup_2 = subset(nova_2recalls_2, subset=nova_2recalls_2$NOVA_optimistic!="4")
+
+nova_opt_up_1_perid<-aggregate(cbind(amount.gr,kcal)~r24h:id, data=nova_opt_up_1, FUN=sum)
+nova_opt_up_2_perid<-aggregate(cbind(amount.gr,kcal)~r24h:id, data=nova_opt_up_2, FUN=sum)
+nova_opt_up_repro<-merge(nova_opt_up_1_perid, nova_opt_up_2_perid, by="id")
+
+ggplot(nova_opt_up_repro, aes(x=amount.gr.x, y=amount.gr.y)) +
+  geom_point() +
+  geom_smooth(method='lm') +
+  labs(title="Optmistic scenario", x="Ultra-processed foods (g) 1st 24-h recall", y="Ultra-processed foods (g) 2nd 24-h recall diversity index")
+cor.test(nova_opt_up_repro$amount.gr.x, nova_opt_up_repro$amount.gr.y)
+
+ggplot(nova_opt_up_repro, aes(x=kcal.x, y=kcal.y)) +
+  geom_point() +
+  geom_smooth(method='lm') +
+  labs(title="Optmistic scenario", x="Ultra-processed foods (kcal) 1st 24-h recall", y="Ultra-processed foods (kcal) 2nd 24-h recall diversity index")
+cor.test(nova_opt_up_repro$kcal.x, nova_opt_up_repro$kcal.y)
+
+# Subsets with the pessimistic calculation
+nova_pes_up_1 = subset(nova_2recalls_1, subset=nova_2recalls_1$NOVA_pessimistic=="4")
+nova_pes_notup_1 = subset(nova_2recalls_1, subset=nova_2recalls_1$NOVA_pessimistic!="4")
+nova_pes_up_2 = subset(nova_2recalls_2, subset=nova_2recalls_2$NOVA_pessimistic=="4")
+nova_pes_notup_2 = subset(nova_2recalls_2, subset=nova_2recalls_2$NOVA_pessimistic!="4")
+
+nova_pes_up_1_perid<-aggregate(cbind(amount.gr,kcal)~r24h:id, data=nova_pes_up_1, FUN=sum)
+nova_pes_up_2_perid<-aggregate(cbind(amount.gr,kcal)~r24h:id, data=nova_pes_up_2, FUN=sum)
+nova_pes_up_repro<-merge(nova_pes_up_1_perid, nova_pes_up_2_perid, by="id")
+
+ggplot(nova_pes_up_repro, aes(x=amount.gr.x, y=amount.gr.y)) +
+  geom_point() +
+  geom_smooth(method='lm') +
+  labs(title="pessimistic scenario", x="Ultra-processed foods (g) 1st 24-h recall", y="Ultra-processed foods (g) 2nd 24-h recall diversity index")
+cor.test(nova_pes_up_repro$amount.gr.x, nova_pes_up_repro$amount.gr.y)
+
+ggplot(nova_pes_up_repro, aes(x=kcal.x, y=kcal.y)) +
+  geom_point() +
+  geom_smooth(method='lm') +
+  labs(title="pessimistic scenario", x="Ultra-processed foods (kcal) 1st 24-h recall", y="Ultra-processed foods (kcal) 2nd 24-h recall diversity index")
+cor.test(nova_pes_up_repro$kcal.x, nova_pes_up_repro$kcal.y)
+
+# Clean the workspace
+rm(nova_2recalls,nova_2recalls_1,nova_2recalls_2,nova_opt_up_1,nova_opt_notup_1,nova_opt_up_2,nova_opt_notup_2,nova_opt_up_1_perid,nova_opt_up_2_perid,nova_opt_up_repro,nova_pes_up_1,nova_pes_notup_1,nova_pes_up_2,nova_pes_notup_2,nova_pes_up_1_perid,nova_pes_up_2_perid,nova_pes_up_repro)
+
+
 -------------------------------------------
 ### 1.a. Nutrient adequacy and amounts ----
 -------------------------------------------
@@ -140,7 +277,7 @@ ncol(abundant_100otus)
 # Reduce the nutritional dataset to the 441 subjects with microbiota data
 nutri441<-nutri[rownames(nutri) %in% rownames(microbio.meta),]
 
-# Table1
+# Table1 with n=441
 table1(~ Calories+Carbohydrates+Proteins+Total_fat+SFA+MUFA+PUFA+
          Cholesterol+Fiber+Ca+P+Fe+Na+K+Mg+Zn+Cu+
          Mn+VitA+B1+B2+B3+B5+B6+B12+Folate+VitC
@@ -149,6 +286,8 @@ table1(~ Calories+Carbohydrates+Proteins+Total_fat+SFA+MUFA+PUFA+
 
 # p-values Table1
 anova(lm(nutri441$Calories~microbio.meta$sex+microbio.meta$age_range))
+Anova(lm(nutri441$Calories~city+sex+age_range+bmi_class+as.factor(socioeconomic), data=microbio.meta))
+
 anova(lm(nutri441$Carbohydrates~microbio.meta$sex+microbio.meta$age_range))
 anova(lm(nutri441$Proteins~microbio.meta$sex+microbio.meta$age_range))
 anova(lm(nutri441$Total_fat~microbio.meta$sex+microbio.meta$age_range))
@@ -186,24 +325,24 @@ radar_nutri441<-nutri441[,c(2:length(nutri441))]
 #  min=apply(radar_nutri441, MARGIN=2, FUN=min),
 #  max=apply(radar_nutri441, MARGIN=2, FUN=max),
 #  apply(radar_nutri441, MARGIN=2, FUN=function(x)
-#    mean(x~microbio.meta$sexo))))
+#    by(x, microbio.meta$sex, mean))))
 
 # With q25 and q75 as min and max
 radar_nutri441<-data.frame(
   rbind(
-  q25=apply(radar_nutri441, MARGIN=2, FUN=function(x) quantile(x)[2]),
-  q75=apply(radar_nutri441, MARGIN=2, FUN=function(x) quantile(x)[4]),
-  apply(radar_nutri441, MARGIN=2, FUN=function(x)
-    mean(x~microbio.meta$sexo))))
+    q25=apply(radar_nutri441, MARGIN=2, FUN=function(x) quantile(x)[2]),
+    q75=apply(radar_nutri441, MARGIN=2, FUN=function(x) quantile(x)[4]),
+    apply(radar_nutri441, MARGIN=2, FUN=function(x)
+      by(x, microbio.meta$sex, mean))))
 
 # Set graphic colors
-coul <- brewer.pal(3, "BrBG")
-colors_border <- coul
+coul <- cbPalette
+colors_border <- cbPalette
 colors_in <- alpha(coul,0.3)
 
 # If you remove the 2 first lines, the function compute the max and min of each variable with the available data:
 # Macronutrients, calories, fiber and cholesterol
-radarchart(radar_nutri441[,c(1:10)], axistype=0 , maxmin=F,
+radarchart(radar_nutri441[,c(1:10)], axistype=0 , maxmin=T,
            #custom polygon
            pcol=colors_border, pfcol=colors_in, plwd=4, plty=1,
            #custom the grid
@@ -212,11 +351,11 @@ radarchart(radar_nutri441[,c(1:10)], axistype=0 , maxmin=F,
            vlcex=0.8 
 )
 # Add a legend
-legend(x=1.5, y=1, legend=c("Women","Men"), bty = "n", pch=20 , col=colors_in , cex=1, pt.cex=3)
-#legend(x=1.5, y=1, legend=rownames(radar_nutri441[-c(1,2),]), bty = "n", pch=20 , col=colors_in , cex=1, pt.cex=3)
+legend(x=1.5, y=1, legend=c("Women","Men"), bty = "n", pch=20 , col=coul , cex=1, pt.cex=3)
+#legend(x=1.5, y=1, legend=rownames(radar_nutri441[-c(1,2),]), bty="n", pch=20, col=coul, cex=1, pt.cex=3)
 
 # Micronutrients
-radarchart(radar_nutri441[,c(11:28)], axistype=0 , maxmin=F,
+radarchart(radar_nutri441[,c(11:28)], axistype=0 , maxmin=T,
             #custom polygon
             pcol=colors_border, pfcol=colors_in, plwd=4, plty=1,
             #custom the grid
@@ -225,7 +364,7 @@ radarchart(radar_nutri441[,c(11:28)], axistype=0 , maxmin=F,
             vlcex=0.8 
 )
 # Add a legend
-legend(x=1.5, y=1, legend=c("Women","Men"), bty = "n", pch=20 , col=colors_in , cex=1, pt.cex=3)
+legend(x=1.5, y=1, legend=c("Women","Men"), bty = "n", pch=20 , col=coul , cex=1, pt.cex=3)
 
 # HERE, WRITE SOME FUNCTIONS TO DETERMINE NUTRIENT ADEQUACY
 
@@ -236,12 +375,14 @@ znutri441<-as.data.frame(apply(nutri441[,2:length(nutri441)], 2, function(x) (x-
 # Correlation heatmap for nutrients
 # http://www.sthda.com/english/wiki/ggplot2-quick-correlation-matrix-heatmap-r-software-and-data-visualization
 cormat_nutr<-round(cor(znutri441),2)
+jpeg("d:/Vidarium/Publicaciones/Dieta_ASGV/Figure 1A.jpeg", width=4, height=4, units='in', res=600)
 aheatmap(cormat_nutr, color="-Spectral:100",
          breaks=NA, scale="none", Rowv=T, Colv=T,
          distfun="euclidean", hclustfun="ward",
          treeheight=c(20,20), legend=T, 
          fontsize=12,
          cexRow=1, cexCol=1, width=30)
+dev.off()
 
 # Because there are some auto-correlated variables, let's see what happens in a PCA
 # http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/118-principal-component-analysis-in-r-prcomp-vs-princomp/
@@ -266,6 +407,14 @@ plot_pca_nutr_23<-fviz_pca_var(pca_nutr, axes=c(2,3),
                                gradient.cols=c("#00AFBB","#E7B800","#FC4E07"),
                                repel=TRUE)
 
+jpeg("d:/Vidarium/Publicaciones/Dieta_ASGV/Figure 1B.jpeg", width=4, height=4, units='in', res=600)
+plot_pca_nutr_12
+dev.off()
+
+jpeg("d:/Vidarium/Publicaciones/Dieta_ASGV/Figure 1C.jpeg", width=4, height=4, units='in', res=600)
+plot_pca_nutr_23
+dev.off()
+
 plot_pca2_fd<-ggplot(alpha_div, aes(x=pca_nutr$x[,2], y=nutri441$Fiber)) +
   geom_point() +
   geom_smooth(method='lm') +
@@ -275,6 +424,7 @@ plot_pca2_b12<-ggplot(alpha_div, aes(x=pca_nutr$x[,2], y=nutri441$B12)) +
   geom_point() +
   geom_smooth(method='lm') +
   labs(x="PCA2 nutrients", y="Vitamin B12 (mg)")
+
 
 # Do PCA axes vary by variables controlled by design?
 lm_pca1_nutr<-lm(pca_nutr$x[,1]~city+sex+age_range+bmi_class+as.factor(socioeconomic), data=microbio.meta)
@@ -290,6 +440,9 @@ Anova(lm_pca3_nutr)
 # Fiber
 lm_zfd<-lm(znutri441$Fiber~city+sex+age_range+bmi_class+as.factor(socioeconomic), data=microbio.meta)
 Anova(lm_zfd)
+# Cholesterol
+lm_zchol<-lm(znutri441$Cholesterol~city+sex+age_range+bmi_class+as.factor(socioeconomic), data=microbio.meta)
+Anova(lm_zchol)
 # VitB12
 lm_zb12<-lm(znutri441$B12~city+sex+age_range+bmi_class+as.factor(socioeconomic), data=microbio.meta)
 Anova(lm_zb12)
@@ -308,6 +461,7 @@ res_pca1_nutr<-residuals(lm_pca1_nutr)
 res_pca2_nutr<-residuals(lm_pca2_nutr)
 res_pca3_nutr<-residuals(lm_pca3_nutr)
 res_zfd<-residuals(lm_zfd)
+res_zchol<-residuals(lm_zchol)
 res_zb12<-residuals(lm_zb12)
 res_zcho<-residuals(lm_zcho)
 res_zfat<-residuals(lm_zfat)
@@ -317,7 +471,7 @@ res_zprot<-residuals(lm_zprot)
 ### 1.b. Food-group intake ----
 -------------------------------
 
-# Food -group data for 441 samples, taking only the first 24-hour recall into account
+# Food-group data for 441 samples, taking only the first 24-hour recall into account
 fg1<-FG[FG$r24h<2,]
 fg2<-FG[FG$r24h>1,]
 fg1_441<-fg1[fg1$Codalt %in% nutri441$Codalt,]
@@ -328,7 +482,7 @@ fg_441<-fg1_441[,c("id","Dairy.g","Meats.g","Eggs.g","Beans.g","Nuts.g","Fruits.
 # Z-scores of food-group consumption
 zfg_441<-as.data.frame(apply(fg_441[,2:length(fg_441)], 2, function(x) (x-mean(x))/sd(x)))
 
-# Table2
+# Table1
 table1(~ Dairy.g+Meats.g+Eggs.g+Beans.g+Nuts.g+
          Fruits.g+Vegetables.g+Cereals.g+Tubers.g+Fats.g+Sugars.g
        | microbio.meta$sex+microbio.meta$age_range,
@@ -347,17 +501,19 @@ anova(lm(fg1_441$Tubers.g~microbio.meta$sex+microbio.meta$age_range))
 anova(lm(fg1_441$Fats.g~microbio.meta$sex+microbio.meta$age_range))
 anova(lm(fg1_441$Sugars.g~microbio.meta$sex+microbio.meta$age_range))
 
+
 # Radar chart for nutrient description (https://www.r-graph-gallery.com/143-spider-chart-with-saveral-individuals.html)
 # Input data format is very specific. Each row must be an entity. Each column is a quantitative variable. First 2 rows provide the min and the max that will be used for each variable.
 # To use the fmsb package, I have to add 2 lines to the dataframe: the max and min of each topic to show on the plot!
-radar_fg441<-fg_441[,c(2:length(fg_441))]
+#radar_fg441<-fg_441[,c(2:length(fg_441))]
+radar_fg441<-fg_441[,c(2:4,7:length(fg_441))]
 
 # With min and max
 #radar_fg441<-data.frame(rbind(
 #  min=apply(radar_fg441, MARGIN=2, FUN=min),
 #  max=apply(radar_fg441, MARGIN=2, FUN=max),
 #  apply(radar_fg441, MARGIN=2, FUN=function(x)
-#    mean(x~microbio.meta$sexo))))
+#    by(x, microbio.meta$sex, mean))))
 
 # With q25 and q75 as min and max
 radar_fg441<-data.frame(
@@ -365,15 +521,15 @@ radar_fg441<-data.frame(
     q25=apply(radar_fg441, MARGIN=2, FUN=function(x) quantile(x)[2]),
     q75=apply(radar_fg441, MARGIN=2, FUN=function(x) quantile(x)[4]),
     apply(radar_fg441, MARGIN=2, FUN=function(x)
-      mean(x~microbio.meta$sexo))))
+      by(x, microbio.meta$sex, mean))))
 
 # Set graphic colors
-coul <- brewer.pal(3, "BrBG")
-colors_border <- coul
+coul <- cbPalette
+colors_border <- cbPalette
 colors_in <- alpha(coul,0.3)
 
 # If you remove the 2 first lines, the function compute the max and min of each variable with the available data:
-radarchart(radar_fg441, axistype=0 , maxmin=F,
+radarchart(radar_fg441, axistype=0 , maxmin=T,
            #custom polygon
            pcol=colors_border, pfcol=colors_in, plwd=4, plty=1,
            #custom the grid
@@ -387,12 +543,17 @@ legend(x=1.5, y=1, legend=c("Women","Men"), bty = "n", pch=20 , col=colors_in , 
 
 # Correlation heatmap for food groups
 cormat_fg<-round(cor(fg_441[,2:length(fg_441)]),2)
-aheatmap(cormat_fg, color="-Spectral:100", scale="none",
-         breaks=NA, Rowv=T, Colv=T, width=30, height=8, cexRow=1,
-         hclustfun="ward", distfun="euclidean")
+jpeg("d:/Vidarium/Publicaciones/Dieta_ASGV/Figure 1D.jpeg", width=8, height=4, units='in', res=600)
+aheatmap(cormat_fg, color="-Spectral:100",
+         breaks=NA, scale="none", Rowv=T, Colv=T,
+         distfun="euclidean", hclustfun="ward",
+         treeheight=c(20,20), legend=T, 
+         fontsize=12,
+         cexRow=1, cexCol=1, width=30)
+dev.off()
 
 # PCA food groups
-pca_fg<-prcomp(fg_441[,2:length(fg_441)], scale.=TRUE)
+pca_fg<-prcomp(fg_441[,2:12], scale.=TRUE)
 
 # Visualize eigenvalues (scree plot)
 fviz_eig(pca_fg)
@@ -407,6 +568,14 @@ plot_pca_fg_23<-fviz_pca_var(pca_fg, axes=c(2,3),
                              col.var="contrib",
                              gradient.cols=c("#00AFBB","#E7B800","#FC4E07"),
                              repel=TRUE)
+
+jpeg("d:/Vidarium/Publicaciones/Dieta_ASGV/Figure 1E.jpeg", width=4, height=4, units='in', res=600)
+plot_pca_fg_12
+dev.off()
+
+jpeg("d:/Vidarium/Publicaciones/Dieta_ASGV/Figure 1F.jpeg", width=4, height=4, units='in', res=600)
+plot_pca_fg_23
+dev.off()
 
 plot_pca1fg<-ggplot(fg_441, aes(x=pca_fg$x[,1], y=Fats.g)) +
   geom_point() +
@@ -423,6 +592,7 @@ plot_pca3fg<-ggplot(fg_441, aes(x=pca_fg$x[,3], y=Dairy.g)) +
   geom_smooth(method='loess') +
   labs(x="PCA3 food groups", y="Dairy (g)")
 
+
 # Do PCA axes vary by variables controlled by design?
 lm_pca1_fg<-lm(pca_fg$x[,1]~city+sex+age_range+bmi_class+as.factor(socioeconomic), data=microbio.meta)
 Anova(lm_pca1_fg)
@@ -432,7 +602,7 @@ Anova(lm_pca2_fg)
 
 lm_pca3_fg<-lm(pca_fg$x[,3]~city+sex+age_range+bmi_class+as.factor(socioeconomic), data=microbio.meta)
 Anova(lm_pca3_fg)
-          
+
 # Do individual food groups vary by variables controlled by design?
 lm_zdairy<-lm(zfg_441$Dairy.g~city+sex+age_range+bmi_class+as.factor(socioeconomic), data=microbio.meta)
 Anova(lm_zdairy)
@@ -452,8 +622,8 @@ Anova(lm_znut)
 lm_zfruit<-lm(zfg_441$Fruits.g~city+sex+age_range+bmi_class+as.factor(socioeconomic), data=microbio.meta)
 Anova(lm_zfruit)
 
-lm_zlegume<-lm(zfg_441$Vegetables.g~city+sex+age_range+bmi_class+as.factor(socioeconomic), data=microbio.meta)
-Anova(lm_zlegume)
+lm_zvegetable<-lm(zfg_441$Vegetables.g~city+sex+age_range+bmi_class+as.factor(socioeconomic), data=microbio.meta)
+Anova(lm_zvegetable)
 
 lm_zcereal<-lm(zfg_441$Cereals.g~city+sex+age_range+bmi_class+as.factor(socioeconomic), data=microbio.meta)
 Anova(lm_zcereal)
@@ -477,7 +647,7 @@ res_zegg<-residuals(lm_zegg)
 res_zbean<-residuals(lm_zbean)
 res_znut<-residuals(lm_znut)
 res_zfruit<-residuals(lm_zfruit)
-res_zlegume<-residuals(lm_zlegume)
+res_zvegetable<-residuals(lm_zvegetable)
 res_zcereal<-residuals(lm_zcereal)
 res_ztuber<-residuals(lm_ztuber)
 res_zfgfat<-residuals(lm_zfgfat)
@@ -615,7 +785,7 @@ Anova(lm_gaba)
 res_hei<-residuals(lm_hei)
 res_gaba<-residuals(lm_gaba)
 
-  
+
 -----------------------------------
 ### 2. Gut microbiota analysis ----
 -----------------------------------
@@ -630,28 +800,60 @@ evenness<-diversityresult(x=microbio.rare,index="Jevenness",method="each site")
 
 alpha_div<-data.frame(richness,shannon,evenness)
 
-pirateplot(formula=alpha_div$Shannon~sexo+rango_edad,
-           data=microbio.meta,
-           pal="google",
-           inf.method="ci",
-           ylab="Shannon diversity index")
+par(mfrow=c(3,1))
 
-pirateplot(formula=alpha_div$richness~sexo+rango_edad,
+jpeg("d:/Vidarium/Publicaciones/Dieta_ASGV/Figure 2A.jpeg", width=8, height=4, units='in', res=600)
+pirateplot(formula=alpha_div$Shannon~sex+age_range,
            data=microbio.meta,
-           pal="google",
-           inf.method="ci",
-           ylab="OTU richness")
+           sortx="sequential",
+           ylab="Shannon diversity index",
+           pal=c("#5E4FA2", "#9E0142"),
+           theme = 2,  # Start with theme 2
+           inf.f.o = 0, # Turn off inf fill
+           inf.b.o = 0, # Turn off inf border
+           point.o = .2,   # Turn up points
+           bar.f.o = .5, # Turn up bars
+           bean.f.o = .4, # Light bean filling
+           bean.b.o = .2, # Light bean border
+           avg.line.o = 0, # Turn off average line
+           point.col = "black") # Black points
+dev.off()
 
-pirateplot(formula=alpha_div$Jevenness~sexo+rango_edad,
+pirateplot(formula=alpha_div$richness~sex+age_range,
            data=microbio.meta,
-           pal="google",
-           inf.method="ci",
-           ylab="Pielou's evenness")
+           sortx="sequential",
+           ylab="OTU richness",
+           pal=c("#5E4FA2", "#9E0142"),
+           theme = 2,  # Start with theme 2
+           inf.f.o = 0, # Turn off inf fill
+           inf.b.o = 0, # Turn off inf border
+           point.o = .2,   # Turn up points
+           bar.f.o = .5, # Turn up bars
+           bean.f.o = .4, # Light bean filling
+           bean.b.o = .2, # Light bean border
+           avg.line.o = 0, # Turn off average line
+           point.col = "black") # Black points
+
+pirateplot(formula=alpha_div$Jevenness~sex+age_range,
+           data=microbio.meta,
+           sortx="sequential",
+           ylab="Pielou's evenness",
+           pal=c("#5E4FA2", "#9E0142"),
+           theme = 2,  # Start with theme 2
+           inf.f.o = 0, # Turn off inf fill
+           inf.b.o = 0, # Turn off inf border
+           point.o = .2,   # Turn up points
+           bar.f.o = .5, # Turn up bars
+           bean.f.o = .4, # Light bean filling
+           bean.b.o = .2, # Light bean border
+           avg.line.o = 0, # Turn off average line
+           point.col = "black") # Black points
 
 # Does alpha diversity differ by variables controlled by design?
 Anova(lm(alpha_div$Shannon~city+sex+age_range+bmi_class+as.factor(socioeconomic), data=microbio.meta))
 Anova(lm(alpha_div$richness~city+sex+age_range+bmi_class+as.factor(socioeconomic), data=microbio.meta))
 Anova(lm(alpha_div$Jevenness~city+sex+age_range+bmi_class+as.factor(socioeconomic), data=microbio.meta))
+
 
 ----------------------------
 ### 2.b. Beta diversity ----
@@ -676,24 +878,23 @@ e.PC2.dw<-round(e.pcoa.dw$eig[2]/sum(e.pcoa.dw$eig), 4)*100
 e.PC3.dw<-round(e.pcoa.dw$eig[3]/sum(e.pcoa.dw$eig), 4)*100
 
 pcoa_table<-data.frame(PC1.du=e.pcoa.du$points[, 1], PC2.du=e.pcoa.du$points[, 2], PC3.du=e.pcoa.du$points[, 3],
-                       PC1.dw=e.pcoa.dw$points[, 1], PC2.dw=e.pcoa.dw$points[, 2], PC3.dw=e.pcoa.dw$points[, 3],
-                       sexo=microbio.meta$sexo, rango_edad=microbio.meta$rango_edad)
+                       PC1.dw=e.pcoa.dw$points[, 1], PC2.dw=e.pcoa.dw$points[, 2], PC3.dw=e.pcoa.dw$points[, 3])
 
 # PCoA
 # http://www.sthda.com/english/wiki/amazing-interactive-3d-scatter-plots-r-software-and-data-visualization
 # 2D plot
 # Weighted unifrac
-ggplot(pcoa_table, aes(x=PC1.dw, y=PC2.dw, color=sexo:rango_edad)) +
+ggplot(pcoa_table, aes(x=PC1.dw, y=PC2.dw, color=microbio.meta$sex:microbio.meta$age_range)) +
   geom_point(position=position_dodge(width=0.4))
 
 # Unweighted unifrac
-ggplot(pcoa_table, aes(x=PC1.du, y=PC2.du, color=sexo:rango_edad)) + 
+ggplot(pcoa_table, aes(x=PC1.du, y=PC2.du, color=microbio.meta$sex:microbio.meta$age_range)) + 
   geom_point(position=position_dodge(width=0.4))
 
 # 3D
 # Weighted unifrac
 scatter3d(x=pcoa_table$PC1.dw, y=pcoa_table$PC2.dw, z=pcoa_table$PC3.dw,
-          groups=pcoa_table$sexo,
+          groups=microbio.meta$sex,
           grid=FALSE, surface=FALSE, ellipsoid=TRUE,
           xlab=paste("PCoA1 (",e.PC1.dw, "%)"),
           ylab=paste("PCoA2 (",e.PC2.dw, "%)"),
@@ -702,7 +903,7 @@ scatter3d(x=pcoa_table$PC1.dw, y=pcoa_table$PC2.dw, z=pcoa_table$PC3.dw,
 
 # Unweighted unifrac
 scatter3d(x=pcoa_table$PC1.du, y=pcoa_table$PC2.du, z=pcoa_table$PC3.du,
-          groups=pcoa_table$sexo,
+          groups=microbio.meta$sex,
           grid=FALSE, surface=FALSE, ellipsoid=TRUE,
           xlab=paste("PCoA1 (",e.PC1.du, "%)"),
           ylab=paste("PCoA2 (",e.PC2.du, "%)"),
@@ -712,6 +913,67 @@ scatter3d(x=pcoa_table$PC1.du, y=pcoa_table$PC2.du, z=pcoa_table$PC3.du,
 # Is beta diversity affected by variables controlled by design?
 adonis(as.dist(dw)~city+sex+age_range+bmi_class+as.factor(socioeconomic), data=microbio.meta)
 adonis(as.dist(du)~city+sex+age_range+bmi_class+as.factor(socioeconomic), data=microbio.meta)
+
+
+# CAGs
+spearman_matrix=cor(abundant_100otus, method="spearman")
+spearman_tree=hclust(dist(spearman_matrix), method="ward")
+
+# With 5 CAGs
+CAG_n5=factor(cutree(tree=spearman_tree, k=5))
+CAG_n5_a=abundant_100otus[,CAG_n5==1]
+CAG_n5_b=abundant_100otus[,CAG_n5==2]
+CAG_n5_c=abundant_100otus[,CAG_n5==3]
+CAG_n5_d=abundant_100otus[,CAG_n5==4]
+CAG_n5_e=abundant_100otus[,CAG_n5==5]
+CAG_n5_matrix<-data.frame(CAG_Prevotella=rowSums(CAG_n5_a),
+                          CAG_Lachnospiraceae=rowSums(CAG_n5_b),
+                          CAG_Pathogen=rowSums(CAG_n5_c),
+                          CAG_Akkermansia=rowSums(CAG_n5_d), 
+                          CAG_Ruminococcaceae=rowSums(CAG_n5_e))
+
+CAG_410<-CAG_n5_matrix[rownames(CAG_n5_matrix) %in% rownames(microbio.rare),]
+
+# 3D plot
+# CAG-Prevotella
+plot_ly(pcoa_table, x=~PC1.dw, y=~PC2.dw, z=~PC3.dw, 
+        color=~CAG_n5_matrix$CAG_Prevotella) %>%
+  add_markers() %>%
+  layout(scene=list(xaxis=list(title=paste("PCoA1 (",e.PC1.dw, "%)")),
+                    yaxis=list(title=paste("PCoA2 (",e.PC2.dw, "%)")),
+                    zaxis=list(title=paste("PCoA3 (",e.PC3.dw, "%)"))))
+
+# CAG-Lachnospiraceae
+plot_ly(pcoa_table, x=~PC1.dw, y=~PC2.dw, z=~PC3.dw, 
+        color=~CAG_n5_matrix$CAG_Lachnospiraceae) %>%
+  add_markers() %>%
+  layout(scene=list(xaxis=list(title=paste("PCoA1 (",e.PC1.dw, "%)")),
+                    yaxis=list(title=paste("PCoA2 (",e.PC2.dw, "%)")),
+                    zaxis=list(title=paste("PCoA3 (",e.PC3.dw, "%)"))))
+
+# CAG-Pathogen
+plot_ly(pcoa_table, x=~PC1.dw, y=~PC2.dw, z=~PC3.dw, 
+        color=~CAG_n5_matrix$CAG_Pathogen) %>%
+  add_markers() %>%
+  layout(scene=list(xaxis=list(title=paste("PCoA1 (",e.PC1.dw, "%)")),
+                    yaxis=list(title=paste("PCoA2 (",e.PC2.dw, "%)")),
+                    zaxis=list(title=paste("PCoA3 (",e.PC3.dw, "%)"))))
+
+# CAG-Akkermansia
+plot_ly(pcoa_table, x=~PC1.dw, y=~PC2.dw, z=~PC3.dw, 
+        color=~CAG_n5_matrix$CAG_Akkermansia) %>%
+  add_markers() %>%
+  layout(scene=list(xaxis=list(title=paste("PCoA1 (",e.PC1.dw, "%)")),
+                    yaxis=list(title=paste("PCoA2 (",e.PC2.dw, "%)")),
+                    zaxis=list(title=paste("PCoA3 (",e.PC3.dw, "%)"))))
+
+# CAG-Ruminococcaceae
+plot_ly(pcoa_table, x=~PC1.dw, y=~PC2.dw, z=~PC3.dw, 
+        color=~CAG_n5_matrix$CAG_Ruminococcaceae) %>%
+  add_markers() %>%
+  layout(scene=list(xaxis=list(title=paste("PCoA1 (",e.PC1.dw, "%)")),
+                    yaxis=list(title=paste("PCoA2 (",e.PC2.dw, "%)")),
+                    zaxis=list(title=paste("PCoA3 (",e.PC3.dw, "%)"))))
 
 
 --------------------------------
@@ -843,6 +1105,78 @@ jpeg("d:/Vidarium/Publicaciones/Dieta_ASGV/Figure 2B.jpeg", width=6, height=4, u
 box_class
 dev.off()
 
+# By order
+# Melt the order table
+order = t(d.order)
+order_melt = melt(order)
+
+# Compute the mean and standard deviation
+mean_abund_order = aggregate(value ~ Var1, data = order_melt, FUN = mean)
+sd_abund_order = aggregate(value ~ Var1, data = order_melt, FUN = sd)
+
+# Ordered mean and SD table
+mean_abund_order = cbind(mean_abund_order, sd = sd_abund_order$value)
+mean_abund_order = mean_abund_order[order(mean_abund_order[,2], decreasing = T),]
+
+# Boxplot of order
+# Combine order with very low abundance
+order_median = aggregate(value ~ Var1, data = order_melt, FUN = median)
+top_order = order_median$Var1[order_median$value > 0]
+bottom_order = order_median$Var1[order_median$value == 0]
+
+top_bottom_order = rbind(order[top_order, ], "Other" = colSums(order[bottom_order, ]))
+
+order_melt = melt(top_bottom_order)
+tax<-str_split_fixed(order_melt$Var1, ";", 4)
+order_melt<-cbind(order_melt, tax)
+
+
+#order_melt$value[order_melt$value < 0.00005] = 0.00005
+order_labels = c("Clostridiales", "Bacteroidales", "Coriobacteriales", "Enterobacteriales", "Erysipelotrichales", "Bifidobacteriales", "Lactobacillales", "Verrucomicrobiales", "Mollicutes RF39", "Bacillales", "Methanobacteriales", "Other", "Actinomycetales", "Burkholderiales", "Desulfovibrionales", "Streptophyta", "Pasteurellales", "Gemellales", "Fusobacteriales", "Cyanobacteria 4C0d-2 YS2", "Pseudomonadales")
+
+box_order = ggplot(order_melt, aes(x=reorder(Var1, -value, FUN=median), y=log(0.001+value), fill=`2`)) +
+  geom_boxplot() + 
+  labs(x="", y="log Relative abundance") + 
+  theme(axis.text.x=element_text(angle=45, hjust=1)) +
+  scale_x_discrete(labels=order_labels) +
+  scale_fill_manual(values=specPalette)
+
+
+# By family
+# Melt the family table
+family = t(d.family)
+family_melt = melt(family)
+
+# Compute the mean and standard deviation
+mean_abund_family = aggregate(value ~ Var1, data = family_melt, FUN = mean)
+sd_abund_family = aggregate(value ~ Var1, data = family_melt, FUN = sd)
+
+# Ordered mean and SD table
+mean_abund_family = cbind(mean_abund_family, sd = sd_abund_family$value)
+mean_abund_family = mean_abund_family[order(mean_abund_family[,2], decreasing = T),]
+
+# Boxplot of family
+# Combine family with very low abundance
+family_median = aggregate(value ~ Var1, data = family_melt, FUN = median)
+top_family = family_median$Var1[family_median$value >= 0.01]
+bottom_family = family_median$Var1[family_median$value < 0.01]
+
+top_bottom_family = rbind(family[top_family, ], "Other" = colSums(family[bottom_family, ]))
+
+family_melt = melt(top_bottom_family)
+
+family_labels = c("Other families","Ruminococcaceae","Lachnospiraceae","Prevotellaceae",
+                  "Coriobacteriaceae","Enterobacteriaceae","Clostridiaceae",
+                  "Veillonellaceae","Erysipelotrichaceae","Bifidobacteriaceae")
+
+box_family = ggplot(family_melt, aes(x = reorder(Var1, -value, FUN=median), y = value)) +
+  geom_boxplot() + 
+  labs(x = "", y = "Relative abundance") + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_x_discrete(labels = family_labels)
+
+plot_grid(box_phylum, box_family, nrow=2, ncol=1,labels="AUTO")
+
 # Proportion of sequences represented by the most abundant OTUs
 # 100 OTUs (median relabund >0.0001)
 prop_reads_100otus = rowSums(microbio.otus[,colnames(microbio.otus) %in% colnames(abundant_100otus)])/
@@ -887,22 +1221,22 @@ Anova(lm(alpha_div$Shannon~city+sex+age_range+bmi_class+as.factor(socioeconomic)
 Anova(lm(alpha_div$Shannon~city+sex+age_range+bmi_class+as.factor(socioeconomic)+
            nutri441$B12, data=microbio.meta))
 
-shannon_pca1nutr = ggplot(alpha_div, aes(x=pca_nutr$x[,1], y=Shannon, color=microbio.meta$sexo)) +
+shannon_pca1nutr = ggplot(alpha_div, aes(x=pca_nutr$x[,1], y=Shannon, color=microbio.meta$sex)) +
   geom_point() +
   geom_smooth(method='lm') +
   labs(x="Nutrient PCA1", y="Shannon diversity index")
 
-shannon_pca2nutr = ggplot(alpha_div, aes(x=pca_nutr$x[,2], y=Shannon, color=microbio.meta$sexo)) +
+shannon_pca2nutr = ggplot(alpha_div, aes(x=pca_nutr$x[,2], y=Shannon, color=microbio.meta$sex)) +
   geom_point() +
   geom_smooth(method='lm') +
   labs(x="Nutrient PCA2", y="Shannon diversity index")
 
-shannon_pca3nutr = ggplot(alpha_div, aes(x=pca_nutr$x[,3], y=Shannon, color=microbio.meta$sexo)) +
+shannon_pca3nutr = ggplot(alpha_div, aes(x=pca_nutr$x[,3], y=Shannon, color=microbio.meta$sex)) +
   geom_point() +
   geom_smooth(method='lm') +
   labs(x="Nutrient PCA3", y="Shannon diversity index")
 
-shannon_fd = ggplot(alpha_div, aes(x=nutri441$FD, y=Shannon, color=microbio.meta$sexo)) +
+shannon_fd = ggplot(alpha_div, aes(x=nutri441$Fiber, y=Shannon, color=microbio.meta$sex)) +
   geom_point() +
   geom_smooth(method='lm') +
   labs(x="Dietary fiber (g)", y="Shannon diversity index")
@@ -1003,6 +1337,14 @@ even_b12 = ggplot(alpha_div, aes(x=nutri441$B12, y=Jevenness, color=microbio.met
   geom_point() +
   geom_smooth(method='lm') +
   labs(x="Vitamin B12 (mg)", y="Pielou's evenness")
+
+# Figure X
+plot_grid(shannon_fd, shannon_pca2nutr,
+          nrow=2, ncol=1, labels='AUTO')
+
+# Supplementary Figure SX
+plot_grid(rich_pca2nutr, rich_fd, even_pca2nutr, even_fd,
+          nrow=2, ncol=2, labels='AUTO')
 
 
 ---------------------------------------
@@ -1114,7 +1456,7 @@ ggplot() +
 
 # Models adjusted by city, sex, age range, BMI and socioeconomic level
 rho_pca1_nutr<-apply(X=rabund_top_features_pca1_nutr, MARGIN=2,
-                     FUN=function(x) round(cor(res_pca1_nutr, x, m="s"),2))
+                     FUN=function(x) round(cor(res_pca1_nutr, x, m="s"),3))
 
 # Matrix with rho and random-forest model attributes
 pca1_nutr_rfmat<-data.frame(rho=rho_pca1_nutr, IncMSE=rf_top_features_forest_pca1_nutr$importance[,1], IncNodePurity=rf_top_features_forest_pca1_nutr$importance[,2])
@@ -1189,7 +1531,7 @@ ggplot() +
 
 # Models adjusted by city, sex, age range, BMI and socioeconomic level
 rho_pca2_nutr<-apply(X=rabund_top_features_pca2_nutr, MARGIN=2,
-                     FUN=function(x) round(cor(res_pca2_nutr, x, m="s"),2))
+                     FUN=function(x) round(cor(res_pca2_nutr, x, m="s"),3))
 
 # Matrix with rho and random-forest model attributes
 pca2_nutr_rfmat<-data.frame(rho=rho_pca2_nutr, IncMSE=rf_top_features_forest_pca2_nutr$importance[,1], IncNodePurity=rf_top_features_forest_pca2_nutr$importance[,2])
@@ -1248,7 +1590,7 @@ ggplot() +
 
 # Models adjusted by city, sex, age range, BMI and socioeconomic level
 rho_pca3_nutr<-apply(X=rabund_top_features_pca3_nutr, MARGIN=2,
-                     FUN=function(x) round(cor(res_pca3_nutr, x, m="s"),2))
+                     FUN=function(x) round(cor(res_pca3_nutr, x, m="s"),3))
 
 # Matrix with rho and random-forest model attributes
 pca3_nutr_rfmat<-data.frame(rho=rho_pca3_nutr, IncMSE=rf_top_features_forest_pca3_nutr$importance[,1], IncNodePurity=rf_top_features_forest_pca3_nutr$importance[,2])
@@ -1291,7 +1633,7 @@ ggplot() +
 
 # Models adjusted by city, sex, age range, BMI and socioeconomic level
 rho_fd<-apply(X=rabund_top_features_fd, MARGIN=2,
-                     FUN=function(x) round(cor(res_zfd, x, m="s"),2))
+                     FUN=function(x) round(cor(res_zfd, x, m="s"),3))
 
 # Matrix with rho and random-forest model attributes
 fd_rfmat<-data.frame(rho=rho_fd, IncMSE=rf_top_features_forest_fd$importance[,1], IncNodePurity=rf_top_features_forest_fd$importance[,2])
@@ -1300,9 +1642,52 @@ fd_rfmat<-data.frame(rho=rho_fd, IncMSE=rf_top_features_forest_fd$importance[,1]
 aheatmap(as.matrix(fd_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(fd_rfmat$IncMSE,2)), labRow=rownames(fd_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="Dietary fiber", fontsize=10)
 
 
---------------
-# VitB12 -----
---------------
+-------------------
+# Cholesterol -----
+-------------------
+# Model adjusted by city, sex, age range, BMI and socioeconomic level
+rf_chol = get_forest(abundant_100otus, res_zchol)
+rf_simplify_rsq_chol <- simplify_model(res_zchol, rf_chol, abundant_100otus, 30)
+n_features_chol <- which.max(rf_simplify_rsq_chol)
+
+decrease_mse_chol <- importance(rf_chol,1)
+feature_order_chol <- order(decrease_mse_chol, decreasing=TRUE)
+top_features_chol <- names(decrease_mse_chol[feature_order_chol,])[1:n_features_chol]
+
+rabund_top_features_chol <- abundant_100otus[,as.character(top_features_chol)]
+
+# Model adjusted by city, sex, age range, BMI and socioeconomic level
+rf_top_features_forest_chol <- get_forest(rabund=rabund_top_features_chol,
+                                          dependent=res_zchol, n_trees=50000)
+
+all_rsq_chol <- rf_chol$rsq[50000]
+top_rsq_chol <- rf_top_features_forest_chol$rsq[50000]
+
+plot(rf_simplify_rsq_chol, xlab="Number of OTUs",
+     ylab="Variance explained (%)", pch=19, main="Cholesterol")
+
+# fit the full model back to the original data
+forest_fit_chol <- predict(rf_top_features_forest_chol, rabund_top_features_chol)
+
+# Model adjusted by city, sex, age range, BMI and socioeconomic level
+ggplot() +
+  geom_point(aes(x=res_zchol, y=forest_fit_chol, color=microbio.meta$sex)) +
+  labs(colour="Sex", x="Adjusted cholesterol", y="Predicted cholesterol", title="Simplified RF regression")
+
+# Models adjusted by city, sex, age range, BMI and socioeconomic level
+rho_chol<-apply(X=rabund_top_features_chol, MARGIN=2,
+                FUN=function(x) round(cor(res_zchol, x, m="s"),3))
+
+# Matrix with rho and random-forest model attributes
+chol_rfmat<-data.frame(rho=rho_chol, IncMSE=rf_top_features_forest_chol$importance[,1], IncNodePurity=rf_top_features_forest_chol$importance[,2])
+
+# Heatmap
+aheatmap(as.matrix(chol_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(chol_rfmat$IncMSE,2)), labRow=rownames(chol_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="Cholesterol", fontsize=10)
+
+
+-------------------
+# Vitamin B12 -----
+-------------------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_b12 = get_forest(abundant_100otus, res_zb12)
 rf_simplify_rsq_b12 <- simplify_model(res_zb12, rf_b12, abundant_100otus, 30)
@@ -1334,7 +1719,7 @@ ggplot() +
 
 # Models adjusted by city, sex, age range, BMI and socioeconomic level
 rho_b12<-apply(X=rabund_top_features_b12, MARGIN=2,
-              FUN=function(x) round(cor(res_zb12, x, m="s"),2))
+              FUN=function(x) round(cor(res_zb12, x, m="s"),3))
 
 # Matrix with rho and random-forest model attributes
 b12_rfmat<-data.frame(rho=rho_b12, IncMSE=rf_top_features_forest_b12$importance[,1], IncNodePurity=rf_top_features_forest_b12$importance[,2])
@@ -1359,10 +1744,10 @@ rabund_top_features_cho <- abundant_100otus[,as.character(top_features_cho)]
 
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_top_features_forest_cho <- get_forest(rabund=rabund_top_features_cho,
-                                         dependent=res_zcho, n_trees=10000)
+                                         dependent=res_zcho, n_trees=50000)
 
-all_rsq_cho <- rf_cho$rsq[10000]
-top_rsq_cho <- rf_top_features_forest_cho$rsq[10000]
+all_rsq_cho <- rf_cho$rsq[50000]
+top_rsq_cho <- rf_top_features_forest_cho$rsq[50000]
 
 plot(rf_simplify_rsq_cho, xlab="Number of features",
      ylab="Variance explained (%)", pch=19)
@@ -1377,7 +1762,7 @@ ggplot() +
 
 # Models adjusted by city, sex, age range, BMI and socioeconomic level
 rho_cho<-apply(X=rabund_top_features_cho, MARGIN=2,
-               FUN=function(x) round(cor(res_zcho, x, m="s"),2))
+               FUN=function(x) round(cor(res_zcho, x, m="s"),3))
 
 # Matrix with rho and random-forest model attributes
 cho_rfmat<-data.frame(rho=rho_cho, IncMSE=rf_top_features_forest_cho$importance[,1], IncNodePurity=rf_top_features_forest_cho$importance[,2])
@@ -1386,9 +1771,9 @@ cho_rfmat<-data.frame(rho=rho_cho, IncMSE=rf_top_features_forest_cho$importance[
 aheatmap(as.matrix(cho_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(cho_rfmat$IncMSE,2)), labRow=rownames(cho_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="Carbohydrates", fontsize=10)
 
 
-------------
-# Fats -----
-------------
+-----------------------
+# Fats (nutrient) -----
+-----------------------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_fat = get_forest(abundant_100otus, res_zfat)
 rf_simplify_rsq_fat <- simplify_model(res_zfat, rf_fat, abundant_100otus, 30)
@@ -1402,10 +1787,10 @@ rabund_top_features_fat <- abundant_100otus[,as.character(top_features_fat)]
 
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_top_features_forest_fat <- get_forest(rabund=rabund_top_features_fat,
-                                         dependent=res_zfat, n_trees=10000)
+                                         dependent=res_zfat, n_trees=50000)
 
-all_rsq_fat <- rf_fat$rsq[10000]
-top_rsq_fat <- rf_top_features_forest_fat$rsq[10000]
+all_rsq_fat <- rf_fat$rsq[50000]
+top_rsq_fat <- rf_top_features_forest_fat$rsq[50000]
 
 plot(rf_simplify_rsq_fat, xlab="Number of features",
      ylab="Variance explained (%)", pch=19)
@@ -1420,7 +1805,7 @@ ggplot() +
 
 # Models adjusted by city, sex, age range, BMI and socioeconomic level
 rho_fat<-apply(X=rabund_top_features_fat, MARGIN=2,
-               FUN=function(x) round(cor(res_zfat, x, m="s"),2))
+               FUN=function(x) round(cor(res_zfat, x, m="s"),3))
 
 # Matrix with rho and random-forest model attributes
 fat_rfmat<-data.frame(rho=rho_fat, IncMSE=rf_top_features_forest_fat$importance[,1], IncNodePurity=rf_top_features_forest_fat$importance[,2])
@@ -1445,10 +1830,10 @@ rabund_top_features_prot <- abundant_100otus[,as.character(top_features_prot)]
 
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_top_features_forest_prot <- get_forest(rabund=rabund_top_features_prot,
-                                          dependent=res_zprot, n_trees=10000)
+                                          dependent=res_zprot, n_trees=50000)
 
-all_rsq_prot <- rf_prot$rsq[10000]
-top_rsq_prot <- rf_top_features_forest_prot$rsq[10000]
+all_rsq_prot <- rf_prot$rsq[50000]
+top_rsq_prot <- rf_top_features_forest_prot$rsq[50000]
 
 plot(rf_simplify_rsq_prot, xlab="Number of features",
      ylab="Variance explained (%)", pch=19)
@@ -1463,7 +1848,7 @@ ggplot() +
 
 # Models adjusted by city, sex, age range, BMI and socioeconomic level
 rho_prot<-apply(X=rabund_top_features_prot, MARGIN=2,
-                FUN=function(x) round(cor(res_zprot, x, m="s"),2))
+                FUN=function(x) round(cor(res_zprot, x, m="s"),3))
 
 # Matrix with rho and random-forest model attributes
 prot_rfmat<-data.frame(rho=rho_prot, IncMSE=rf_top_features_forest_prot$importance[,1], IncNodePurity=rf_top_features_forest_prot$importance[,2])
@@ -1660,7 +2045,7 @@ ggplot() +
 
 # Models adjusted by city, sex, age range, BMI and socioeconomic level
 rho_pca1_fg<-apply(X=rabund_top_features_pca1_fg, MARGIN=2,
-                   FUN=function(x) round(cor(res_pca1_fg, x, m="s"),2))
+                   FUN=function(x) round(cor(res_pca1_fg, x, m="s"),3))
 
 # Matrix with rho and random-forest model attributes
 pca1_fg_rfmat<-data.frame(rho=rho_pca1_fg, IncMSE=rf_top_features_forest_pca1_fg$importance[,1], IncNodePurity=rf_top_features_forest_pca1_fg$importance[,2])
@@ -1740,7 +2125,7 @@ ggplot() +
 
 # Models adjusted by city, sex, age range, BMI and socioeconomic level
 rho_pca2_fg<-apply(X=rabund_top_features_pca2_fg, MARGIN=2,
-                   FUN=function(x) round(cor(res_pca2_fg, x, m="s"),2))
+                   FUN=function(x) round(cor(res_pca2_fg, x, m="s"),3))
 
 # Matrix with rho and random-forest model attributes
 pca2_fg_rfmat<-data.frame(rho=rho_pca2_fg, IncMSE=rf_top_features_forest_pca2_fg$importance[,1], IncNodePurity=rf_top_features_forest_pca2_fg$importance[,2])
@@ -1806,7 +2191,7 @@ ggplot() +
 
 # Models adjusted by city, sex, age range, BMI and socioeconomic level
 rho_pca3_fg<-apply(X=rabund_top_features_pca3_fg, MARGIN=2,
-                   FUN=function(x) round(cor(res_pca3_fg, x, m="s"),2))
+                   FUN=function(x) round(cor(res_pca3_fg, x, m="s"),3))
 
 # Matrix with rho and random-forest model attributes
 pca3_fg_rfmat<-data.frame(rho=rho_pca3_fg, IncMSE=rf_top_features_forest_pca3_fg$importance[,1], IncNodePurity=rf_top_features_forest_pca3_fg$importance[,2])
@@ -1831,10 +2216,10 @@ rabund_top_features_dairy <- abundant_100otus[,as.character(top_features_dairy)]
 
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_top_features_forest_dairy <- get_forest(rabund=rabund_top_features_dairy,
-                                           dependent=res_zdairy, n_trees=10000)
+                                           dependent=res_zdairy, n_trees=50000)
 
-all_rsq_dairy <- rf_dairy$rsq[10000]
-top_rsq_dairy <- rf_top_features_forest_dairy$rsq[10000]
+all_rsq_dairy <- rf_dairy$rsq[50000]
+top_rsq_dairy <- rf_top_features_forest_dairy$rsq[50000]
 
 plot(rf_simplify_rsq_dairy, xlab="Number of features",
      ylab="Variance explained (%)", pch=19)
@@ -1849,7 +2234,7 @@ ggplot() +
 
 # Models adjusted by city, sex, age range, BMI and socioeconomic level
 rho_dairy<-apply(X=rabund_top_features_dairy, MARGIN=2,
-                 FUN=function(x) round(cor(res_zdairy, x, m="s"),2))
+                 FUN=function(x) round(cor(res_zdairy, x, m="s"),3))
 
 # Matrix with rho and random-forest model attributes
 dairy_rfmat<-data.frame(rho=rho_dairy, IncMSE=rf_top_features_forest_dairy$importance[,1], IncNodePurity=rf_top_features_forest_dairy$importance[,2])
@@ -1874,10 +2259,10 @@ rabund_top_features_meat <- abundant_100otus[,as.character(top_features_meat)]
 
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_top_features_forest_meat <- get_forest(rabund=rabund_top_features_meat,
-                                          dependent=res_zmeat, n_trees=10000)
+                                          dependent=res_zmeat, n_trees=50000)
 
-all_rsq_meat <- rf_meat$rsq[10000]
-top_rsq_meat <- rf_top_features_forest_meat$rsq[10000]
+all_rsq_meat <- rf_meat$rsq[50000]
+top_rsq_meat <- rf_top_features_forest_meat$rsq[50000]
 
 plot(rf_simplify_rsq_meat, xlab="Number of features",
      ylab="Variance explained (%)", pch=19)
@@ -1892,7 +2277,7 @@ ggplot() +
 
 # Models adjusted by city, sex, age range, BMI and socioeconomic level
 rho_meat<-apply(X=rabund_top_features_meat, MARGIN=2,
-                FUN=function(x) round(cor(res_zmeat, x, m="s"),2))
+                FUN=function(x) round(cor(res_zmeat, x, m="s"),3))
 
 # Matrix with rho and random-forest model attributes
 meat_rfmat<-data.frame(rho=rho_meat, IncMSE=rf_top_features_forest_meat$importance[,1], IncNodePurity=rf_top_features_forest_meat$importance[,2])
@@ -1901,9 +2286,9 @@ meat_rfmat<-data.frame(rho=rho_meat, IncMSE=rf_top_features_forest_meat$importan
 aheatmap(as.matrix(meat_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(meat_rfmat$IncMSE,2)), labRow=rownames(meat_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="Meats", fontsize=10)
 
 
--------------
-# Egg -----
--------------
+-----------
+# Eggs ----
+-----------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_egg = get_forest(abundant_100otus, res_zegg)
 rf_simplify_rsq_egg <- simplify_model(res_zegg, rf_egg, abundant_100otus, 30)
@@ -1917,10 +2302,10 @@ rabund_top_features_egg <- abundant_100otus[,as.character(top_features_egg)]
 
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_top_features_forest_egg <- get_forest(rabund=rabund_top_features_egg,
-                                         dependent=res_zegg, n_trees=10000)
+                                         dependent=res_zegg, n_trees=50000)
 
-all_rsq_egg <- rf_egg$rsq[10000]
-top_rsq_egg <- rf_top_features_forest_egg$rsq[10000]
+all_rsq_egg <- rf_egg$rsq[50000]
+top_rsq_egg <- rf_top_features_forest_egg$rsq[50000]
 
 plot(rf_simplify_rsq_egg, xlab="Number of features",
      ylab="Variance explained (%)", pch=19)
@@ -1935,7 +2320,7 @@ ggplot() +
 
 # Models adjusted by city, sex, age range, BMI and socioeconomic level
 rho_egg<-apply(X=rabund_top_features_egg, MARGIN=2,
-               FUN=function(x) round(cor(res_zegg, x, m="s"),2))
+               FUN=function(x) round(cor(res_zegg, x, m="s"),3))
 
 # Matrix with rho and random-forest model attributes
 egg_rfmat<-data.frame(rho=rho_egg, IncMSE=rf_top_features_forest_egg$importance[,1], IncNodePurity=rf_top_features_forest_egg$importance[,2])
@@ -1945,7 +2330,7 @@ aheatmap(as.matrix(egg_rfmat$rho), color="-Spectral:100", scale="none", breaks=N
 
 
 ------------
-# Bean -----
+# Beans ----
 ------------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_bean = get_forest(abundant_100otus, res_zbean)
@@ -1960,10 +2345,10 @@ rabund_top_features_bean <- abundant_100otus[,as.character(top_features_bean)]
 
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_top_features_forest_bean <- get_forest(rabund=rabund_top_features_bean,
-                                          dependent=res_zbean, n_trees=10000)
+                                          dependent=res_zbean, n_trees=50000)
 
-all_rsq_bean <- rf_bean$rsq[10000]
-top_rsq_bean <- rf_top_features_forest_bean$rsq[10000]
+all_rsq_bean <- rf_bean$rsq[50000]
+top_rsq_bean <- rf_top_features_forest_bean$rsq[50000]
 
 plot(rf_simplify_rsq_bean, xlab="Number of features",
      ylab="Variance explained (%)", pch=19)
@@ -1978,7 +2363,7 @@ ggplot() +
 
 # Models adjusted by city, sex, age range, BMI and socioeconomic level
 rho_bean<-apply(X=rabund_top_features_bean, MARGIN=2,
-                FUN=function(x) round(cor(res_zbean, x, m="s"),2))
+                FUN=function(x) round(cor(res_zbean, x, m="s"),3))
 
 # Matrix with rho and random-forest model attributes
 bean_rfmat<-data.frame(rho=rho_bean, IncMSE=rf_top_features_forest_bean$importance[,1], IncNodePurity=rf_top_features_forest_bean$importance[,2])
@@ -1988,7 +2373,7 @@ aheatmap(as.matrix(bean_rfmat$rho), color="-Spectral:100", scale="none", breaks=
 
 
 -----------
-# Nut -----
+# Nuts ----
 -----------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_nut = get_forest(abundant_100otus, res_znut)
@@ -2003,10 +2388,10 @@ rabund_top_features_nut <- abundant_100otus[,as.character(top_features_nut)]
 
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_top_features_forest_nut <- get_forest(rabund=rabund_top_features_nut,
-                                         dependent=res_znut, n_trees=10000)
+                                         dependent=res_znut, n_trees=50000)
 
-all_rsq_nut <- rf_nut$rsq[10000]
-top_rsq_nut <- rf_top_features_forest_nut$rsq[10000]
+all_rsq_nut <- rf_nut$rsq[50000]
+top_rsq_nut <- rf_top_features_forest_nut$rsq[50000]
 
 plot(rf_simplify_rsq_nut, xlab="Number of features",
      ylab="Variance explained (%)", pch=19)
@@ -2021,7 +2406,7 @@ ggplot() +
 
 # Models adjusted by city, sex, age range, BMI and socioeconomic level
 rho_nut<-apply(X=rabund_top_features_nut, MARGIN=2,
-               FUN=function(x) round(cor(res_znut, x, m="s"),2))
+               FUN=function(x) round(cor(res_znut, x, m="s"),3))
 
 # Matrix with rho and random-forest model attributes
 nut_rfmat<-data.frame(rho=rho_nut, IncMSE=rf_top_features_forest_nut$importance[,1], IncNodePurity=rf_top_features_forest_nut$importance[,2])
@@ -2030,9 +2415,9 @@ nut_rfmat<-data.frame(rho=rho_nut, IncMSE=rf_top_features_forest_nut$importance[
 aheatmap(as.matrix(nut_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(nut_rfmat$IncMSE,2)), labRow=rownames(nut_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="Nuts", fontsize=10)
 
 
--------------
-# Fruit -----
--------------
+--------------
+# Fruits -----
+--------------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_fruit = get_forest(abundant_100otus, res_zfruit)
 rf_simplify_rsq_fruit <- simplify_model(res_zfruit, rf_fruit, abundant_100otus, 30)
@@ -2046,10 +2431,10 @@ rabund_top_features_fruit <- abundant_100otus[,as.character(top_features_fruit)]
 
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_top_features_forest_fruit <- get_forest(rabund=rabund_top_features_fruit,
-                                           dependent=res_zfruit, n_trees=10000)
+                                           dependent=res_zfruit, n_trees=50000)
 
-all_rsq_fruit <- rf_fruit$rsq[10000]
-top_rsq_fruit <- rf_top_features_forest_fruit$rsq[10000]
+all_rsq_fruit <- rf_fruit$rsq[50000]
+top_rsq_fruit <- rf_top_features_forest_fruit$rsq[50000]
 
 plot(rf_simplify_rsq_fruit, xlab="Number of features",
      ylab="Variance explained (%)", pch=19)
@@ -2064,7 +2449,7 @@ ggplot() +
 
 # Models adjusted by city, sex, age range, BMI and socioeconomic level
 rho_fruit<-apply(X=rabund_top_features_fruit, MARGIN=2,
-                 FUN=function(x) round(cor(res_zfruit, x, m="s"),2))
+                 FUN=function(x) round(cor(res_zfruit, x, m="s"),3))
 
 # Matrix with rho and random-forest model attributes
 fruit_rfmat<-data.frame(rho=rho_fruit, IncMSE=rf_top_features_forest_fruit$importance[,1], IncNodePurity=rf_top_features_forest_fruit$importance[,2])
@@ -2077,48 +2462,48 @@ aheatmap(as.matrix(fruit_rfmat$rho), color="-Spectral:100", scale="none", breaks
 # Vegetables -----
 ------------------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
-rf_legume = get_forest(abundant_100otus, res_zlegume)
-rf_simplify_rsq_legume <- simplify_model(res_zlegume, rf_legume, abundant_100otus, 30)
-n_features_legume <- which.max(rf_simplify_rsq_legume)
+rf_vegetable = get_forest(abundant_100otus, res_zvegetable)
+rf_simplify_rsq_vegetable <- simplify_model(res_zvegetable, rf_vegetable, abundant_100otus, 30)
+n_features_vegetable <- which.max(rf_simplify_rsq_vegetable)
 
-decrease_mse_legume <- importance(rf_legume,1)
-feature_order_legume <- order(decrease_mse_legume, decreasing=TRUE)
-top_features_legume <- names(decrease_mse_legume[feature_order_legume,])[1:n_features_legume]
+decrease_mse_vegetable <- importance(rf_vegetable,1)
+feature_order_vegetable <- order(decrease_mse_vegetable, decreasing=TRUE)
+top_features_vegetable <- names(decrease_mse_vegetable[feature_order_vegetable,])[1:n_features_vegetable]
 
-rabund_top_features_legume <- abundant_100otus[,as.character(top_features_legume)]
+rabund_top_features_vegetable <- abundant_100otus[,as.character(top_features_vegetable)]
 
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
-rf_top_features_forest_legume <- get_forest(rabund=rabund_top_features_legume,
-                                            dependent=res_zlegume, n_trees=10000)
+rf_top_features_forest_vegetable <- get_forest(rabund=rabund_top_features_vegetable,
+                                               dependent=res_zvegetable, n_trees=50000)
 
-all_rsq_legume <- rf_legume$rsq[10000]
-top_rsq_legume <- rf_top_features_forest_legume$rsq[10000]
+all_rsq_vegetable <- rf_vegetable$rsq[50000]
+top_rsq_vegetable <- rf_top_features_forest_vegetable$rsq[50000]
 
-plot(rf_simplify_rsq_legume, xlab="Number of features",
+plot(rf_simplify_rsq_vegetable, xlab="Number of features",
      ylab="Variance explained (%)", pch=19)
 
 # fit the full model back to the original data
-forest_fit_legume <- predict(rf_top_features_forest_legume, rabund_top_features_legume)
+forest_fit_vegetable <- predict(rf_top_features_forest_vegetable, rabund_top_features_vegetable)
 
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 ggplot() +
-  geom_point(aes(x=res_zlegume, y=forest_fit_legume, color=microbio.meta$sex)) +
-  labs(colour="Sex", x="Adjusted legume intake", y="Predicted legume intake", title="Simplified RF regression")
+  geom_point(aes(x=res_zvegetable, y=forest_fit_vegetable, color=microbio.meta$sex)) +
+  labs(colour="Sex", x="Adjusted vegetable intake", y="Predicted vegetable intake", title="Simplified RF regression")
 
 # Models adjusted by city, sex, age range, BMI and socioeconomic level
-rho_legume<-apply(X=rabund_top_features_legume, MARGIN=2,
-                  FUN=function(x) round(cor(res_zlegume, x, m="s"),2))
+rho_vegetable<-apply(X=rabund_top_features_vegetable, MARGIN=2,
+                     FUN=function(x) round(cor(res_zvegetable, x, m="s"),3))
 
 # Matrix with rho and random-forest model attributes
-legume_rfmat<-data.frame(rho=rho_legume, IncMSE=rf_top_features_forest_legume$importance[,1], IncNodePurity=rf_top_features_forest_legume$importance[,2])
+vegetable_rfmat<-data.frame(rho=rho_vegetable, IncMSE=rf_top_features_forest_vegetable$importance[,1], IncNodePurity=rf_top_features_forest_vegetable$importance[,2])
 
 # Heatmap
-aheatmap(as.matrix(legume_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(legume_rfmat$IncMSE,2)), labRow=rownames(legume_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="Legumes", fontsize=10)
+aheatmap(as.matrix(vegetable_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(vegetable_rfmat$IncMSE,2)), labRow=rownames(vegetable_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="vegetables", fontsize=10)
 
 
--------------
-# Cereal -----
--------------
+--------------
+# Cereals ----
+--------------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_cereal = get_forest(abundant_100otus, res_zcereal)
 rf_simplify_rsq_cereal <- simplify_model(res_zcereal, rf_cereal, abundant_100otus, 30)
@@ -2132,10 +2517,10 @@ rabund_top_features_cereal <- abundant_100otus[,as.character(top_features_cereal
 
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_top_features_forest_cereal <- get_forest(rabund=rabund_top_features_cereal,
-                                            dependent=res_zcereal, n_trees=10000)
+                                            dependent=res_zcereal, n_trees=50000)
 
-all_rsq_cereal <- rf_cereal$rsq[10000]
-top_rsq_cereal <- rf_top_features_forest_cereal$rsq[10000]
+all_rsq_cereal <- rf_cereal$rsq[50000]
+top_rsq_cereal <- rf_top_features_forest_cereal$rsq[50000]
 
 plot(rf_simplify_rsq_cereal, xlab="Number of features",
      ylab="Variance explained (%)", pch=19)
@@ -2150,7 +2535,7 @@ ggplot() +
 
 # Models adjusted by city, sex, age range, BMI and socioeconomic level
 rho_cereal<-apply(X=rabund_top_features_cereal, MARGIN=2,
-                  FUN=function(x) round(cor(res_zcereal, x, m="s"),2))
+                  FUN=function(x) round(cor(res_zcereal, x, m="s"),3))
 
 # Matrix with rho and random-forest model attributes
 cereal_rfmat<-data.frame(rho=rho_cereal, IncMSE=rf_top_features_forest_cereal$importance[,1], IncNodePurity=rf_top_features_forest_cereal$importance[,2])
@@ -2160,7 +2545,7 @@ aheatmap(as.matrix(cereal_rfmat$rho), color="-Spectral:100", scale="none", break
 
 
 -------------
-# Tuber -----
+# Tubers ----
 -------------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_tuber = get_forest(abundant_100otus, res_ztuber)
@@ -2175,10 +2560,10 @@ rabund_top_features_tuber <- abundant_100otus[,as.character(top_features_tuber)]
 
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_top_features_forest_tuber <- get_forest(rabund=rabund_top_features_tuber,
-                                           dependent=res_ztuber, n_trees=10000)
+                                           dependent=res_ztuber, n_trees=50000)
 
-all_rsq_tuber <- rf_tuber$rsq[10000]
-top_rsq_tuber <- rf_top_features_forest_tuber$rsq[10000]
+all_rsq_tuber <- rf_tuber$rsq[50000]
+top_rsq_tuber <- rf_top_features_forest_tuber$rsq[50000]
 
 plot(rf_simplify_rsq_tuber, xlab="Number of features",
      ylab="Variance explained (%)", pch=19)
@@ -2193,7 +2578,7 @@ ggplot() +
 
 # Models adjusted by city, sex, age range, BMI and socioeconomic level
 rho_tuber<-apply(X=rabund_top_features_tuber, MARGIN=2,
-                 FUN=function(x) round(cor(res_ztuber, x, m="s"),2))
+                 FUN=function(x) round(cor(res_ztuber, x, m="s"),3))
 
 # Matrix with rho and random-forest model attributes
 tuber_rfmat<-data.frame(rho=rho_tuber, IncMSE=rf_top_features_forest_tuber$importance[,1], IncNodePurity=rf_top_features_forest_tuber$importance[,2])
@@ -2202,9 +2587,9 @@ tuber_rfmat<-data.frame(rho=rho_tuber, IncMSE=rf_top_features_forest_tuber$impor
 aheatmap(as.matrix(tuber_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(tuber_rfmat$IncMSE,2)), labRow=rownames(tuber_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="Tubers", fontsize=10)
 
 
--------------
-# Fats -----
--------------
+------------------------
+# Fats (food group) ----
+------------------------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_fgfat = get_forest(abundant_100otus, res_zfgfat)
 rf_simplify_rsq_fgfat <- simplify_model(res_zfgfat, rf_fgfat, abundant_100otus, 30)
@@ -2218,10 +2603,10 @@ rabund_top_features_fgfat <- abundant_100otus[,as.character(top_features_fgfat)]
 
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_top_features_forest_fgfat <- get_forest(rabund=rabund_top_features_fgfat,
-                                           dependent=res_zfgfat, n_trees=10000)
+                                           dependent=res_zfgfat, n_trees=50000)
 
-all_rsq_fgfat <- rf_fgfat$rsq[10000]
-top_rsq_fgfat <- rf_top_features_forest_fgfat$rsq[10000]
+all_rsq_fgfat <- rf_fgfat$rsq[50000]
+top_rsq_fgfat <- rf_top_features_forest_fgfat$rsq[50000]
 
 plot(rf_simplify_rsq_fgfat, xlab="Number of features",
      ylab="Variance explained (%)", pch=19)
@@ -2236,7 +2621,7 @@ ggplot() +
 
 # Models adjusted by city, sex, age range, BMI and socioeconomic level
 rho_fgfat<-apply(X=rabund_top_features_fgfat, MARGIN=2,
-                 FUN=function(x) round(cor(res_zfgfat, x, m="s"),2))
+                 FUN=function(x) round(cor(res_zfgfat, x, m="s"),3))
 
 # Matrix with rho and random-forest model attributes
 fgfat_rfmat<-data.frame(rho=rho_fgfat, IncMSE=rf_top_features_forest_fgfat$importance[,1], IncNodePurity=rf_top_features_forest_fgfat$importance[,2])
@@ -2246,7 +2631,7 @@ aheatmap(as.matrix(fgfat_rfmat$rho), color="-Spectral:100", scale="none", breaks
 
 
 -------------
-# Sugar -----
+# Sugars ----
 -------------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_sugar = get_forest(abundant_100otus, res_zsugar)
@@ -2261,10 +2646,10 @@ rabund_top_features_sugar <- abundant_100otus[,as.character(top_features_sugar)]
 
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_top_features_forest_sugar <- get_forest(rabund=rabund_top_features_sugar,
-                                           dependent=res_zsugar, n_trees=10000)
+                                           dependent=res_zsugar, n_trees=50000)
 
-all_rsq_sugar <- rf_sugar$rsq[10000]
-top_rsq_sugar <- rf_top_features_forest_sugar$rsq[10000]
+all_rsq_sugar <- rf_sugar$rsq[50000]
+top_rsq_sugar <- rf_top_features_forest_sugar$rsq[50000]
 
 plot(rf_simplify_rsq_sugar, xlab="Number of features",
      ylab="Variance explained (%)", pch=19)
@@ -2279,7 +2664,7 @@ ggplot() +
 
 # Models adjusted by city, sex, age range, BMI and socioeconomic level
 rho_sugar<-apply(X=rabund_top_features_sugar, MARGIN=2,
-                 FUN=function(x) round(cor(res_zsugar, x, m="s"),2))
+                 FUN=function(x) round(cor(res_zsugar, x, m="s"),3))
 
 # Matrix with rho and random-forest model attributes
 sugar_rfmat<-data.frame(rho=rho_sugar, IncMSE=rf_top_features_forest_sugar$importance[,1], IncNodePurity=rf_top_features_forest_sugar$importance[,2])
@@ -2287,7 +2672,7 @@ sugar_rfmat<-data.frame(rho=rho_sugar, IncMSE=rf_top_features_forest_sugar$impor
 # Heatmap
 aheatmap(as.matrix(sugar_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(sugar_rfmat$IncMSE,2)), labRow=rownames(sugar_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="Sugar", fontsize=10)
 
-                 
+
 --------------------------------------------
 # 3.e. Diet quality and alpha diversity ----
 --------------------------------------------
@@ -2389,7 +2774,7 @@ ggplot() +
 
 # Models adjusted by city, sex, age range, BMI and socioeconomic level
 rho_opt_per_up<-apply(X=rabund_top_features_opt_per_up, MARGIN=2,
-                      FUN=function(x) round(cor(res_opt_per_up, x, m="s"),2))
+                      FUN=function(x) round(cor(res_opt_per_up, x, m="s"),3))
 
 # Matrix with rho and random-forest model attributes
 opt_per_up_rfmat<-data.frame(rho=rho_opt_per_up, IncMSE=rf_top_features_forest_opt_per_up$importance[,1], IncNodePurity=rf_top_features_forest_opt_per_up$importance[,2])
@@ -2432,7 +2817,7 @@ ggplot() +
 
 # Models adjusted by city, sex, age range, BMI and socioeconomic level
 rho_pes_per_up<-apply(X=rabund_top_features_pes_per_up, MARGIN=2,
-                      FUN=function(x) round(cor(res_pes_per_up, x, m="s"),2))
+                      FUN=function(x) round(cor(res_pes_per_up, x, m="s"),3))
 
 # Matrix with rho and random-forest model attributes
 pes_per_up_rfmat<-data.frame(rho=rho_pes_per_up, IncMSE=rf_top_features_forest_pes_per_up$importance[,1], IncNodePurity=rf_top_features_forest_pes_per_up$importance[,2])
@@ -2475,7 +2860,7 @@ ggplot() +
 
 # Models adjusted by city, sex, age range, BMI and socioeconomic level
 rho_hei<-apply(X=rabund_top_features_hei, MARGIN=2,
-               FUN=function(x) round(cor(res_hei, x, m="s"),2))
+               FUN=function(x) round(cor(res_hei, x, m="s"),3))
 
 # Matrix with rho and random-forest model attributes
 hei_rfmat<-data.frame(rho=rho_hei, IncMSE=rf_top_features_forest_hei$importance[,1], IncNodePurity=rf_top_features_forest_hei$importance[,2])
@@ -2518,7 +2903,7 @@ ggplot() +
 
 # Models adjusted by city, sex, age range, BMI and socioeconomic level
 rho_gaba<-apply(X=rabund_top_features_gaba, MARGIN=2,
-                FUN=function(x) round(cor(res_gaba, x, m="s"),2))
+                FUN=function(x) round(cor(res_gaba, x, m="s"),3))
 
 # Matrix with rho and random-forest model attributes
 gaba_rfmat<-data.frame(rho=rho_gaba, IncMSE=rf_top_features_forest_gaba$importance[,1], IncNodePurity=rf_top_features_forest_gaba$importance[,2])
@@ -2533,13 +2918,13 @@ aheatmap(as.matrix(gaba_rfmat$rho), color="-Spectral:100", scale="none", breaks=
 
 diet_all<-read.table(file="d:/Vidarium/Publicaciones/Dieta_ASGV/scripts/JSE/rf_diet_all.txt", header=T, row.names = 1)
 names(diet_all)<-c('PC1 (19)','PC2 (16)','PC3 (20)',
-                   'Fiber (21)','Vitamin B12 (17)',
-                   'Carbohydrates (16)','Fats (17)',
-                   'Proteins (18)',
+                   'Fiber (21)','Cholesterol (9)','Vitamin B12 (17)',
+                   'Carbohydrates (26)','Proteins (14)','Fats (20)',
                    'PC1 (9)','PC2 (26)','PC3 (11)',
-                   'Dairy (23)','Meats (5)','Eggs (25)',
-                   'Beans (4)','Fruits (13)','Vegetables (9)',
-                   'Cereals (20)','Tubers (12)','Sugars (11)',
+                   'Dairy (8)','Meats (5)','Eggs (24)',
+                   'Beans (17)','Fruits (9)','Vegetables (10)',
+                   'Cereals (25)','Tubers (15)','Sugars (10)',
+                   'Nuts (0)','Fats (0)',
                    'UPopt (27)','Ultra-processed (17)','HEI (11)',
                    'GABA (17)',
                    'Phylum','Class','Order','Family','Genus','Species')
@@ -2558,15 +2943,41 @@ aheatmap(diet_all[,c(1:8)], color=c("red","black","green"),
          cexRow=1, cexCol=1, width=10)
 dev.off()
 
+# Main figure diet quality
 # Figure 3
-# Figure 3A
+jpeg("d:/Vidarium/Publicaciones/Dieta_ASGV/Figure 3.jpeg", width=4, height=4, units='in', res=1200)
+aheatmap(diet_all[,c(25:27)], color=c("red","black","green"),
+         breaks=0, scale="none", Rowv=T, Colv=T,
+         distfun="euclidean", hclustfun="ward",
+         treeheight=c(50,10), legend=T, annRow=tax_annot,
+         annColors="Paired", annLegend=T, 
+         labRow=paste(rownames(diet_all),diet_all$Genus,diet_all$Species,sep=" "),
+         fontsize=7,
+         cexRow=1, cexCol=1, width=10)
+dev.off()
+
+# Main figure food groups
+# Figure 4
+jpeg("d:/Vidarium/Publicaciones/Dieta_ASGV/Figure 4.jpeg", width=4, height=4, units='in', res=1200)
+aheatmap(diet_all[,c(10:23)], color=c("red","black","green"),
+         breaks=0, scale="none", Rowv=T, Colv=T,
+         distfun="euclidean", hclustfun="ward",
+         treeheight=c(50,10), legend=T, annRow=tax_annot,
+         annColors="Paired", annLegend=T, 
+         labRow=paste(rownames(diet_all),diet_all$Genus,diet_all$Species,sep=" "),
+         fontsize=7,
+         cexRow=1, cexCol=1, width=10)
+dev.off()
+
+# Figure 5
+# Figure 5A
 fit<-lm(alpha_div$Shannon~pca_nutr$x[,2])
 # predicts + interval
 newx<-seq(min(pca_nutr$x[,2]), max(pca_nutr$x[,2]), length.out=441)
 preds<-predict(fit, newdata=data.frame(x=newx), 
                  interval='confidence')
 
-jpeg("d:/Vidarium/Publicaciones/Dieta_ASGV/Figure 3.jpeg", width=4, height=8, units='in', res=1200)
+jpeg("d:/Vidarium/Publicaciones/Dieta_ASGV/Figure 5.jpeg", width=4, height=8, units='in', res=1200)
 layout(matrix(c(1,1,2,2,2,2,2), 7, 1, byrow = TRUE), respect=FALSE)
 plot(alpha_div$Shannon~pca_nutr$x[,2], main="A", pch=19,
      xlab="PC2", ylab="Shannon diversity index")
@@ -2576,7 +2987,7 @@ lines(pca_nutr$x[,2], fitted(fit))
 lines(pca_nutr$x[,2], preds[ ,3], lty = 'dashed', col = 'red')
 lines(pca_nutr$x[,2], preds[ ,2], lty = 'dashed', col = 'red')
 
-# Figure 3B
+# Figure 5B
 aheatmap(diet_all[,c(1:8)], color=c("red","black","green"),
          breaks=0, scale="none", Rowv=T, Colv=T,
          distfun="euclidean", hclustfun="ward",
@@ -2588,29 +2999,226 @@ aheatmap(diet_all[,c(1:8)], color=c("red","black","green"),
          main="B")
 dev.off()
 
-# Main figure food groups
-# Figure 4
-jpeg("d:/Vidarium/Publicaciones/Dieta_ASGV/Figure 4.jpeg", width=4, height=4, units='in', res=1200)
-aheatmap(diet_all[,c(9:20)], color=c("red","black","green"),
-         breaks=0, scale="none", Rowv=T, Colv=T,
-         distfun="euclidean", hclustfun="ward",
-         treeheight=c(50,10), legend=T, annRow=tax_annot,
-         annColors="Paired", annLegend=T, 
-         labRow=paste(rownames(diet_all),diet_all$Genus,diet_all$Species,sep=" "),
-         fontsize=7,
-         cexRow=1, cexCol=1, width=10)
+
+-----------------------------
+### Save the environment ----
+-----------------------------
+save.image(file='d:/Vidarium/Publicaciones/Dieta_ASGV/scripts/JSE/diet-microbiota_env.RData')
+
+# OTU abundance and nutrients
+save.image(file='d:/Vidarium/Publicaciones/Dieta_ASGV/scripts/JSE/nutrients_OTUabun_env.RData')
+
+# OTU abundance and food groups and diet quality
+save.image(file='d:/Vidarium/Publicaciones/Dieta_ASGV/scripts/JSE/fg_qual_OTUabun_env.RData')
+save.image(file='d:/Vidarium/Publicaciones/Dieta_ASGV/scripts/JSE/fg_qual_OTUabun_env2.RData')
+
+# Sensitivity analysis: lean individuals
+save.image(file='d:/Vidarium/Publicaciones/Dieta_ASGV/scripts/JSE/lean_sensitivity_env.RData')
+
+
+---------------------------------------
+### Microbiota-health associations ----
+---------------------------------------
+# DESeq2 and volcano plot
+# https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html
+
+# Reduce the datasets to 441 individuals and 100 most-abundant OTUs
+# Cardiometabolic health status modified with the American Heart Associations new cutoffs for blood pressure (i.e., systolic <120 mm Hg, diastolic <80 mm Hg)
+classification_table=read.table("d:/Vidarium/Publicaciones/Dieta_ASGV/scripts/JSE/bsp_classification_2020.txt", sep="\t", row.names=1, header=T)
+classification_table=classification_table[rownames(classification_table) %in% rownames(microbio.meta),]
+identical(rownames(classification_table), rownames(microbio.meta))
+
+microbio.rare_100otus=microbio.rare[,colnames(microbio.rare) %in% colnames(abundant_100otus)]
+# DESeq2 calculates a geometric mean for every gene over every sample. The geometric mean will be zero if at least one entry is zero, i.e., if one of the four samples has a zero count it will be zero and cannot be used. The geometric means are later important for the DESeq2 normalisation.
+# Therefore, we need to add a pseudo-count of 1 to all counts.
+microbio.rare_100otus = 1+microbio.rare_100otus
+
+------------------------------------
+# Cardiometabolic health status ----
+------------------------------------
+# Modified code from: d:/Vidarium/GitHub/bsp/classification/Microbio_BSP_Classification.R
+# to include the American Heart Associations new cutoffs for blood pressure (i.e., systolic <120 mm Hg, diastolic <80 mm Hg)
+  
+# When considering your specification of experimental design, you will want to re-order the levels so that the NULL set is first.
+classification_table$chs_class = relevel(classification_table$chs_class, ref = "Healthy")
+
+dds_chs <- DESeqDataSetFromMatrix(countData = t(microbio.rare_100otus),
+                                  colData = classification_table[,c(1:2)],
+                                  design= ~ chs_class)
+dds_chs <- DESeq(dds_chs)
+resultsNames(dds_chs) # lists the coefficients
+res_chs <- results(dds_chs, name="chs_class_Abnormal_vs_Healthy")
+res_chs = cbind(as(res_chs, "data.frame"), as(diet_all[,c(28:33)][rownames(res_chs), ], "matrix"))
+sigtab_dds_chs = res_chs[which(res_chs$padj < 0.05), ]
+
+# Fold-change plot DESeq2
+chs_plot=ggplot(sigtab_dds_chs, aes(x=log2FoldChange, y=paste(rownames(sigtab_dds_chs), sigtab_dds_chs$Genus, sigtab_dds_chs$Species, sep=" "), color=Class)) + 
+  geom_point(size=3, shape=15) + 
+  ylab("") +
+  xlab(bquote(~Log[2]~ 'fold change')) +
+  scale_colour_manual(values=c("#A6CEE3","#1F78B4","#B2DF8A","#E31A1C","#6A3D9A"))
+
+# Volcano plot DESeq2
+# From https://github.com/kevinblighe/EnhancedVolcano#plot-the-most-basic-volcano-plot
+
+# Cardiometabolic health status
+chs_volcano=EnhancedVolcano(res_chs,
+                lab = rownames(res_chs),
+#                lab = paste(res_chs$Genus, res_chs$Species, sep=" "),
+                title = NULL,
+                subtitle = NULL,
+                caption = NULL,
+                x = 'log2FoldChange',
+                y = 'pvalue',
+                pCutoff = 0.01,
+                FCcutoff = 0,
+                transcriptPointSize = 1.5,
+                transcriptLabSize = 4.0,
+                colAlpha = 1,
+                legendPosition = 'none',
+                col=c('black', 'black', 'black', 'red3'),
+                drawConnectors = TRUE)
+
+
+----------------------------
+# Body mass index (BMI) ----
+----------------------------
+# When considering your specification of experimental design, you will want to re-order the levels so that the NULL set is first.
+microbio.meta$bmi_class = relevel(microbio.meta$bmi_class, ref = "Lean")
+
+dds_bmi <- DESeqDataSetFromMatrix(countData = t(microbio.rare_100otus),
+                                  colData = microbio.meta,
+                                  design= ~ bmi_class)
+dds_bmi <- DESeq(dds_bmi)
+resultsNames(dds_bmi) # lists the coefficients
+res_bmi <- results(dds_bmi, name="bmi_class_Obese_vs_Lean")
+res_bmi = cbind(as(res_bmi, "data.frame"), as(diet_all[,c(28:33)][rownames(res_bmi), ], "matrix"))
+sigtab_dds_bmi = res_bmi[which(res_bmi$padj < 0.05), ]
+
+# Fold-change plot DESeq2
+bmi_plot=ggplot(sigtab_dds_bmi, aes(x=log2FoldChange, y=paste(rownames(sigtab_dds_bmi), sigtab_dds_bmi$Genus, sigtab_dds_bmi$Species, sep=" "), color=Class)) + 
+  geom_point(size=3, shape=15) + 
+  ylab("") +
+  xlab(bquote(~Log[2]~ 'fold change')) +
+  scale_colour_manual(values=c("#A6CEE3","#1F78B4","#B2DF8A","#E31A1C","#FF7F00","#6A3D9A"))
+
+# Volcano plot DESeq2
+# From https://github.com/kevinblighe/EnhancedVolcano#plot-the-most-basic-volcano-plot
+
+# BMI
+bmi_volcano=EnhancedVolcano(res_bmi,
+                lab = rownames(res_bmi),
+#                lab = paste(res_bmi$Genus, res_bmi$Species, sep=" "),
+                title = NULL,
+                subtitle = NULL,
+                caption = NULL,
+                x = 'log2FoldChange',
+                y = 'pvalue',
+                pCutoff = 0.01,
+                FCcutoff = 0,
+                transcriptPointSize = 1.5,
+                transcriptLabSize = 4.0,
+                colAlpha = 1,
+                legendPosition = 'none',
+                col=c('black', 'black', 'black', 'red3'),
+                drawConnectors = TRUE)
+
+----------------------
+# Central obesity ----
+----------------------
+# When considering your specification of experimental design, you will want to re-order the levels so that the NULL set is first.
+microbio.meta$waist_bool = ifelse(microbio.meta$sex=="Male" & microbio.meta$waist<102, 0, ifelse(microbio.meta$sex=="Female" & microbio.meta$waist<88, 0, 1))
+microbio.meta$waist_bool = relevel(as.factor(microbio.meta$waist_bool), ref = "0")
+
+dds_wc <- DESeqDataSetFromMatrix(countData = t(microbio.rare_100otus),
+                                  colData = microbio.meta,
+                                  design= ~ as.factor(waist_bool))
+dds_wc <- DESeq(dds_wc)
+resultsNames(dds_wc) # lists the coefficients
+res_wc <- results(dds_wc, name="as.factor.waist_bool.1")
+res_wc = cbind(as(res_wc, "data.frame"), as(diet_all[,c(28:33)][rownames(res_wc), ], "matrix"))
+sigtab_dds_wc = res_wc[which(res_wc$padj < 0.05), ]
+
+# Fold-change plot DESeq2
+wc_plot=ggplot(sigtab_dds_wc, aes(x=log2FoldChange, y=paste(rownames(sigtab_dds_wc), sigtab_dds_wc$Genus, sigtab_dds_wc$Species, sep=" "), color=Class)) + 
+  geom_point(size=3, shape=15) + 
+  ylab("") +
+  xlab(bquote(~Log[2]~ 'fold change')) +
+  scale_colour_manual(values=c("#A6CEE3","#1F78B4","#B2DF8A","#E31A1C","#FF7F00","#6A3D9A"))
+
+# Volcano plot DESeq2
+# From https://github.com/kevinblighe/EnhancedVolcano#plot-the-most-basic-volcano-plot
+
+# Waist circumference
+wc_volcano=EnhancedVolcano(res_wc,
+                           lab = rownames(res_wc),
+#                           lab = paste(res_wc$Genus, res_wc$Species, sep=" "),
+                           title = NULL,
+                           subtitle = NULL,
+                           caption = NULL,
+                           x = 'log2FoldChange',
+                           y = 'pvalue',
+                           pCutoff = 0.01,
+                           FCcutoff = 0,
+                           transcriptPointSize = 1.5,
+                           transcriptLabSize = 4.0,
+                           colAlpha = 1,
+                           legendPosition = 'none',
+                           col=c('black', 'black', 'black', 'red3'),
+                           drawConnectors = TRUE)
+
+-------------------
+# Hypertension ----
+-------------------
+# Modified code from: d:/Vidarium/GitHub/bsp/classification/Microbio_BSP_Classification.R
+# to include the American Heart Associations new cutoffs for blood pressure (i.e., systolic <120 mm Hg, diastolic <80 mm Hg)
+  
+dds_hyp <- DESeqDataSetFromMatrix(countData = t(microbio.rare_100otus),
+                                  colData = classification_table,
+                                  design= ~ a_hypertension)
+dds_hyp <- DESeq(dds_hyp)
+resultsNames(dds_hyp) # lists the coefficients
+res_hyp <- results(dds_hyp, name="a_hypertensionTRUE")
+res_hyp = cbind(as(res_hyp, "data.frame"), as(diet_all[,c(28:33)][rownames(res_hyp), ], "matrix"))
+sigtab_dds_hyp = res_hyp[which(res_hyp$padj < 0.05), ]
+
+# Fold-change plot DESeq2
+hyp_plot=ggplot(sigtab_dds_hyp, aes(x=log2FoldChange, y=paste(rownames(sigtab_dds_hyp), sigtab_dds_hyp$Genus, sigtab_dds_hyp$Species, sep=" "), color=Class)) + 
+  geom_point(size=3, shape=15) + 
+  ylab("") +
+  xlab(bquote(~Log[2]~ 'fold change')) +
+  scale_colour_manual(values=c("#A6CEE3","#1F78B4","#B2DF8A","#E31A1C","#FDBF6F","#FF7F00","#CAB2D6","#6A3D9A","#B15928"))
+
+# Volcano plot DESeq2
+# From https://github.com/kevinblighe/EnhancedVolcano#plot-the-most-basic-volcano-plot
+
+# Hypertension
+hyp_volcano=EnhancedVolcano(res_hyp,
+                lab = rownames(res_hyp),
+#                lab = paste(res_hyp$Genus, res_hyp$Species, sep=" "),
+                title = NULL,
+                subtitle = NULL,
+                caption = NULL,
+                x = 'log2FoldChange',
+                y = 'pvalue',
+                pCutoff = 0.01,
+                FCcutoff = 0,
+                transcriptPointSize = 1.5,
+                transcriptLabSize = 4.0,
+                colAlpha = 1,
+                legendPosition = 'none',
+                col=c('black', 'black', 'black', 'red3'),
+                drawConnectors = TRUE)
+
+# All figure together
+jpeg("d:/Vidarium/Publicaciones/Dieta_ASGV/Figure 6.jpeg", width=12, height=8, units='in', res=600)
+plot_grid(chs_plot, chs_volcano,
+          bmi_plot, bmi_volcano,
+          nrow=2, ncol=2, labels="AUTO")
 dev.off()
 
-
-# Main figure diet quality
-# Figure 5
-jpeg("d:/Vidarium/Publicaciones/Dieta_ASGV/Figure 5.jpeg", width=4, height=4, units='in', res=1200)
-aheatmap(diet_all[,c(22:24)], color=c("red","black","green"),
-         breaks=0, scale="none", Rowv=T, Colv=T,
-         distfun="euclidean", hclustfun="ward",
-         treeheight=c(50,10), legend=T, annRow=tax_annot,
-         annColors="Paired", annLegend=T, 
-         labRow=paste(rownames(diet_all),diet_all$Genus,diet_all$Species,sep=" "),
-         fontsize=7,
-         cexRow=1, cexCol=1, width=10)
+jpeg("d:/Vidarium/Publicaciones/Dieta_ASGV/Figure SX.jpeg", width=12, height=8, units='in', res=600)
+plot_grid(hyp_plot, hyp_volcano,
+          wc_plot, wc_volcano,
+          nrow=2, ncol=2, labels="AUTO")
 dev.off()
