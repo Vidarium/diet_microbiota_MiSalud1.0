@@ -1352,16 +1352,12 @@ plot_grid(rich_pca2nutr, rich_fd, even_pca2nutr, even_fd,
 -----------------------------------------
 
 # Unweighted UniFrac
-protest(du, pca_nutr$x, scale = TRUE, permutations = how(nperm = 10000))
-protest(du, pca_nutr$x[,1], scale = TRUE, permutations = how(nperm = 10000))
-protest(du, pca_nutr$x[,2], scale = TRUE, permutations = how(nperm = 10000))
-protest(du, pca_nutr$x[,3], scale = TRUE, permutations = how(nperm = 10000))
+procr_unw_nutr<-protest(du, pca_nutr$x, scale = TRUE, permutations = how(nperm = 10000))
+plot(procr_unw_nutr, to.target=TRUE, kind=1, type="p")
 
 # Weighted UniFrac
-protest(dw, pca_nutr$x, scale = TRUE, permutations = how(nperm = 10000))
-protest(dw, pca_nutr$x[,1], scale = TRUE, permutations = how(nperm = 10000))
-protest(dw, pca_nutr$x[,2], scale = TRUE, permutations = how(nperm = 10000))
-protest(dw, pca_nutr$x[,3], scale = TRUE, permutations = how(nperm = 10000))
+procr_wgt_nutr<-protest(dw, pca_nutr$x, scale = TRUE, permutations = how(nperm = 10000))
+plot(procr_wgt_nutr, to.target=TRUE, kind=1, type="p")
 
 
 ---------------------------------------
@@ -2005,16 +2001,12 @@ Anova(lm(alpha_div$Jevenness~city+sex+age_range+bmi_class+as.factor(socioeconomi
 ------------------------------------------
   
 # Unweighted UniFrac
-protest(du, pca_fg$x, scale = TRUE, permutations = how(nperm = 10000))
-protest(du, pca_fg$x[,1], scale = TRUE, permutations = how(nperm = 10000))
-protest(du, pca_fg$x[,2], scale = TRUE, permutations = how(nperm = 10000))
-protest(du, pca_fg$x[,3], scale = TRUE, permutations = how(nperm = 10000))
+procr_unw_fg<-protest(du, pca_fg$x, scale = TRUE, permutations = how(nperm = 10000))
+plot(procr_unw_fg, to.target=TRUE, kind=1, type="p")
 
 # Weighted UniFrac
-protest(dw, pca_fg$x, scale = TRUE, permutations = how(nperm = 10000))
-protest(dw, pca_fg$x[,1], scale = TRUE, permutations = how(nperm = 10000))
-protest(dw, pca_fg$x[,2], scale = TRUE, permutations = how(nperm = 10000))
-protest(dw, pca_fg$x[,3], scale = TRUE, permutations = how(nperm = 10000))
+procr_wgt_fg<-protest(dw, pca_fg$x, scale = TRUE, permutations = how(nperm = 10000))
+plot(procr_wgt_fg, to.target=TRUE, kind=1, type="p")
 
 
 -----------------------------------------
@@ -2774,16 +2766,30 @@ Anova(lm(alpha_div$Jevenness~city+sex+age_range+bmi_class+as.factor(socioeconomi
 -------------------------------------------
   
 # Unweighted UniFrac
-protest(du, optimistic$kcal_up, scale = TRUE, permutations = how(nperm = 10000))
-protest(du, pessimistic$kcal_up, scale = TRUE, permutations = how(nperm = 10000))
-protest(du, fg_441$HEI, scale = TRUE, permutations = how(nperm = 10000))
-protest(du, fg_441$SCORE_GABAS, scale = TRUE, permutations = how(nperm = 10000))
+procr_unw_opt<-protest(du, res_opt_kcal_up, scale = TRUE, permutations = how(nperm = 10000))
+plot(procr_unw_opt, to.target=TRUE, kind=1, type="p")
+
+procr_unw_pes<-protest(du, res_pes_kcal_up, scale = TRUE, permutations = how(nperm = 10000))
+plot(procr_unw_pes, to.target=TRUE, kind=1, type="p")
+
+procr_unw_hei<-protest(du, res_hei, scale = TRUE, permutations = how(nperm = 10000))
+plot(procr_unw_hei, to.target=TRUE, kind=1, type="p")
+
+procr_unw_gaba<-protest(du, res_gaba, scale = TRUE, permutations = how(nperm = 10000))
+plot(procr_unw_gaba, to.target=TRUE, kind=1, type="p")
 
 # Weighted UniFrac
-protest(dw, optimistic$kcal_up, scale = TRUE, permutations = how(nperm = 10000))
-protest(dw, pessimistic$kcal_up, scale = TRUE, permutations = how(nperm = 10000))
-protest(dw, fg_441$HEI, scale = TRUE, permutations = how(nperm = 10000))
-protest(dw, fg_441$SCORE_GABAS, scale = TRUE, permutations = how(nperm = 10000))
+procr_wgt_opt<-protest(dw, res_opt_kcal_up, scale = TRUE, permutations = how(nperm = 10000))
+plot(procr_wgt_opt, to.target=TRUE, kind=1, type="p")
+
+procr_wgt_pes<-protest(dw, res_pes_kcal_up, scale = TRUE, permutations = how(nperm = 10000))
+plot(procr_wgt_pes, to.target=TRUE, kind=1, type="p")
+
+procr_wgt_hei<-protest(dw, res_hei, scale = TRUE, permutations = how(nperm = 10000))
+plot(procr_wgt_hei, to.target=TRUE, kind=1, type="p")
+
+procr_wgt_gaba<-protest(dw, res_gaba, scale = TRUE, permutations = how(nperm = 10000))
+plot(procr_wgt_gaba, to.target=TRUE, kind=1, type="p")
 
 
 ------------------------------------------
