@@ -1347,8 +1347,25 @@ plot_grid(rich_pca2nutr, rich_fd, even_pca2nutr, even_fd,
           nrow=2, ncol=2, labels='AUTO')
 
 
+-----------------------------------------
+# 3.b. Nutrients and beta diversity ----
+-----------------------------------------
+
+# Unweighted UniFrac
+protest(du, pca_nutr$x, scale = TRUE, permutations = how(nperm = 10000))
+protest(du, pca_nutr$x[,1], scale = TRUE, permutations = how(nperm = 10000))
+protest(du, pca_nutr$x[,2], scale = TRUE, permutations = how(nperm = 10000))
+protest(du, pca_nutr$x[,3], scale = TRUE, permutations = how(nperm = 10000))
+
+# Weighted UniFrac
+protest(dw, pca_nutr$x, scale = TRUE, permutations = how(nperm = 10000))
+protest(dw, pca_nutr$x[,1], scale = TRUE, permutations = how(nperm = 10000))
+protest(dw, pca_nutr$x[,2], scale = TRUE, permutations = how(nperm = 10000))
+protest(dw, pca_nutr$x[,3], scale = TRUE, permutations = how(nperm = 10000))
+
+
 ---------------------------------------
-# 3.b. Nutrients and OTU abundance ----
+# 3.c. Nutrients and OTU abundance ----
 ---------------------------------------
 
 --------------------------------
@@ -1858,7 +1875,7 @@ aheatmap(as.matrix(prot_rfmat$rho), color="-Spectral:100", scale="none", breaks=
 
 
 -------------------------------------------
-# 3.c. Food groups and alpha diversity ----
+# 3.d. Food groups and alpha diversity ----
 -------------------------------------------
 
 # Shannon
@@ -1983,8 +2000,25 @@ Anova(lm(alpha_div$Jevenness~city+sex+age_range+bmi_class+as.factor(socioeconomi
            zfg_441$Sugars.g, data=microbio.meta))
 
 
+------------------------------------------
+# 3.e. Food groups and beta diversity ----
+------------------------------------------
+  
+# Unweighted UniFrac
+protest(du, pca_fg$x, scale = TRUE, permutations = how(nperm = 10000))
+protest(du, pca_fg$x[,1], scale = TRUE, permutations = how(nperm = 10000))
+protest(du, pca_fg$x[,2], scale = TRUE, permutations = how(nperm = 10000))
+protest(du, pca_fg$x[,3], scale = TRUE, permutations = how(nperm = 10000))
+
+# Weighted UniFrac
+protest(dw, pca_fg$x, scale = TRUE, permutations = how(nperm = 10000))
+protest(dw, pca_fg$x[,1], scale = TRUE, permutations = how(nperm = 10000))
+protest(dw, pca_fg$x[,2], scale = TRUE, permutations = how(nperm = 10000))
+protest(dw, pca_fg$x[,3], scale = TRUE, permutations = how(nperm = 10000))
+
+
 -----------------------------------------
-# 3.d. Food groups and OTU abundance ----
+# 3.f. Food groups and OTU abundance ----
 -----------------------------------------
 
 -------------------------
@@ -2674,7 +2708,7 @@ aheatmap(as.matrix(sugar_rfmat$rho), color="-Spectral:100", scale="none", breaks
 
 
 --------------------------------------------
-# 3.e. Diet quality and alpha diversity ----
+# 3.g. Diet quality and alpha diversity ----
 --------------------------------------------
 
 # Shannon index
@@ -2735,8 +2769,25 @@ Anova(lm(alpha_div$Jevenness~city+sex+age_range+bmi_class+as.factor(socioeconomi
            fg_441$SCORE_GABAS, data=microbio.meta))
 
 
+-------------------------------------------
+# 3.h. Diet quality and beta diversity ----
+-------------------------------------------
+  
+# Unweighted UniFrac
+protest(du, optimistic$kcal_up, scale = TRUE, permutations = how(nperm = 10000))
+protest(du, pessimistic$kcal_up, scale = TRUE, permutations = how(nperm = 10000))
+protest(du, fg_441$HEI, scale = TRUE, permutations = how(nperm = 10000))
+protest(du, fg_441$SCORE_GABAS, scale = TRUE, permutations = how(nperm = 10000))
+
+# Weighted UniFrac
+protest(dw, optimistic$kcal_up, scale = TRUE, permutations = how(nperm = 10000))
+protest(dw, pessimistic$kcal_up, scale = TRUE, permutations = how(nperm = 10000))
+protest(dw, fg_441$HEI, scale = TRUE, permutations = how(nperm = 10000))
+protest(dw, fg_441$SCORE_GABAS, scale = TRUE, permutations = how(nperm = 10000))
+
+
 ------------------------------------------
-# 3.f. Diet quality and OTU abundance ----
+# 3.i. Diet quality and OTU abundance ----
 ------------------------------------------
 
 ----------------------------------
