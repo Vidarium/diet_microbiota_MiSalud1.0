@@ -22,9 +22,9 @@
 #  e. Diet quality and alpha diversity
 #  f. Diet quality and OTU abundance
 
--------------------------
+#-------------------------
 ### Initial commands ----
--------------------------
+#-------------------------
 
 # Clean the workspace
 #rm(list=ls())
@@ -145,9 +145,9 @@ ncol(abundant_137otus)
 abundant_100otus=microbio.relative[,median_abund>=0.0001]
 ncol(abundant_100otus)
 
------------------------------
+#-----------------------------
 ### Sensitivity analysis ----
------------------------------
+#-----------------------------
 
 # Reducing metadata to samples with >15,000 reads
 microbio.rare_15k<-Rarefy(microbio.otus, 15000)$otu.tab.rff
@@ -178,9 +178,9 @@ nomed.nutri<-nutri441[rownames(microbio.meta) %in% rownames(nomed.meta),]
 nomed.fg_441<-fg_441[rownames(microbio.meta) %in% rownames(nomed.meta),]
 nomed.abundant_100otus<-abundant_100otus[rownames(microbio.meta) %in% rownames(nomed.meta),]
 
--------------------------
+#-------------------------
 ### 1. Diet -------------
--------------------------
+#-------------------------
 
 # Reproducibility between 1st and 2nd 24-h dietary recalls ----
 
@@ -270,9 +270,9 @@ cor.test(nova_pes_up_repro$kcal.x, nova_pes_up_repro$kcal.y)
 rm(nova_2recalls,nova_2recalls_1,nova_2recalls_2,nova_opt_up_1,nova_opt_notup_1,nova_opt_up_2,nova_opt_notup_2,nova_opt_up_1_perid,nova_opt_up_2_perid,nova_opt_up_repro,nova_pes_up_1,nova_pes_notup_1,nova_pes_up_2,nova_pes_notup_2,nova_pes_up_1_perid,nova_pes_up_2_perid,nova_pes_up_repro)
 
 
--------------------------------------------
+#-------------------------------------------
 ### 1.a. Nutrient adequacy and amounts ----
--------------------------------------------
+#-------------------------------------------
 
 # Reduce the nutritional dataset to the 441 subjects with microbiota data
 nutri441<-nutri[rownames(nutri) %in% rownames(microbio.meta),]
@@ -351,7 +351,7 @@ radarchart(radar_nutri441[,c(1:10)], axistype=0 , maxmin=T,
            vlcex=0.8 
 )
 # Add a legend
-legend(x=1.5, y=1, legend=c("Women","Men"), bty = "n", pch=20 , col=coul , cex=1, pt.cex=3)
+legend(x=1.5, y=1, legend=c("Women","Men"), bty = "n", pch=20 , col=colors_border[-2] , cex=1, pt.cex=3)
 #legend(x=1.5, y=1, legend=rownames(radar_nutri441[-c(1,2),]), bty="n", pch=20, col=coul, cex=1, pt.cex=3)
 
 # Micronutrients
@@ -364,9 +364,118 @@ radarchart(radar_nutri441[,c(11:28)], axistype=0 , maxmin=T,
             vlcex=0.8 
 )
 # Add a legend
-legend(x=1.5, y=1, legend=c("Women","Men"), bty = "n", pch=20 , col=coul , cex=1, pt.cex=3)
+legend(x=1.5, y=1, legend=c("Women","Men"), bty = "n", pch=20 , col=colors_border[-2] , cex=1, pt.cex=3)
 
-# HERE, WRITE SOME FUNCTIONS TO DETERMINE NUTRIENT ADEQUACY
+# NUTRIENT ADEQUACY
+nutri_adeq <- nutri441
+
+#Calculating the percentage of calories coming from each macronutrient
+nutri_adeq$ProtTotal_perc <- (nutri_adeq$ProtTotal*4)/nutri_adeq$Calorias*100
+nutri_adeq$GT_perc <- (nutri_adeq$GT*9)/nutri_adeq$Calorias*100
+nutri_adeq$GS_perc <- (nutri_adeq$GS*9)/nutri_adeq$Calorias*100
+nutri_adeq$GM_perc <- (nutri_adeq$GM*9)/nutri_adeq$Calorias*100
+nutri_adeq$GP_perc <- (nutri_adeq$GP*9)/nutri_adeq$Calorias*100
+nutri_adeq$CHO_perc <- (nutri_adeq$CHOtotal*4)/nutri_adeq$Calorias*100
+
+# Determine how close to the expected percentage of adequacy per individual
+nutri_adeq$ProtTotal_adeq <- cut(nutri_adeq$ProtTotal_perc, c(0,14,20,Inf), labels = c("Low","Adequate","High"))
+nutri_adeq$GT_adeq <- cut(nutri_adeq$GT_perc, c(0,20,35,Inf), labels = c("Low","Adequate","High"))
+nutri_adeq$GS_adeq <- cut(nutri_adeq$GS_perc, c(0,10,Inf), labels = c("Adequate","High"))
+nutri_adeq$GM_adeq <- cut(nutri_adeq$GM_perc, c(0,9.4,13.8,Inf), labels = c("Low","Adequate","High"))
+nutri_adeq$GP_adeq <- cut(nutri_adeq$GP_perc, c(0,5.6,11.2,Inf), labels = c("Low","Adequate","High"))
+nutri_adeq$CHO_adeq <- cut(nutri_adeq$CHO_perc, c(0,50,65,Inf), labels = c("Low","Adequate","High"))
+
+for (dat in 1:dim(nutri_adeq)[1]) {
+  if (microbio.meta[dat,'sex']== "Female") {
+    
+    # values only for women
+    nutri_adeq[dat,'Cal_adeq'] <- cut(nutri_adeq[dat,'Calorias'],c(0,1750,2300,Inf), labels = c("Low","Adequate","High"))
+    nutri_adeq[dat,'P_adeq'] <-cut(nutri_adeq[dat,'P'],c(0,580,700,Inf), labels = c("Low","Adequate","High"))
+    nutri_adeq[dat,'K_adeq'] <- cut(nutri_adeq[dat,'K'],c(0,4700,Inf), labels = c("Low","Adequate"))
+    nutri_adeq[dat,'Mg_adeq'] <- cut(nutri_adeq[dat,'Mg'],c(0,265,320,Inf), labels = c("Low","Adequate","High"))
+    nutri_adeq[dat,'Zn_adeq'] <-cut(nutri_adeq[dat,'Zn'],c(0,6.5,8,Inf), labels = c("Low","Adequate","High"))
+    nutri_adeq[dat,'Cu_adeq'] <-cut(nutri_adeq[dat,'Cu'],c(0,0.7,0.9,Inf), labels = c("Low","Adequate","High"))
+    nutri_adeq[dat,'Mn_adeq'] <-cut(nutri_adeq[dat,'Mn'],c(0,1.8,11,Inf), labels = c("Low","Adequate","High"))
+    nutri_adeq[dat,'VitA_adeq'] <- cut(nutri_adeq[dat,'VitA.ER.'],c(0,500,700,Inf), labels = c("Low","Adequate","High"))
+    nutri_adeq[dat,'B1_adeq'] <- cut(nutri_adeq[dat,'B1'],c(0,0.9,1.1,Inf), labels = c("Low","Adequate","High"))
+    nutri_adeq[dat,'B2_adeq'] <- cut(nutri_adeq[dat,'B2'],c(0,0.9,1.1,Inf), labels = c("Low","Adequate","High"))
+    nutri_adeq[dat,'B3_adeq'] <-cut(nutri_adeq[dat,'B3'],c(0,11,14,Inf), labels = c("Low","Adequate","High"))
+    nutri_adeq[dat,'B5_adeq'] <- cut(nutri_adeq[dat,'AcPantoenico'],c(0,5,Inf), labels = c("Low","Adequate"))
+    nutri_adeq[dat,'B9_adeq'] <- cut(nutri_adeq[dat,'Folico'],c(0,320,400,Inf), labels = c("Low","Adequate","High"))
+    nutri_adeq[dat,'B12_adeq'] <- cut(nutri_adeq[dat,'B12'],c(0,2,2.4,Inf), labels = c("Low","Adequate","High"))
+    nutri_adeq[dat,'VitC_adeq'] <-cut(nutri_adeq[dat,'AcAscorbico'],c(0,60,75,Inf), labels = c("Low","Adequate","High"))
+    
+    # discriminating values by age in women
+    if(microbio.meta[dat,'age_range']=="18_40") 
+    {
+      nutri_adeq[dat,'FD_adeq'] <- cut(nutri_adeq[dat,'FD'],c(0,25,Inf), labels = c("Low","Adequate"))
+      nutri_adeq[dat,'Na_adeq'] <-cut(nutri_adeq[dat,'Na'],c(0,1500,2300,Inf), labels = c("Low","Adequate","High"))
+      nutri_adeq[dat,'Ca_adeq'] <-cut(nutri_adeq[dat,'Ca'],c(0,800,1000,Inf), labels = c("Low","Adequate","High"))
+      nutri_adeq[dat,'Fe_adeq'] <-cut(nutri_adeq[dat,'FeTotal'],c(0,11.7,27,Inf), labels = c("Low","Adequate","High"))
+      nutri_adeq[dat,'B6_adeq'] <- cut(nutri_adeq[dat,'B6'],c(0,1.1,1.3,Inf), labels = c("Low","Adequate","High"))
+    }
+    else {
+      nutri_adeq[dat,'FD_adeq'] <- cut(nutri_adeq[dat,'FD'],c(0,21,Inf), labels = c("Low","Adequate"))
+      nutri_adeq[dat,'Na_adeq'] <-cut(nutri_adeq[dat,'Na'],c(0,1300,2300,Inf), labels = c("Low","Adequate","High"))
+      nutri_adeq[dat,'Ca_adeq'] <-cut(nutri_adeq[dat,'Ca'],c(0,1000,1200,Inf), labels = c("Low","Adequate","High"))
+      nutri_adeq[dat,'Fe_adeq'] <-cut(nutri_adeq[dat,'FeTotal'],c(0,7.5,12,Inf), labels = c("Low","Adequate","High"))
+      nutri_adeq[dat,'B6_adeq'] <- cut(nutri_adeq[dat,'B6'],c(0,1.3,1.5,Inf), labels = c("Low","Adequate","High"))
+    }
+  } else {
+    # Values only for men
+    nutri_adeq[dat,'Cal_adeq'] <- cut(nutri_adeq[dat,'Calorias'],c(0,2000,2700,Inf), labels = c("Low","Adequate","High"))
+    nutri_adeq[dat,'P_adeq'] <-cut(nutri_adeq[dat,'P'],c(0,580,700,Inf), labels = c("Low","Adequate","High"))
+    nutri_adeq[dat,'Fe_adeq'] <-cut(nutri_adeq[dat,'FeTotal'],c(0,9,13,Inf), labels = c("Low","Adequate","High"))
+    nutri_adeq[dat,'K_adeq'] <- cut(nutri_adeq[dat,'K'],c(0,4700,Inf), labels = c("Low","Adequate"))
+    nutri_adeq[dat,'Mg_adeq'] <- cut(nutri_adeq[dat,'Mg'],c(0,350,420,Inf), labels = c("Low","Adequate","High"))
+    nutri_adeq[dat,'Zn_adeq'] <-cut(nutri_adeq[dat,'Zn'],c(0,12,14,Inf), labels = c("Low","Adequate","High"))
+    nutri_adeq[dat,'Cu_adeq'] <-cut(nutri_adeq[dat,'Cu'],c(0,0.7,0.9,Inf), labels = c("Low","Adequate","High"))
+    nutri_adeq[dat,'Mn_adeq'] <-cut(nutri_adeq[dat,'Mn'],c(0,2.3,11,Inf), labels = c("Low","Adequate","High"))
+    nutri_adeq[dat,'VitA_adeq'] <- cut(nutri_adeq[dat,'VitA.ER.'],c(0,625,900,Inf), labels = c("Low","Adequate","High"))
+    nutri_adeq[dat,'B1_adeq'] <- cut(nutri_adeq[dat,'B1'],c(0,1.0,1.2,Inf), labels = c("Low","Adequate","High"))
+    nutri_adeq[dat,'B2_adeq'] <- cut(nutri_adeq[dat,'B2'],c(0,1.1,1.3,Inf), labels = c("Low","Adequate","High"))
+    nutri_adeq[dat,'B3_adeq'] <-cut(nutri_adeq[dat,'B3'],c(0,12,16,Inf), labels = c("Low","Adequate","High"))
+    nutri_adeq[dat,'B5_adeq'] <- cut(nutri_adeq[dat,'AcPantoenico'],c(0,5,Inf), labels = c("Low","Adequate"))
+    nutri_adeq[dat,'B9_adeq'] <- cut(nutri_adeq[dat,'Folico'],c(0,320,400,Inf), labels = c("Low","Adequate","High"))
+    nutri_adeq[dat,'B12_adeq'] <- cut(nutri_adeq[dat,'B12'],c(0,2,2.4,Inf), labels = c("Low","Adequate","High"))
+    nutri_adeq[dat,'VitC_adeq'] <-cut(nutri_adeq[dat,'AcAscorbico'],c(0,75,90,Inf), labels = c("Low","Adequate","High"))
+    nutri_adeq[dat,'Ca_adeq'] <-cut(nutri_adeq[dat,'Ca'],c(0,800,1000,Inf), labels = c("Low","Adequate","High"))
+    
+    # dismcriminating values by age in men
+    if(microbio.meta[dat,'age_range']=="18-41") 
+    {
+      nutri_adeq[dat,'FD_adeq'] <- cut(nutri_adeq[dat,'FD'],c(0,38,Inf), labels = c("Low","Adequate"))
+      nutri_adeq[dat,'Na_adeq'] <-cut(nutri_adeq[dat,'Na'],c(0,1500,2300,Inf), labels = c("Low","Adequate","High"))
+      nutri_adeq[dat,'B6_adeq'] <- cut(nutri_adeq[dat,'B6'],c(0,1.1,1.3,Inf), labels = c("Low","Adequate","High"))
+    }
+    else {
+      nutri_adeq[dat,'FD_adeq'] <- cut(nutri_adeq[dat,'FD'],c(0,31,Inf), labels = c("Low","Adequate"))
+      nutri_adeq[dat,'Na_adeq'] <-cut(nutri_adeq[dat,'Na'],c(0,1300,2300,Inf), labels = c("Low","Adequate","High"))
+      nutri_adeq[dat,'B6_adeq'] <- cut(nutri_adeq[dat,'B6'],c(0,1.4,1.7,Inf), labels = c("Low","Adequate","High"))
+    }
+  }
+}
+
+# macronutrient adequacy
+table1::table1(~ Cal_adeq + ProtTotal_adeq + GT_adeq + GS_adeq + GM_adeq + GP_adeq + CHO_adeq + FD_adeq |
+                 microbio.meta$sex + microbio.meta$age_range ,data = nutri_adeq)
+# mineral adequacy
+table1::table1(~ Ca_adeq + P_adeq + Fe_adeq + Na_adeq + K_adeq + Mg_adeq + Zn_adeq + Cu_adeq + Mn_adeq |
+                 microbio.meta$sex + microbio.meta$age_range ,data = nutri_adeq, overall = FALSE)
+# vitamin adequacy
+table1::table1(~ VitA_adeq + B1_adeq + B2_adeq + B3_adeq + B5_adeq + B6_adeq + B9_adeq + B12_adeq + VitC_adeq |
+                 microbio.meta$sex + microbio.meta$age_range ,data = nutri_adeq, overall = FALSE)
+
+#data_macro_adeq <- tidyr::gather(nutri_adeq[,36:43], key = type_col, value = categories)
+#plot_adequacy <- ggplot(data_macro_adeq, aes(x = categories, fill = categories)) +
+#  geom_bar() + facet_wrap(~ type_col, nrow = 1)
+#data_mineral_adeq <- tidyr::gather(nutri_adeq[,c(44:50,59,60)], key = type_col, value = categories)
+#plot_mineral_adequacy <- ggplot(data_mineral_adeq, aes(x = categories, fill = categories)) +
+#  geom_bar() + facet_wrap(~ type_col, nrow = 1)
+#data_vit_adeq <- tidyr::gather(nutri_adeq[,c(51:58,61)], key = type_col, value = categories)
+#plot_vit_adequacy <- ggplot(data_vit_adeq, aes(x = categories, fill = categories)) +
+#  geom_bar() + facet_wrap(~ type_col, nrow = 1)
+
 
 # PCA nutrients
 # Z-scores of nutrient intake
@@ -653,17 +762,52 @@ res_ztuber<-residuals(lm_ztuber)
 res_zfgfat<-residuals(lm_zfgfat)
 res_zsugar<-residuals(lm_zsugar)
 
+#FOOD GROUPS ADEQUACY (Based on GABA, 2016)
+fg_441_adeq <- fg_441
+fg_441_adeq$GroupI <- rowSums(fg_441[,9:10]) #Cereals and Tubers
+fg_441_adeq$GroupII <- rowSums(fg_441[,7:8]) #Fruits and Vegetables
+fg_441_adeq$GroupIII <- fg_441_adeq$Dairy.g #Dairy
+fg_441_adeq$GroupIV <- rowSums(fg_441[,3:5]) #Meats, Eggs and Beans (Protein source)
 
---------------------------
+# All values will be estiamted as a range between 90% - 110% of reccomended gram portions
+for (dat in 1:dim(fg_441_adeq)[1]) {
+  if (microbio.meta[dat,'sex']== "Female") {
+    
+    # values only for women
+    fg_441_adeq[dat,'GroupI_adeq'] <- cut(fg_441_adeq[dat,'GroupI'],c(0,405,495,Inf), labels = c("Low","Adequate","High")) # 75g cereals and tubers = 1 portion, recommended 6
+    fg_441_adeq[dat,'GroupII_adeq'] <- cut(fg_441_adeq[dat,'GroupII'],c(0,374.4,457.6,Inf), labels = c("Low","Adequate","High")) # 104g fruits and vegetables = 1 portion, recommended 4    
+    fg_441_adeq[dat,'Dairy_adeq'] <- cut(fg_441_adeq[dat,'Dairy.g'],c(0,346.5,362.4,Inf), labels = c("Low","Adequate","High")) # 110g dairy = 1 portion, recommended 3.5
+    fg_441_adeq[dat,'GroupIV.A_adeq'] <- cut(fg_441_adeq[dat,'GroupIV'],c(0,307,375,Inf), labels = c("Low","Adequate","High")) # 62g meats, eggs and beans = 1 portion, recommended 5.5    
+    fg_441_adeq[dat,'GroupIV.B_adeq'] <- cut(fg_441_adeq[dat,'GroupIV'],c(0,55.8,68.2,Inf), labels = c("Low","Adequate","High")) # 62g nuts = 1 portion, recommended 1
+    fg_441_adeq[dat,'Fats_adeq'] <- cut(fg_441_adeq[dat,'Fats.g'],c(0,32.4,39.6,Inf), labels = c("Low","Adequate","High")) # 9g fats = 1 portion, recommended 4
+    fg_441_adeq[dat,'Sugars_adeq'] <- cut(fg_441_adeq[dat,'Sugars.g'],c(0,126.9,155.1,Inf), labels = c("Low","Adequate","High")) # 47g sugars = 1 portion, recommended 3    
+  } else {
+    
+    # values only for men
+    fg_441_adeq[dat,'GroupI_adeq'] <- cut(fg_441_adeq[dat,'GroupI'],c(0,540,660,Inf), labels = c("Low","Adequate","High")) # 75g cereals and tubers = 1 portion, recommended 8
+    fg_441_adeq[dat,'GroupII_adeq'] <- cut(fg_441_adeq[dat,'GroupII'],c(0,468,572,Inf), labels = c("Low","Adequate","High")) # 104g fruits and vegetables = 1 portion, recommended 5    
+  	fg_441_adeq[dat,'Dairy_adeq'] <- cut(fg_441_adeq[dat,'Dairy.g'],c(0,495,605,Inf), labels = c("Low","Adequate","High")) # 110g dairy = 1 portion, recommended 5
+    fg_441_adeq[dat,'GroupIV.A_adeq'] <- cut(fg_441_adeq[dat,'GroupIV'],c(0,362.7,443.3,Inf), labels = c("Low","Adequate","High")) # 62g meats, eggs and beans = 1 portion, recommended 6.5    
+    fg_441_adeq[dat,'GroupIV.B_adeq'] <- cut(fg_441_adeq[dat,'GroupIV'],c(0,55.8,68.2,Inf), labels = c("Low","Adequate","High")) # 62g nuts = 1 portion, recommended 1    
+    fg_441_adeq[dat,'Fats_adeq'] <- cut(fg_441_adeq[dat,'Fats.g'],c(0,40.5,49.5,Inf), labels = c("Low","Adequate","High")) # 9g fats = 1 portion, recommended 5    
+    fg_441_adeq[dat,'Sugars_adeq'] <- cut(fg_441_adeq[dat,'Sugars.g'],c(0,126.9,155.1,Inf), labels = c("Low","Adequate","High")) # 47g sugars = 1 portion, recommended 3    
+  }  
+}
+
+table1::table1(~ GroupI_adeq + GroupII_adeq + Dairy_adeq + GroupIV.A_adeq + 
+                GroupIV.B_adeq + Fats_adeq + Sugars_adeq |
+                 microbio.meta$sex + microbio.meta$age_range ,data = fg_441_adeq)
+          
+#--------------------------
 ### 1.c. Diet quality ----
---------------------------
+#--------------------------
 
 # These analyses are based on the 1st 24-h dietary recall, as
 # it's the closest to the fecal sample used for microbiota analysis.
   
---------------------
+#--------------------
 # NOVA analysis ----
---------------------
+#--------------------
 
 # Select only the first 24h dietary recall
 nova<-nova[nova$r24h==1,]
@@ -741,9 +885,9 @@ res_pes_kcal_notup<-residuals(lm_pes_kcal_notup)
 res_pes_per_up<-residuals(lm_pes_per_up)
 
 
---------------------------
+#--------------------------
 # HEI and GABA scores ----  
---------------------------
+#--------------------------
   
 # Table1
 table1(~ fg1_441$HEI + fg1_441$SCORE_GABAS
@@ -786,13 +930,13 @@ res_hei<-residuals(lm_hei)
 res_gaba<-residuals(lm_gaba)
 
 
------------------------------------
-### 2. Gut microbiota analysis ----
------------------------------------
+#-----------------------------------
+### 2. Gut microbiota analysis -----
+#-----------------------------------
 
------------------------------
-### 2.a. Alpha diversity ----
------------------------------
+#-----------------------------
+### 2.a. Alpha diversity -----
+#-----------------------------
 
 richness<-diversityresult(x=microbio.rare,index="richness",method="each site")
 shannon<-diversityresult(x=microbio.rare,index="Shannon",method="each site")
@@ -855,9 +999,9 @@ Anova(lm(alpha_div$richness~city+sex+age_range+bmi_class+as.factor(socioeconomic
 Anova(lm(alpha_div$Jevenness~city+sex+age_range+bmi_class+as.factor(socioeconomic), data=microbio.meta))
 
 
-----------------------------
-### 2.b. Beta diversity ----
-----------------------------
+#----------------------------
+### 2.b. Beta diversity -----
+#----------------------------
 
 # UniFrac distances
 unifracs<-GUniFrac(microbio.rare, microbio.tree, alpha=c(0, 0.5, 1))$unifracs
@@ -976,9 +1120,9 @@ plot_ly(pcoa_table, x=~PC1.dw, y=~PC2.dw, z=~PC3.dw,
                     zaxis=list(title=paste("PCoA3 (",e.PC3.dw, "%)"))))
 
 
---------------------------------
-### 2.c. Most abundant OTUs ----
---------------------------------
+#--------------------------------
+### 2.c. Most abundant OTUs -----
+#--------------------------------
 
 # To create phylotypes for each taxonomic level
 # Sums all the OTUs with the same taxonomy
@@ -1193,17 +1337,17 @@ sd(prop_reads_137otus)
 median(prop_reads_137otus)
 
 
-----------------------------------------
-### 3. Diet-microbiota associations ----
-----------------------------------------
+#----------------------------------------
+### 3. Diet-microbiota associations -----
+#----------------------------------------
 
 # Reduce the rarefied OTU table to most abundant OTUs defined above
 #abundant_100otus_rare = microbio.rare[,colnames(abundant_100otus)]
 #abundant_137otus_rare = microbio.rare[,colnames(abundant_137otus)]
 
------------------------------------------
-# 3.a. Nutrients and alpha diversity ----
------------------------------------------
+#-----------------------------------------
+# 3.a. Nutrients and alpha diversity -----
+#-----------------------------------------
 
 # Shannon index
 Anova(lm(alpha_div$Shannon~city+sex+age_range+bmi_class+as.factor(socioeconomic)+
@@ -1347,9 +1491,9 @@ plot_grid(rich_pca2nutr, rich_fd, even_pca2nutr, even_fd,
           nrow=2, ncol=2, labels='AUTO')
 
 
------------------------------------------
-# 3.b. Nutrients and beta diversity ----
------------------------------------------
+#-----------------------------------------
+# 3.b. Nutrients and beta diversity ------
+#-----------------------------------------
 
 # Unweighted UniFrac
 procr_unw_nutr<-protest(du, pca_nutr$x, scale = TRUE, permutations = how(nperm = 10000))
@@ -1360,13 +1504,13 @@ procr_wgt_nutr<-protest(dw, pca_nutr$x, scale = TRUE, permutations = how(nperm =
 plot(procr_wgt_nutr, to.target=TRUE, kind=1, type="p")
 
 
----------------------------------------
-# 3.c. Nutrients and OTU abundance ----
----------------------------------------
+#---------------------------------------
+# 3.c. Nutrients and OTU abundance -----
+#---------------------------------------
 
---------------------------------
-# Random forest regressions ----
---------------------------------
+#--------------------------------
+# Random forest regressions -----
+#--------------------------------
 
 # From Zacular et al. 2015, mSphere: https://github.com/SchlossLab/Zackular_AbAOMDSS_mSphere_2015
 
@@ -1415,9 +1559,9 @@ simplify_model <- function(dependent, forest, rabund, max_features){
 }
 
 
----------------------
-# PCA1 nutrients ----
----------------------
+#---------------------
+# PCA1 nutrients -----
+#---------------------
 # Model with no adjustment
 #rf_pca1_nutr = get_forest(abundant_100otus, pca_nutr$x[,1])
   
@@ -1490,9 +1634,9 @@ plot_grid(otu_pcanutr1_1, xxx,
           ncol=2, nrow=4, labels="AUTO")
 
 
----------------------
-# PCA2 nutrients ----
----------------------
+#---------------------
+# PCA2 nutrients -----
+#---------------------
 # Model with no adjustment
 #rf_pca2_nutr = get_forest(abundant_100otus, pca_nutr$x[,2])
 
@@ -1565,9 +1709,9 @@ plot_grid(otu_pca2nutr_01, xxx,
           ncol=2, nrow=4, labels="AUTO")
 
 
----------------------
-# PCA3 nutrients ----
----------------------
+#---------------------
+# PCA3 nutrients -----
+#---------------------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_pca3_nutr = get_forest(abundant_100otus, res_pca3_nutr)
 
@@ -1612,9 +1756,9 @@ pca3_nutr_rfmat<-data.frame(rho=rho_pca3_nutr, IncMSE=rf_top_features_forest_pca
 aheatmap(as.matrix(pca3_nutr_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(pca3_nutr_rfmat$IncMSE,2)), labRow=rownames(pca3_nutr_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="PCA3 nutrients", fontsize=10)
 
 
----------------------
-# Dietary fiber -----
----------------------
+#---------------------
+# Dietary fiber ------
+#---------------------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_fd = get_forest(abundant_100otus, res_zfd)
 rf_simplify_rsq_fd <- simplify_model(res_zfd, rf_fd, abundant_100otus, 30)
@@ -1655,9 +1799,9 @@ fd_rfmat<-data.frame(rho=rho_fd, IncMSE=rf_top_features_forest_fd$importance[,1]
 aheatmap(as.matrix(fd_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(fd_rfmat$IncMSE,2)), labRow=rownames(fd_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="Dietary fiber", fontsize=10)
 
 
--------------------
-# Cholesterol -----
--------------------
+#-------------------
+# Cholesterol ------
+#-------------------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_chol = get_forest(abundant_100otus, res_zchol)
 rf_simplify_rsq_chol <- simplify_model(res_zchol, rf_chol, abundant_100otus, 30)
@@ -1698,9 +1842,9 @@ chol_rfmat<-data.frame(rho=rho_chol, IncMSE=rf_top_features_forest_chol$importan
 aheatmap(as.matrix(chol_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(chol_rfmat$IncMSE,2)), labRow=rownames(chol_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="Cholesterol", fontsize=10)
 
 
--------------------
-# Vitamin B12 -----
--------------------
+#-------------------
+# Vitamin B12 ------
+#-------------------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_b12 = get_forest(abundant_100otus, res_zb12)
 rf_simplify_rsq_b12 <- simplify_model(res_zb12, rf_b12, abundant_100otus, 30)
@@ -1741,9 +1885,9 @@ b12_rfmat<-data.frame(rho=rho_b12, IncMSE=rf_top_features_forest_b12$importance[
 aheatmap(as.matrix(b12_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(b12_rfmat$IncMSE,2)), labRow=rownames(b12_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="Vitamin B12", fontsize=10)
 
 
----------------------
-# Carbohydrates -----
----------------------
+#---------------------
+# Carbohydrates ------
+#---------------------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_cho = get_forest(abundant_100otus, res_zcho)
 rf_simplify_rsq_cho <- simplify_model(res_zcho, rf_cho, abundant_100otus, 30)
@@ -1784,9 +1928,9 @@ cho_rfmat<-data.frame(rho=rho_cho, IncMSE=rf_top_features_forest_cho$importance[
 aheatmap(as.matrix(cho_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(cho_rfmat$IncMSE,2)), labRow=rownames(cho_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="Carbohydrates", fontsize=10)
 
 
------------------------
-# Fats (nutrient) -----
------------------------
+#-----------------------
+# Fats (nutrient) ------
+#-----------------------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_fat = get_forest(abundant_100otus, res_zfat)
 rf_simplify_rsq_fat <- simplify_model(res_zfat, rf_fat, abundant_100otus, 30)
@@ -1827,9 +1971,9 @@ fat_rfmat<-data.frame(rho=rho_fat, IncMSE=rf_top_features_forest_fat$importance[
 aheatmap(as.matrix(fat_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(fat_rfmat$IncMSE,2)), labRow=rownames(fat_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="Fats", fontsize=10)
 
 
-----------------
-# Proteins -----
-----------------
+#----------------
+# Proteins ------
+#----------------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_prot = get_forest(abundant_100otus, res_zprot)
 rf_simplify_rsq_prot <- simplify_model(res_zprot, rf_prot, abundant_100otus, 30)
@@ -1870,9 +2014,9 @@ prot_rfmat<-data.frame(rho=rho_prot, IncMSE=rf_top_features_forest_prot$importan
 aheatmap(as.matrix(prot_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(prot_rfmat$IncMSE,2)), labRow=rownames(prot_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="Proteins", fontsize=10)
 
 
--------------------------------------------
-# 3.d. Food groups and alpha diversity ----
--------------------------------------------
+#-------------------------------------------
+# 3.d. Food groups and alpha diversity -----
+#-------------------------------------------
 
 # Shannon
 Anova(lm(alpha_div$Shannon~city+sex+age_range+bmi_class+as.factor(socioeconomic)+
@@ -1996,9 +2140,9 @@ Anova(lm(alpha_div$Jevenness~city+sex+age_range+bmi_class+as.factor(socioeconomi
            zfg_441$Sugars.g, data=microbio.meta))
 
 
-------------------------------------------
-# 3.e. Food groups and beta diversity ----
-------------------------------------------
+#------------------------------------------
+# 3.e. Food groups and beta diversity -----
+#------------------------------------------
   
 # Unweighted UniFrac
 procr_unw_fg<-protest(du, pca_fg$x, scale = TRUE, permutations = how(nperm = 10000))
@@ -2009,13 +2153,13 @@ procr_wgt_fg<-protest(dw, pca_fg$x, scale = TRUE, permutations = how(nperm = 100
 plot(procr_wgt_fg, to.target=TRUE, kind=1, type="p")
 
 
------------------------------------------
-# 3.f. Food groups and OTU abundance ----
------------------------------------------
+#-----------------------------------------
+# 3.f. Food groups and OTU abundance -----
+#-----------------------------------------
 
--------------------------
+#-------------------------
 ### PCA1 food groups ----
--------------------------
+#-------------------------
 
 # Build random forest with the most abundant OTUs;
 # the dependent variables are microbiota abundance
@@ -2094,9 +2238,9 @@ plot_grid(otu_pcafg1_1,otu_pcafg1_2,otu_pcafg1_3,otu_pcafg1_4,
           otu_pcafg1_13, ncol=3, nrow=5, labels="AUTO")
 
 
--------------------------
-### PCA2 food groups ----
--------------------------
+#-------------------------
+### PCA2 food groups -----
+#-------------------------
 # Build random forest with the most abundant OTUs;
 # the dependent variables are microbiota abundance
 # Model with no adjustment
@@ -2160,9 +2304,9 @@ pca2_fg_rfmat<-data.frame(rho=rho_pca2_fg, IncMSE=rf_top_features_forest_pca2_fg
 aheatmap(as.matrix(pca2_fg_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(pca2_fg_rfmat$IncMSE,2)), labRow=rownames(pca2_fg_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="PCA2 food groups", fontsize=10)
 
 
--------------------------
+#-------------------------
 ### PCA3 food groups ----
--------------------------
+#-------------------------
 # Build random forest with the most abundant OTUs;
 # the dependent variables are microbiota abundance
 # Model with no adjustment
@@ -2226,9 +2370,9 @@ pca3_fg_rfmat<-data.frame(rho=rho_pca3_fg, IncMSE=rf_top_features_forest_pca3_fg
 aheatmap(as.matrix(pca3_fg_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(pca3_fg_rfmat$IncMSE,2)), labRow=rownames(pca3_fg_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="PCA3 food groups", fontsize=10)
 
 
--------------
-# Dairy -----
--------------
+#-------------
+# Dairy ------
+#-------------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_dairy = get_forest(abundant_100otus, res_zdairy)
 rf_simplify_rsq_dairy <- simplify_model(res_zdairy, rf_dairy, abundant_100otus, 30)
@@ -2269,9 +2413,9 @@ dairy_rfmat<-data.frame(rho=rho_dairy, IncMSE=rf_top_features_forest_dairy$impor
 aheatmap(as.matrix(dairy_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(dairy_rfmat$IncMSE,2)), labRow=rownames(dairy_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="Dairy", fontsize=10)
 
 
-------------
-# Meat -----
-------------
+#------------
+# Meat ------
+#------------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_meat = get_forest(abundant_100otus, res_zmeat)
 rf_simplify_rsq_meat <- simplify_model(res_zmeat, rf_meat, abundant_100otus, 30)
@@ -2312,9 +2456,9 @@ meat_rfmat<-data.frame(rho=rho_meat, IncMSE=rf_top_features_forest_meat$importan
 aheatmap(as.matrix(meat_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(meat_rfmat$IncMSE,2)), labRow=rownames(meat_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="Meats", fontsize=10)
 
 
------------
-# Eggs ----
------------
+#-----------
+# Eggs -----
+#-----------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_egg = get_forest(abundant_100otus, res_zegg)
 rf_simplify_rsq_egg <- simplify_model(res_zegg, rf_egg, abundant_100otus, 30)
@@ -2355,9 +2499,9 @@ egg_rfmat<-data.frame(rho=rho_egg, IncMSE=rf_top_features_forest_egg$importance[
 aheatmap(as.matrix(egg_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(egg_rfmat$IncMSE,2)), labRow=rownames(egg_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="Eggs", fontsize=10)
 
 
-------------
-# Beans ----
-------------
+#------------
+# Beans -----
+#------------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_bean = get_forest(abundant_100otus, res_zbean)
 rf_simplify_rsq_bean <- simplify_model(res_zbean, rf_bean, abundant_100otus, 30)
@@ -2398,9 +2542,9 @@ bean_rfmat<-data.frame(rho=rho_bean, IncMSE=rf_top_features_forest_bean$importan
 aheatmap(as.matrix(bean_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(bean_rfmat$IncMSE,2)), labRow=rownames(bean_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="Beans", fontsize=10)
 
 
------------
-# Nuts ----
------------
+#-----------
+# Nuts -----
+#-----------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_nut = get_forest(abundant_100otus, res_znut)
 rf_simplify_rsq_nut <- simplify_model(res_znut, rf_nut, abundant_100otus, 30)
@@ -2441,9 +2585,9 @@ nut_rfmat<-data.frame(rho=rho_nut, IncMSE=rf_top_features_forest_nut$importance[
 aheatmap(as.matrix(nut_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(nut_rfmat$IncMSE,2)), labRow=rownames(nut_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="Nuts", fontsize=10)
 
 
---------------
-# Fruits -----
---------------
+#--------------
+# Fruits ------
+#--------------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_fruit = get_forest(abundant_100otus, res_zfruit)
 rf_simplify_rsq_fruit <- simplify_model(res_zfruit, rf_fruit, abundant_100otus, 30)
@@ -2484,9 +2628,9 @@ fruit_rfmat<-data.frame(rho=rho_fruit, IncMSE=rf_top_features_forest_fruit$impor
 aheatmap(as.matrix(fruit_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(fruit_rfmat$IncMSE,2)), labRow=rownames(fruit_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="Fruits", fontsize=10)
 
 
-------------------
-# Vegetables -----
-------------------
+#------------------
+# Vegetables ------
+#------------------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_vegetable = get_forest(abundant_100otus, res_zvegetable)
 rf_simplify_rsq_vegetable <- simplify_model(res_zvegetable, rf_vegetable, abundant_100otus, 30)
@@ -2527,9 +2671,9 @@ vegetable_rfmat<-data.frame(rho=rho_vegetable, IncMSE=rf_top_features_forest_veg
 aheatmap(as.matrix(vegetable_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(vegetable_rfmat$IncMSE,2)), labRow=rownames(vegetable_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="vegetables", fontsize=10)
 
 
---------------
-# Cereals ----
---------------
+#--------------
+# Cereals -----
+#--------------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_cereal = get_forest(abundant_100otus, res_zcereal)
 rf_simplify_rsq_cereal <- simplify_model(res_zcereal, rf_cereal, abundant_100otus, 30)
@@ -2570,9 +2714,9 @@ cereal_rfmat<-data.frame(rho=rho_cereal, IncMSE=rf_top_features_forest_cereal$im
 aheatmap(as.matrix(cereal_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(cereal_rfmat$IncMSE,2)), labRow=rownames(cereal_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="Cereals", fontsize=10)
 
 
--------------
-# Tubers ----
--------------
+#-------------
+# Tubers -----
+#-------------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_tuber = get_forest(abundant_100otus, res_ztuber)
 rf_simplify_rsq_tuber <- simplify_model(res_ztuber, rf_tuber, abundant_100otus, 30)
@@ -2613,9 +2757,9 @@ tuber_rfmat<-data.frame(rho=rho_tuber, IncMSE=rf_top_features_forest_tuber$impor
 aheatmap(as.matrix(tuber_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(tuber_rfmat$IncMSE,2)), labRow=rownames(tuber_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="Tubers", fontsize=10)
 
 
-------------------------
-# Fats (food group) ----
-------------------------
+#------------------------
+# Fats (food group) -----
+#------------------------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_fgfat = get_forest(abundant_100otus, res_zfgfat)
 rf_simplify_rsq_fgfat <- simplify_model(res_zfgfat, rf_fgfat, abundant_100otus, 30)
@@ -2656,9 +2800,9 @@ fgfat_rfmat<-data.frame(rho=rho_fgfat, IncMSE=rf_top_features_forest_fgfat$impor
 aheatmap(as.matrix(fgfat_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(fgfat_rfmat$IncMSE,2)), labRow=rownames(fgfat_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="Fats", fontsize=10)
 
 
--------------
-# Sugars ----
--------------
+#-------------
+# Sugars -----
+#-------------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_sugar = get_forest(abundant_100otus, res_zsugar)
 rf_simplify_rsq_sugar <- simplify_model(res_zsugar, rf_sugar, abundant_100otus, 30)
@@ -2699,9 +2843,9 @@ sugar_rfmat<-data.frame(rho=rho_sugar, IncMSE=rf_top_features_forest_sugar$impor
 aheatmap(as.matrix(sugar_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(sugar_rfmat$IncMSE,2)), labRow=rownames(sugar_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="Sugar", fontsize=10)
 
 
---------------------------------------------
-# 3.g. Diet quality and alpha diversity ----
---------------------------------------------
+#--------------------------------------------
+# 3.g. Diet quality and alpha diversity -----
+#--------------------------------------------
 
 # Shannon index
 Anova(lm(alpha_div$Shannon~city+sex+age_range+bmi_class+as.factor(socioeconomic)+
@@ -2761,9 +2905,9 @@ Anova(lm(alpha_div$Jevenness~city+sex+age_range+bmi_class+as.factor(socioeconomi
            fg_441$SCORE_GABAS, data=microbio.meta))
 
 
--------------------------------------------
-# 3.h. Diet quality and beta diversity ----
--------------------------------------------
+#-------------------------------------------
+# 3.h. Diet quality and beta diversity -----
+#-------------------------------------------
   
 # Unweighted UniFrac
 procr_unw_opt<-protest(du, res_opt_kcal_up, scale = TRUE, permutations = how(nperm = 10000))
@@ -2792,13 +2936,13 @@ procr_wgt_gaba<-protest(dw, res_gaba, scale = TRUE, permutations = how(nperm = 1
 plot(procr_wgt_gaba, to.target=TRUE, kind=1, type="p")
 
 
-------------------------------------------
-# 3.i. Diet quality and OTU abundance ----
-------------------------------------------
+#------------------------------------------
+# 3.i. Diet quality and OTU abundance -----
+#------------------------------------------
 
-----------------------------------
+#----------------------------------                
 ### Optimistic classification ----
-----------------------------------
+#----------------------------------
 
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_opt_per_up = get_forest(abundant_100otus, res_opt_per_up)
@@ -2840,9 +2984,9 @@ opt_per_up_rfmat<-data.frame(rho=rho_opt_per_up, IncMSE=rf_top_features_forest_o
 aheatmap(as.matrix(opt_per_up_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(opt_per_up_rfmat$IncMSE,4)), labRow=rownames(opt_per_up_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="% ultra-processed foods\nOptimistic scenario", fontsize=10)
 
 
------------------------------------
+#-----------------------------------
 ### Pessimistic classification ----
------------------------------------
+#-----------------------------------
 
 rf_pes_per_up = get_forest(abundant_100otus, res_pes_per_up)
 rf_simplify_rsq_pes_per_up <- simplify_model(res_pes_per_up, rf_pes_per_up, abundant_100otus, 30)
@@ -2883,9 +3027,9 @@ pes_per_up_rfmat<-data.frame(rho=rho_pes_per_up, IncMSE=rf_top_features_forest_p
 aheatmap(as.matrix(pes_per_up_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(pes_per_up_rfmat$IncMSE,4)), labRow=rownames(pes_per_up_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="% ultra-processed foods\npessimistic scenario", fontsize=10)
 
 
-------------
-### HEI ----
-------------
+#------------
+### HEI -----
+#------------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_hei = get_forest(abundant_100otus, res_hei)
 rf_simplify_rsq_hei <- simplify_model(res_hei, rf_hei, abundant_100otus, 30)
@@ -2926,9 +3070,9 @@ hei_rfmat<-data.frame(rho=rho_hei, IncMSE=rf_top_features_forest_hei$importance[
 aheatmap(as.matrix(hei_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(hei_rfmat$IncMSE,2)), labRow=rownames(hei_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="hei", fontsize=10)
 
 
--------------------
-### GABA Score ----
--------------------
+#-------------------
+### GABA Score -----
+#-------------------
 # Model adjusted by city, sex, age range, BMI and socioeconomic level
 rf_gaba = get_forest(abundant_100otus, res_gaba)
 rf_simplify_rsq_gaba <- simplify_model(res_gaba, rf_gaba, abundant_100otus, 30)
@@ -2969,9 +3113,9 @@ gaba_rfmat<-data.frame(rho=rho_gaba, IncMSE=rf_top_features_forest_gaba$importan
 aheatmap(as.matrix(gaba_rfmat$rho), color="-Spectral:100", scale="none", breaks=NA, Rowv=T, Colv=NA, width=30, height=8, hclustfun="ward", distfun="euclidean", txt=as.matrix(round(gaba_rfmat$IncMSE,2)), labRow=rownames(gaba_rfmat), cellwidth=30, treeheight=50, labCol=NA, main="gaba", fontsize=10)
 
 
-------------------------------
+#-----------------------------
 # Summary of associations ----
-------------------------------
+#-----------------------------
 
 diet_all<-read.table(file="d:/Vidarium/Publicaciones/Dieta_ASGV/scripts/JSE/rf_diet_all.txt", header=T, row.names = 1)
 names(diet_all)<-c('PC1 (19)','PC2 (16)','PC3 (20)',
@@ -3057,9 +3201,9 @@ aheatmap(diet_all[,c(1:8)], color=c("red","black","green"),
 dev.off()
 
 
------------------------------
-### Save the environment ----
------------------------------
+#-----------------------------
+### Save the environment -----
+#-----------------------------
 save.image(file='d:/Vidarium/Publicaciones/Dieta_ASGV/scripts/JSE/diet-microbiota_env.RData')
 
 # OTU abundance and nutrients
@@ -3073,9 +3217,9 @@ save.image(file='d:/Vidarium/Publicaciones/Dieta_ASGV/scripts/JSE/fg_qual_OTUabu
 save.image(file='d:/Vidarium/Publicaciones/Dieta_ASGV/scripts/JSE/lean_sensitivity_env.RData')
 
 
----------------------------------------
+#--------------------------------------
 ### Microbiota-health associations ----
----------------------------------------
+#--------------------------------------
 # DESeq2 and volcano plot
 # https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html
 
@@ -3090,9 +3234,9 @@ microbio.rare_100otus=microbio.rare[,colnames(microbio.rare) %in% colnames(abund
 # Therefore, we need to add a pseudo-count of 1 to all counts.
 microbio.rare_100otus = 1+microbio.rare_100otus
 
-------------------------------------
+#-----------------------------------
 # Cardiometabolic health status ----
-------------------------------------
+#-----------------------------------
 # Modified code from: d:/Vidarium/GitHub/bsp/classification/Microbio_BSP_Classification.R
 # to include the American Heart Associations new cutoffs for blood pressure (i.e., systolic <120 mm Hg, diastolic <80 mm Hg)
   
@@ -3137,9 +3281,9 @@ chs_volcano=EnhancedVolcano(res_chs,
                 drawConnectors = TRUE)
 
 
-----------------------------
+#---------------------------
 # Body mass index (BMI) ----
-----------------------------
+#---------------------------
 # When considering your specification of experimental design, you will want to re-order the levels so that the NULL set is first.
 microbio.meta$bmi_class = relevel(microbio.meta$bmi_class, ref = "Lean")
 
@@ -3180,9 +3324,9 @@ bmi_volcano=EnhancedVolcano(res_bmi,
                 col=c('black', 'black', 'black', 'red3'),
                 drawConnectors = TRUE)
 
-----------------------
+#---------------------
 # Central obesity ----
-----------------------
+#---------------------
 # When considering your specification of experimental design, you will want to re-order the levels so that the NULL set is first.
 microbio.meta$waist_bool = ifelse(microbio.meta$sex=="Male" & microbio.meta$waist<102, 0, ifelse(microbio.meta$sex=="Female" & microbio.meta$waist<88, 0, 1))
 microbio.meta$waist_bool = relevel(as.factor(microbio.meta$waist_bool), ref = "0")
@@ -3224,9 +3368,9 @@ wc_volcano=EnhancedVolcano(res_wc,
                            col=c('black', 'black', 'black', 'red3'),
                            drawConnectors = TRUE)
 
--------------------
-# Hypertension ----
--------------------
+#-------------------
+# Hypertension -----
+#-------------------
 # Modified code from: d:/Vidarium/GitHub/bsp/classification/Microbio_BSP_Classification.R
 # to include the American Heart Associations new cutoffs for blood pressure (i.e., systolic <120 mm Hg, diastolic <80 mm Hg)
   
