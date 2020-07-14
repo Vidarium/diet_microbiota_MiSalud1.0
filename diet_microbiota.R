@@ -178,6 +178,7 @@ nomed.nutri<-nutri441[rownames(microbio.meta) %in% rownames(nomed.meta),]
 nomed.fg_441<-fg_441[rownames(microbio.meta) %in% rownames(nomed.meta),]
 nomed.abundant_100otus<-abundant_100otus[rownames(microbio.meta) %in% rownames(nomed.meta),]
 
+
 -------------------------
 ### 1. Diet -------------
 -------------------------
@@ -415,15 +416,20 @@ jpeg("d:/Vidarium/Publicaciones/Dieta_ASGV/Figure 1C.jpeg", width=4, height=4, u
 plot_pca_nutr_23
 dev.off()
 
-plot_pca2_fd<-ggplot(alpha_div, aes(x=pca_nutr$x[,2], y=nutri441$Fiber)) +
+plot_pca2_fd<-ggplot(nutri441, aes(x=pca_nutr$x[,2], y=nutri441$Fiber)) +
   geom_point() +
   geom_smooth(method='lm') +
   labs(x="PCA2 nutrients", y="Dietary fiber (g)")
 
-plot_pca2_b12<-ggplot(alpha_div, aes(x=pca_nutr$x[,2], y=nutri441$B12)) +
+plot_pca2_b12<-ggplot(nutri441, aes(x=pca_nutr$x[,2], y=nutri441$B12)) +
   geom_point() +
   geom_smooth(method='lm') +
   labs(x="PCA2 nutrients", y="Vitamin B12 (mg)")
+
+plot_pca2_chol<-ggplot(nutri441, aes(x=pca_nutr$x[,2], y=nutri441$Cholesterol)) +
+  geom_point() +
+  geom_smooth(method='lm') +
+  labs(x="PCA2 nutrients", y="Cholesterol (mg)")
 
 
 # Do PCA axes vary by variables controlled by design?
@@ -786,6 +792,59 @@ res_hei<-residuals(lm_hei)
 res_gaba<-residuals(lm_gaba)
 
 
+-------------------------------
+# 10% extremes diet quality ----  
+-------------------------------
+
+# Percentiles optimistic classification ultra-processed foods
+optimistic=within(optimistic,
+                   per_up_percentiles<-as.integer(
+                     cut(optimistic$per_up, 
+                         quantile(optimistic$per_up,
+                                  probs=0:10/10, na.rm=TRUE),
+                         include.lowest=TRUE)))
+
+optimistic$per_up_percentiles=as.factor(optimistic$per_up_percentiles)
+
+aggregate(per_up~per_up_percentiles, FUN=mean, data=optimistic)
+
+# Percentiles pessimistic classification ultra-processed foods
+pessimistic=within(pessimistic,
+                   per_up_percentiles<-as.integer(
+                     cut(pessimistic$per_up, 
+                         quantile(pessimistic$per_up,
+                                  probs=0:10/10, na.rm=TRUE),
+                         include.lowest=TRUE)))
+
+pessimistic$per_up_percentiles=as.factor(pessimistic$per_up_percentiles)
+
+aggregate(per_up~per_up_percentiles, FUN=mean, data=pessimistic)
+
+# Percentiles HEI
+fg1_441=within(fg1_441,
+                 HEI_percentiles<-as.integer(
+                   cut(fg1_441$HEI, 
+                       quantile(fg1_441$HEI,
+                                probs=0:10/10, na.rm=TRUE),
+                       include.lowest=TRUE)))
+
+fg1_441$HEI_percentiles=as.factor(fg1_441$HEI_percentiles)
+
+aggregate(HEI~HEI_percentiles, FUN=mean, data=fg1_441)
+
+# Percentiles GABA
+fg1_441=within(fg1_441,
+               GABA_percentiles<-as.integer(
+                 cut(fg1_441$SCORE_GABAS, 
+                     quantile(fg1_441$SCORE_GABAS,
+                              probs=0:10/10, na.rm=TRUE),
+                     include.lowest=TRUE)))
+
+fg1_441$GABA_percentiles=as.factor(fg1_441$GABA_percentiles)
+
+aggregate(SCORE_GABAS~GABA_percentiles, FUN=mean, data=fg1_441)
+
+
 -----------------------------------
 ### 2. Gut microbiota analysis ----
 -----------------------------------
@@ -837,7 +896,7 @@ pirateplot(formula=alpha_div$richness~sex+age_range,
 pirateplot(formula=alpha_div$Jevenness~sex+age_range,
            data=microbio.meta,
            sortx="sequential",
-           ylab="Pielou's evenness",
+           ylab="Jevenness",
            pal=c("#5E4FA2", "#9E0142"),
            theme = 2,  # Start with theme 2
            inf.f.o = 0, # Turn off inf fill
@@ -1063,6 +1122,51 @@ box_phylum = ggplot(phylum_melt, aes(x=reorder(Var1, -value, FUN=median), y=valu
   theme(axis.text.x=element_text(angle=45, hjust=1)) +
   scale_x_discrete(labels=phyla_labels) +
   scale_fill_brewer(palette="Paired")
+
+# Barplot variability among individuals
+ggplot(phylum_melt, aes(x=Var2, y=value, fill=Var1)) +
+  geom_bar(stat="identity", width=1.2) +
+  labs(x = "", y = "Relative abundance") +
+  guides(fill=guide_legend(title="Phylum")) +
+  scale_fill_brewer(palette="Paired")
+
+macronutr_per<-nutri441[,c(3,4,9)]
+macronutr_per<-data.frame(Proteins=macronutr_per$Proteins*4,
+                          Total_fat=macronutr_per$Total_fat*9,
+                          Carbohydrates=macronutr_per$Carbohydrates*4,
+                          Calories=macronutr_per$Proteins*4+macronutr_per$Total_fat*9+macronutr_per$Carbohydrates*4)
+macronutr_per<-data.frame(id=row.names(nutri441),
+                          Proteins=macronutr_per$Proteins/macronutr_per$Calories,
+                          Total_fat=macronutr_per$Total_fat/macronutr_per$Calorie,
+                          Carbohydrates=macronutr_per$Carbohydrates/macronutr_per$Calories)
+
+macronutr_per_melt=melt(macronutr_per)
+
+ggplot(macronutr_per_melt, aes(x=id, y=value, fill=variable)) +
+  geom_bar(stat="identity", width=1.2) +
+  labs(x = "", y = "Relative abundance") +
+  guides(fill=guide_legend(title="Macronutrient")) +
+  scale_fill_brewer(palette="Paired")
+
+
+
+phylum_melt = melt(phylum[top_eight_phylum$Var1,])
+phylum_melt$value[phylum_melt$value < 0.00005] = 0.00005
+box_phylum = ggplot(phylum_melt, aes(x = reorder(Var1, -log(value), FUN=median), y = log(value)))
+box_phylum + geom_boxplot() + theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position="none") + labs(x = "Phylum", y = "Log(relative abundance)", title = "Taxonomic profiles of the gut microbiota of Colombians")
+
+# Barplot variability among individuals
+setwd(dir = "D:/Vidarium/Publicaciones/CAGs/reproducibility/analisis/phylotypes")
+phylum = read.table(file = "phyla2.txt", header=T)
+phylum$ID <- factor(phylum$ID, levels = phylum$ID)
+ph_melt = melt(phylum)
+ggplot(ph_melt, aes(x=ID, y=value, fill=variable)) +
+  geom_bar(stat="identity", width=1.2) +
+  labs(x = "", y = "Relative abundance") +
+  guides(fill=guide_legend(title="Phylum")) +
+  scale_fill_brewer(palette="Paired")
+
+
 
 
 # By class
@@ -1316,27 +1420,27 @@ Anova(lm(alpha_div$Jevenness~city+sex+age_range+bmi_class+as.factor(socioeconomi
 even_pca1nutr = ggplot(alpha_div, aes(x=pca_nutr$x[,1], y=Jevenness, color=microbio.meta$sex)) +
   geom_point() +
   geom_smooth(method='lm') +
-  labs(x="Nutrient PCA1", y="Pielou's evenness")
+  labs(x="Nutrient PCA1", y="Jevenness")
 
 even_pca2nutr = ggplot(alpha_div, aes(x=pca_nutr$x[,2], y=Jevenness, color=microbio.meta$sex)) +
   geom_point() +
   geom_smooth(method='lm') +
-  labs(x="Nutrient PCA2", y="Pielou's evenness")
+  labs(x="Nutrient PCA2", y="Jevenness")
 
 even_pca3nutr = ggplot(alpha_div, aes(x=pca_nutr$x[,3], y=Jevenness, color=microbio.meta$sex)) +
   geom_point() +
   geom_smooth(method='lm') +
-  labs(x="Nutrient PCA3", y="Pielou's evenness")
+  labs(x="Nutrient PCA3", y="Jevenness")
 
 even_fd = ggplot(alpha_div, aes(x=nutri441$Fiber, y=Jevenness, color=microbio.meta$sex)) +
   geom_point() +
   geom_smooth(method='lm') +
-  labs(x="Dietary fiber (g)", y="Pielou's evenness")
+  labs(x="Dietary fiber (g)", y="Jevenness")
 
 even_b12 = ggplot(alpha_div, aes(x=nutri441$B12, y=Jevenness, color=microbio.meta$sex)) +
   geom_point() +
   geom_smooth(method='lm') +
-  labs(x="Vitamin B12 (mg)", y="Pielou's evenness")
+  labs(x="Vitamin B12 (mg)", y="Jevenness")
 
 # Figure X
 plot_grid(shannon_fd, shannon_pca2nutr,
@@ -2761,6 +2865,67 @@ Anova(lm(alpha_div$Jevenness~city+sex+age_range+bmi_class+as.factor(socioeconomi
            fg_441$SCORE_GABAS, data=microbio.meta))
 
 
+---------------------------
+# Sensitivity analyses ----
+---------------------------
+
+# Analyses on individuals with the 10% highest and lowest HEI
+fg1_441_sens<-fg1_441[fg1_441$HEI_percentiles==1|fg1_441$HEI_percentiles==10,]
+alpha_div_sens<-alpha_div[rownames(alpha_div) %in% fg1_441_sens$id,]
+microbio.meta_sens<-microbio.meta[rownames(microbio.meta) %in% fg1_441_sens$id,]
+
+Anova(lm(alpha_div_sens$Shannon~city+sex+age_range+bmi_class+as.factor(socioeconomic)+
+           fg1_441_sens$HEI_percentiles, data=microbio.meta_sens))
+
+Anova(lm(alpha_div_sens$richness~city+sex+age_range+bmi_class+as.factor(socioeconomic)+
+           fg1_441_sens$HEI_percentiles, data=microbio.meta_sens))
+
+Anova(lm(alpha_div_sens$Jevenness~city+sex+age_range+bmi_class+as.factor(socioeconomic)+
+           fg1_441_sens$HEI_percentiles, data=microbio.meta_sens))
+
+# Analyses on individuals with the 10% highest and lowest GABA
+fg1_441_sens<-fg1_441[fg1_441$GABA_percentiles==1|fg1_441$GABA_percentiles==10,]
+alpha_div_sens<-alpha_div[rownames(alpha_div) %in% fg1_441_sens$id,]
+microbio.meta_sens<-microbio.meta[rownames(microbio.meta) %in% fg1_441_sens$id,]
+
+Anova(lm(alpha_div_sens$Shannon~city+sex+age_range+bmi_class+as.factor(socioeconomic)+
+           fg1_441_sens$GABA_percentiles, data=microbio.meta_sens))
+
+Anova(lm(alpha_div_sens$richness~city+sex+age_range+bmi_class+as.factor(socioeconomic)+
+           fg1_441_sens$GABA_percentiles, data=microbio.meta_sens))
+
+Anova(lm(alpha_div_sens$Jevenness~city+sex+age_range+bmi_class+as.factor(socioeconomic)+
+           fg1_441_sens$GABA_percentiles, data=microbio.meta_sens))
+
+# Analyses on individuals with the 10% highest and lowest optimistic %ultra-processed foods
+optimistic_sens<-optimistic[optimistic$per_up_percentiles==1|optimistic$per_up_percentiles==10,]
+alpha_div_sens<-alpha_div[rownames(alpha_div) %in% rownames(optimistic_sens),]
+microbio.meta_sens<-microbio.meta[rownames(microbio.meta) %in% rownames(optimistic_sens),]
+
+Anova(lm(alpha_div_sens$Shannon~city+sex+age_range+bmi_class+as.factor(socioeconomic)+
+           optimistic_sens$per_up_percentiles, data=microbio.meta_sens))
+
+Anova(lm(alpha_div_sens$richness~city+sex+age_range+bmi_class+as.factor(socioeconomic)+
+           optimistic_sens$per_up_percentiles, data=microbio.meta_sens))
+
+Anova(lm(alpha_div_sens$Jevenness~city+sex+age_range+bmi_class+as.factor(socioeconomic)+
+           optimistic_sens$per_up_percentiles, data=microbio.meta_sens))
+
+# Analyses on individuals with the 10% highest and lowest pessimistic %ultra-processed foods
+pessimistic_sens<-pessimistic[pessimistic$per_up_percentiles==1|pessimistic$per_up_percentiles==10,]
+alpha_div_sens<-alpha_div[rownames(alpha_div) %in% rownames(pessimistic_sens),]
+microbio.meta_sens<-microbio.meta[rownames(microbio.meta) %in% rownames(pessimistic_sens),]
+
+Anova(lm(alpha_div_sens$Shannon~city+sex+age_range+bmi_class+as.factor(socioeconomic)+
+           pessimistic_sens$per_up_percentiles, data=microbio.meta_sens))
+
+Anova(lm(alpha_div_sens$richness~city+sex+age_range+bmi_class+as.factor(socioeconomic)+
+           pessimistic_sens$per_up_percentiles, data=microbio.meta_sens))
+
+Anova(lm(alpha_div_sens$Jevenness~city+sex+age_range+bmi_class+as.factor(socioeconomic)+
+           pessimistic_sens$per_up_percentiles, data=microbio.meta_sens))
+
+
 -------------------------------------------
 # 3.h. Diet quality and beta diversity ----
 -------------------------------------------
@@ -2990,7 +3155,7 @@ tax_annot<-data.frame(Class=diet_all$Class)
 
 # Main figure nutrients
 jpeg("d:/Vidarium/Publicaciones/Dieta_ASGV/Figure 3B.jpeg", width=4, height=4, units='in', res=1200)
-aheatmap(diet_all[,c(1:8)], color=c("red","black","green"),
+aheatmap(diet_all[,c(1:4,5:9)], color=c("red","black","green"),
          breaks=0, scale="none", Rowv=T, Colv=T,
          distfun="euclidean", hclustfun="ward",
          treeheight=c(50,10), legend=T, annRow=tax_annot,
@@ -3045,7 +3210,7 @@ lines(pca_nutr$x[,2], preds[ ,3], lty = 'dashed', col = 'red')
 lines(pca_nutr$x[,2], preds[ ,2], lty = 'dashed', col = 'red')
 
 # Figure 5B
-aheatmap(diet_all[,c(1:8)], color=c("red","black","green"),
+aheatmap(diet_all[,c(1:4,5:9)], color=c("red","black","green"),
          breaks=0, scale="none", Rowv=T, Colv=T,
          distfun="euclidean", hclustfun="ward",
          treeheight=c(50,10), legend=T, annRow=tax_annot,
