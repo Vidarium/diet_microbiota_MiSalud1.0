@@ -1,447 +1,447 @@
-ID	city	sex	age	age_range	socioeconomic	HDL	LDL	cholesterol	triglycerides	hsCRP	glucose	glycosylated_hg	adiponectin	insulin	HOMA_IR	stool_consistency	hiden_blood	systolic_bp	diastolic_bp	bmi	bmi_class	body_fat	waist	medicament
-MI_001_H	Medellin	Male	36	18_40	3	38	93	170	195	1,71	86	5,47	5,33	15,09	3,201,092	Normal	Negative	146	99	29,7	Overweight	3,755,085,213	97,6	No
-MI_002_H	Medellin	Female	40	18_40	2	52	130	202	100	0,32	87	5,81	2,57	13,57	2,912,122	Normal	Negative	121	92	30,4	Obese	4,100,993,849	89,3	No
-MI_003_H	Medellin	Male	53	41_62	3	51	119	185	76	1,84	85	5,55	3,44	6,28	1,316,706,667	Normal	Negative	127	92	24,4	Lean	3,402,038,175	92,8	No
-MI_004_H	Medellin	Male	58	41_62	5	59	120	199	99	0,86	96	5,63	12,37	6,54	1,548,672	Normal	Negative	97	59	21,6	Lean	3,064,064,855	84,7	Yes
-MI_005_H	Medellin	Female	44	41_62	3	73	63	159	114	0,43	64	5,3	28,21	6,66	1,051,392	Normal	Negative	109	74	21	Lean	3,529,269,552	73,3	Yes
-MI_006_H	Medellin	Male	43	41_62	2	41	76	178	306	1,47	81	5,5	6,2	9,25	184,815	Normal	Negative	129	83	26,1	Overweight	3,474,737,273	88,2	Yes
-MI_007_H	Medellin	Male	20	18_40	4	34	101	172	186	1,68	75	5,4	4,56	6,09	112,665	Normal	Negative	110	74	20	Lean	308,445,613	73	No
-MI_008_H1	Medellin	Male	32	18_40	5	42	85	152	126	0,91	81	4,9	2,82	10,68	2,133,864	Normal	Negative	169	106	32,3	Obese	3,740,641,712	105,2	Yes
-MI_008_H2	Medellin	Male	32	18_40	5	42	85	152	126	0,91	81	4,9	2,82	10,68	1,034,816	Normal	Negative	169	106	32,3	Obese	3,740,641,712	105,2	Yes
-MI_009_H	Medellin	Male	56	41_62	3	51	109	192	160	3,52	96	5,29	3,63	4,37	5,291,715,333	Normal	Negative	145	90	27,5	Overweight	3,919,815,966	98,8	No
-MI_010_H	Medellin	Male	55	41_62	2	18	30	67	95	1,45	133	7,5	2,88	16,13	216,635	Normal	Negative	119	72	26,7	Overweight	3,567,063,412	94,3	Yes
-MI_011_H	Medellin	Female	22	18_40	3	73	122	206	54	6,13	75	5,6	6,23	11,71	5,686,209,333	Normal	Negative	113	75	28,3	Overweight	3,740,641,712	76,9	Yes
-MI_012_H	Medellin	Male	52	41_62	3	44	88	158	128	2,32	79	4,95	6,36	29,18	5,311,670,667	Normal	Negative	136	100	33,5	Obese	4,610,782,679	113,4	Yes
-MI_013_H	Medellin	Male	55	41_62	3	71	112	214	154	2,92	134	8,28	3,35	16,07	3,422,796	Hard	Negative	158	88	34,8	Obese	4,663,804,113	111,5	Yes
-MI_014_H	Medellin	Female	32	18_40	2	52	96	163	76	9,39	78	5,03	6,76	17,79	221,112	Normal	Negative	124	80	28,5	Overweight	4,031,671,437	90	Yes
-MI_015_H	Medellin	Male	34	18_40	2	40	144	209	123	0,48	83	5,55	3,5	10,8	124,875	Normal	Negative	114	72	25,6	Overweight	3,489,646,946	92,9	No
-MI_016_H	Medellin	Female	45	41_62	2	51	116	175	42	2,34	81	5,4	5,15	6,25	4,715,884,333	Normal	Negative	106	72	28	Overweight	4,158,097,026	91,1	Yes
-MI_017_H	Medellin	Male	37	18_40	2	11	NA	176	446	4,3	335	10,77	1,3	57,07	1,385,378,667	Normal	Negative	141	91	41,8	Obese	4,267,658,637	131,3	Yes
-MI_018_H	Medellin	Female	52	41_62	2	90	90	194	68	4,5	76	6	18,07	7,39	466,829	Normal	Negative	118	75	33,5	Obese	4,351,710,628	97,7	Yes
-MI_019_H	Medellin	Male	25	18_40	3	39	147	226	202	4,68	93	5,16	6,54	20,35	304,695	Normal	Negative	136	94	41,2	Obese	4,407,874,214	126,6	Yes
-MI_020_H	Medellin	Female	58	41_62	3	55	56	135	118	1,37	75	5,29	3,88	16,47	2,204,213,333	Normal	Negative	147	94	31,9	Obese	4,216,844,511	94,2	Yes
-MI_021_H	Medellin	Female	41	41_62	2	50	80	155	127	0,95	80	5,02	4,71	11,17	1,764,480,667	Normal	Negative	151	96	25,8	Overweight	4,100,993,849	83,1	No
-MI_022_H	Medellin	Female	19	18_40	3	47	78	133	38	0,37	77	4,85	11,41	9,29	5,465,763,333	Hard	Negative	106	78	22,3	Lean	3,617,822,818	72	No
-MI_023_H	Medellin	Female	56	41_62	2	63	81	160	80	2,18	91	6,21	6,42	24,35	239,723	Normal	Negative	133	77	33,6	Obese	4,867,844,898	109,9	Yes
-MI_024_H	Medellin	Female	53	41_62	3	44	156	233	166	4,03	117	6,46	2,73	17,78	5,131,308	Hard	Negative	145	78	33,9	Obese	4,498,652,598	110,9	Yes
-MI_025_H	Medellin	Male	39	18_40	4	46	161	247	201	1,21	95	5,37	2,48	10,23	3,824,172	Normal	Negative	118	84	28,4	Overweight	3,711,355,483	94,8	Yes
-MI_026_H	Medellin	Female	46	41_62	3	52	123	203	140	4,79	99	5,84	9,55	15,66	78,366	Normal	Negative	157	102	26,2	Overweight	4,041,400,085	82,1	Yes
-MI_027_H	Medellin	Male	41	41_62	3	25	121	174	231	1,46	90	5,89	1,77	35,3	1,447,292	Normal	Negative	132	91	27,1	Overweight	3,546,962,386	93,3	Yes
-MI_028_H	Medellin	Female	23	18_40	5	70	89	182	116	2,54	77	4,91	12,56	7,62	3,720,276	Normal	Negative	96	67	21,5	Lean	3,384,182,176	69,7	Yes
-MI_029_H	Medellin	Female	27	18_40	5	60	92	172	100	8,96	81	5,27	2,14	18,62	2,056,016	Hard	Negative	124	80	33,2	Obese	3,994,959,946	105,5	Yes
-MI_030_H	Medellin	Male	56	41_62	3	47	117	203	197	1,04	92	5,31	7,1	9,06	0,641111333	Normal	Negative	157	101	32,8	Obese	4,083,727,404	112,8	Yes
-MI_031_H	Medellin	Male	42	41_62	3	49	115	233	344	1,71	79	5,37	3,63	3,29	1,590,408	Normal	Negative	155	103	20,7	Lean	361,547,984	79,8	No
-MI_032_H	Medellin	Male	31	18_40	2	29	125	184	149	0,21	81	5	1,86	7,96	224,035	Hard	Negative	121	70	25,3	Overweight	3,106,338,372	86,3	Yes
-MI_033_H	Medellin	Female	29	18_40	3	75	101	189	67	5,37	75	5,27	7,29	12,11	1,399,192	Hard	Negative	102	59	24,7	Lean	3,711,355,483	75,4	Yes
-MI_034_H	Medellin	Male	52	41_62	3	73	96	183	71	0,51	87	5,17	7,01	6,52	4,649,716	Normal	Negative	105	66	22,3	Lean	2,894,643,919	76,4	No
-MI_035_H	Medellin	Male	47	41_62	4	39	136	203	139	2,54	89	5,55	7,84	21,18	3,520,254	Hard	Negative	169	104	34,9	Obese	4,212,914,723	114,5	Yes
-MI_036_H	Medellin	Female	48	41_62	4	53	160	278	327	2,14	101	5,9	6,92	14,13	112,591	Normal	Negative	130	87	24,5	Lean	4,029,162,417	88,5	Yes
-MI_037_H	Medellin	Female	47	41_62	3	51	115	187	106	0,46	85	5,52	8,71	5,37	5,351,976	Normal	Negative	115	68	22,7	Lean	3,417,874,897	77,3	No
-MI_038_H	Medellin	Male	43	41_62	6	39	149	214	128	1,99	98	5,5	5,45	22,14	2,356,653,333	Normal	Negative	115	78	26,5	Overweight	4,041,400,085	103,2	No
-MI_039_H	Medellin	Female	61	41_62	4	81	96	196	97	0,56	85	5,5	11,29	11,24	3,304,149,333	Normal	Negative	132	84	33,2	Obese	4,821,743,148	108,1	Yes
-MI_040_H	Medellin	Female	55	41_62	2	49	102	173	112	9,55	92	5,68	9,76	14,56	3,750,838	Hard	Negative	109	80	26,8	Overweight	4,402,347,966	93	Yes
-MI_041_H	Medellin	Male	50	41_62	5	58	92	172	110	0,46	91	5,48	12,49	16,71	2,642,688	Hard	Negative	126	94	30,2	Obese	42,586,327	106,2	Yes
-MI_042_H	Medellin	Male	46	41_62	4	66	103	188	94	43,4	93	5,57	2,54	11,52	134,199	Normal	Negative	124	69	26	Overweight	3,511,338,915	97,4	Yes
-MI_043_H	Medellin	Female	51	41_62	3	37	139	211	175	2,97	130	6,61	1,98	41,85	4,919,914,667	Hard	Negative	111	73	32,5	Obese	4,510,258,049	97,3	Yes
-MI_044_H	Medellin	Female	41	41_62	3	50	118	217	145	3,26	92	5,41	8,89	21,68	3,861,270,667	Normal	Negative	122	78	33,4	Obese	4,326,328,144	94,9	Yes
-MI_045_H	Medellin	Male	26	18_40	2	36	182	250	159	4,25	82	5,43	6,88	19,09	3,055,435,333	Normal	Negative	137	91	29,3	Overweight	3,839,102,213	100,6	Yes
-MI_046_H	Medellin	Female	56	41_62	3	52	154	228	109	1,15	97	5,81	7,67	12,77	1,109,654,667	Normal	Negative	138	82	34,1	Obese	4,402,347,966	103,1	Yes
-MI_047_H	Medellin	Male	41	41_62	1	54	135	212	117	0,74	83	5,28	2,36	5,42	1,438,831,333	Normal	Negative	130	78	21	Lean	290,330,011	78,5	No
-MI_048_H	Medellin	Female	40	18_40	6	70	83	164	53	0,3	91	4,98	8,51	6,41	303,807	Hard	Negative	98	59	22,7	Lean	3,598,676,758	79,1	No
-MI_049_H	Medellin	Female	20	18_40	3	36	76	125	65	6,4	85	4,94	9,25	14,49	3,855,893,333	Normal	Negative	98	57	24,6	Lean	3,556,225,647	73	No
-MI_050_H	Medellin	Female	25	18_40	3	67	67	159	125	9,64	80	5,01	12,34	19,54	2,768,586,667	Hard	Negative	117	76	28,7	Overweight	352,328,753	82,1	Yes
-MI_051_H	Medellin	Male	29	18_40	3	38	104	158	81	3,68	92	5,34	2,96	12,2	743,478	Normal	Negative	113	70	27,2	Overweight	3,635,687,771	91,7	No
-MI_052_H	Medellin	Male	33	18_40	4	37	100	178	207	7,01	90	5,87	9,96	33,49	3,074,453,333	Normal	Negative	147	106	42,9	Obese	4,203,665,031	126	No
-MI_053_H	Medellin	Male	59	41_62	4	37	87	159	174	1,37	95	5,4	5,46	13,12	2,252,362,667	Normal	Negative	121	75	26,1	Overweight	4,272,299,333	97,5	Yes
-MI_054_H	Medellin	Female	41	41_62	3	48	104	189	185	0,43	104	5,57	9,54	8,78	4,918,336	Normal	Negative	109	71	23,2	Lean	3,712,101,619	80,9	Yes
-MI_055_H	Medellin	Male	40	18_40	5	55	112	186	97	4,35	96	5,75	14,02	20,77	3,276,917,333	Normal	Negative	126	83	31,8	Obese	4,100,993,849	106,3	No
-MI_056_H	Medellin	Female	23	18_40	2	34	97	158	136	2,03	76	5,33	5,91	17,48	3,292,408	Normal	Negative	118	73	27,4	Overweight	3,711,355,483	85,3	No
-MI_057_H	Medellin	Male	45	41_62	3	41	158	227	140	5,66	84	5,5	18,35	15,89	2,267,754,667	Normal	Negative	115	71	26,7	Overweight	3,772,860,312	92,4	No
-MI_058_H	Medellin	Female	49	41_62	2	74	108	208	132	1,51	104	5,25	7,43	8,84	1,187,946,667	Normal	Negative	124	69	24,7	Lean	372,755,037	84,7	No
-MI_059_H	Medellin	Male	27	18_40	3	72	70	163	106	0,33	80	5,21	3,36	6,02	141,414	Hard	Negative	138	94	19	Lean	2,138,683,724	72	No
-MI_060_H	Medellin	Female	40	18_40	3	39	79	140	111	0,39	90	4,93	8,81	6,37	2,849,937,333	Normal	Negative	149	102	28,5	Overweight	4,412,648,798	96,5	No
-MI_061_H	Medellin	Male	22	18_40	2	43	77	163	215	0,44	82	5,14	20,74	14,09	1,128,771,333	Normal	Negative	121	78	24,1	Lean	343,779,902	86,7	No
-MI_062_H	Medellin	Female	46	41_62	3	54	112	194	142	1,35	67	5,03	7,81	6,83	160,802	Normal	Negative	107	68	22,8	Lean	3,830,997,828	75,9	Yes
-MI_063_H	Medellin	Male	39	18_40	4	46	121	184	84	4,95	82	4,9	5,18	7,95	46,842	Normal	Negative	124	78	27,1	Overweight	3,420,129,395	96,5	Yes
-MI_064_H	Medellin	Male	45	41_62	5	46	150	233	184	1,9	90	5,4	3,89	21,1	3,775,332	Normal	Negative	145	107	30	Obese	4,124,121,905	108,1	No
-MI_065_H	Medellin	Male	56	41_62	3	36	87	165	209	3,28	99	5,47	8,03	15,46	1,717,688	Normal	Negative	119	68	32,5	Obese	4,114,385,371	108,6	Yes
-MI_066_H	Medellin	Male	29	18_40	2	50	105	182	136	1,32	84	4,97	1,71	8,29	0,989824	Normal	Negative	154	95	25,9	Overweight	3,309,715,518	86,7	No
-MI_067_H	Medellin	Male	51	41_62	3	32	93	157	160	2,18	88	5,64	2,7	4,56	2,864,046,667	Normal	Negative	114	71	23,1	Lean	3,653,363,761	83,6	Yes
-MI_068_H	Medellin	Male	32	18_40	2	51	104	181	128	0,62	85	5,44	3,5	13,66	1,456,616	Normal	Negative	127	82	26,8	Overweight	3,588,490,959	92	No
-MI_069_H	Medellin	Male	42	41_62	3	50	126	198	112	0,93	84	5,3	6,14	7,03	406,112	Normal	Negative	159	104	28,4	Overweight	372,755,037	92,3	No
-MI_070_H	Medellin	Female	62	41_62	3	44	82	156	152	1,63	105	5,91	3,97	15,68	1,527,656	Normal	Negative	126	83	29,9	Overweight	4,285,838,791	95,9	Yes
-MI_071_H	Medellin	Female	29	18_40	2	47	120	191	118	0,77	78	4,83	8,87	7,94	10,738,584	Hard	Negative	114	73	32,4	Obese	3,879,510,028	101,8	Yes
-MI_072_H	Medellin	Female	54	41_62	3	44	63	136	143	4,76	139	7,41	3,01	31,32	1,527,064	Normal	Negative	138	88	32,7	Obese	4,533,197,599	99,9	Yes
-MI_073_H	Medellin	Male	24	18_40	6	50	108	182	119	0,5	84	5,29	9,24	7,37	6,618,116	Normal	Negative	118	85	20,8	Lean	2,625,690,783	71,7	No
-MI_074_H	Medellin	Male	38	18_40	3	36	71	161	268	3,13	97	5,65	1,27	27,66	3,054,991,333	Normal	Negative	145	80	33,9	Obese	3,982,534,354	109	Yes
-MI_075_H	Medellin	Female	53	41_62	6	54	110	196	161	4,09	91	5,82	7,5	13,61	1,908,953,333	Normal	Negative	124	88	28,9	Overweight	42,586,327	99	Yes
-MI_076_H	Medellin	Male	40	18_40	2	52	105	179	108	1,52	71	5,91	5,33	10,9	3,497,536	Normal	Negative	129	89	39,9	Obese	4,537,068,585	125,6	No
-MI_077_H	Medellin	Male	60	41_62	5	33	86	163	222	1,76	84	5,05	1,52	16,88	1,352,256,267	Normal	Negative	129	84	27,7	Overweight	3,866,757,749	103,8	Yes
-MI_078_H	Medellin	Male	28	18_40	3	34	NA	262	440	2,15	98	5,41	2,26	55,94	2,210,429,333	Normal	Negative	131	79	31,5	Obese	4,192,750,012	105,1	No
-MI_079_H	Medellin	Female	52	41_62	3	65	74	161	109	1,62	86	5,55	14,35	10,42	2,300,092,667	Normal	Negative	176	104	33,8	Obese	4,475,162,879	104,4	Yes
-MI_080_H	Medellin	Female	43	41_62	3	40	168	246	192	3,13	77	5,63	6,01	12,11	1,790,824,667	Hard	Negative	126	84	27	Overweight	4,135,540,904	86,8	No
-MI_081_H	Medellin	Female	57	41_62	3	69	100	183	68	0,12	79	5,23	5,21	9,19	4,873,048	Hard	Negative	90	63	19	Lean	296,493,232	65,2	Yes
-MI_082_H	Medellin	Female	55	41_62	5	45	123	208	202	2,56	101	5,67	3,04	19,56	286,528	Normal	Negative	112	73	25,3	Overweight	4,338,772,157	84,1	Yes
-MI_083_H	Medellin	Female	33	18_40	3	56	101	182	125	4,57	88	4,69	3,47	13,2	159,877	Normal	Negative	122	77	23,8	Lean	3,879,510,028	79,9	Yes
-MI_084_H	Medellin	Male	41	41_62	5	51	93	163	94	0,38	87	5,38	4,53	7,45	1,877,232	Normal	Negative	122	80	20,4	Lean	257,936,625	82,4	Yes
-MI_085_H	Medellin	Male	22	18_40	4	61	98	175	80	0,5	84	5,34	4,43	9,06	2,215,436,667	Normal	Negative	115	72	24,1	Lean	3,251,441,563	77,2	No
-MI_086_H	Medellin	Male	56	41_62	3	36	108	182	188	2,45	71	6,04	4,93	12,65	1,031,264	Normal	Negative	160	90	29,5	Overweight	4,451,291,008	107,6	Yes
-MI_087_H	Medellin	Male	45	41_62	3	46	109	182	135	0,33	78	5,41	4,96	5,36	3,755,327,333	Normal	Negative	100	69	23,9	Lean	3,696,473,283	94,8	No
-MI_088_H	Medellin	Male	53	41_62	5	32	81	135	109	1,5	91	5,73	4,37	16,73	1,430,198	Hard	Negative	123	80	31,4	Obese	4,510,258,049	114,5	Yes
-MI_089_H	Medellin	Female	44	41_62	3	49	107	178	108	3,24	77	5,22	6,73	7,53	24,642	Hard	Negative	101	59	27,9	Overweight	3,873,015,727	88,8	Yes
-MI_090_H	Medellin	Female	34	18_40	3	54	73	135	42	0,82	74	4,78	5,61	13,5	9,130,736,667	Normal	Negative	108	69	22,1	Lean	347,255,341	73,4	Yes
-MI_091_H	Medellin	Female	57	41_62	2	39	135	194	98	6,9	101	6,06	4,43	36,65	2,263,413,333	Normal	Negative	140	81	38	Obese	4,849,574,994	120,6	Yes
-MI_092_H	Medellin	Female	35	18_40	3	48	116	180	79	2,56	80	4,81	13,42	11,47	1,064,810,667	Normal	Negative	100	72	33,3	Obese	4,007,290,332	91,6	No
-MI_093_H1	Medellin	Female	56	41_62	4	64	106	193	113	0,54	76	5,42	17,39	5,68	1,805,304	Hard	Negative	112	71	24,4	Lean	4,144,406,548	80	Yes
-MI_093_H12	Medellin	Female	56	41_62	4	64	106	193	113	0,54	76	5,42	17,39	5,68	0,649572	Hard	Negative	112	71	24,4	Lean	4,144,406,548	80	Yes
-MI_094_H	Medellin	Female	21	18_40	2	47	91	148	52	0,58	76	4,96	3,94	9,63	228,475	Normal	Negative	113	71	21,2	Lean	3,328,666,944	74	Yes
-MI_095_H	Medellin	Male	43	41_62	3	52	116	185	86	0,5	77	5,33	6,85	3,42	0,846066667	Normal	Negative	101	66	22,4	Lean	3,417,874,897	79,4	Yes
-MI_096_H	Medellin	Female	40	18_40	6	87	71	190	160	12,45	65	6,06	6,36	14,25	114,552	Normal	Negative	112	69	31,2	Obese	4,212,914,723	99,8	Yes
-MI_097_H	Medellin	Female	54	41_62	6	64	110	191	87	3,79	98	5,45	14,85	3,5	217,005	Normal	Negative	116	69	28,5	Overweight	4,129,473,851	84,4	Yes
-MI_098_H	Medellin	Male	48	41_62	2	48	94	166	120	4,61	86	5,4	5,3	5,4	10,619	Normal	Negative	103	72	22,8	Lean	3,546,962,386	88,1	No
-MI_099_H	Medellin	Male	45	41_62	4	43	119	212	249	1,4	85	5,64	2,54	10,35	2,091,388	Hard	Negative	115	68	28	Overweight	3,598,676,758	100,4	Yes
-MI_100_H	Bogota	Female	44	41_62	3	58	182	255	101	1,2	82	5,5	9,42	5,25	1,975,306,667	Normal	Negative	105	79	25,8	Overweight	4,016,813,835	87,6	Yes
-MI_101_H	Bogota	Female	26	18_40	2	55	111	175	70	0,6	78	5,6	9,64	10,87	1,300,377,333	Normal	Negative	106	73	23,2	Lean	3,347,391,535	77,7	No
-MI_102_H	Bogota	Female	29	18_40	1	43	120	169	64	0,9	77	5,3	5,15	10,4	1,266,189,333	Normal	Negative	140	87	23,8	Lean	3,489,646,946	80,9	No
-MI_103_H	Bogota	Female	57	41_62	4	62	83	148	78	0,7	86	5,7	18,82	6,13	1,332,888	Normal	Negative	111	73	20,6	Lean	3,298,226,487	69,9	Yes
-MI_104_H	Bogota	Female	33	18_40	4	48	134	189	51	1,9	82	5,6	10,2	6,26	1,676,248	Normal	Negative	109	72	26,1	Overweight	3,556,225,647	87	No
-MI_105_H	Bogota	Female	43	41_62	4	57	116	188	111	1,5	79	5,6	8,56	6,84	154,364	Normal	Negative	109	71	24,2	Lean	3,816,696,512	76,6	Yes
-MI_106_H	Bogota	Female	50	41_62	3	95	118	224	46	0,9	84	5,6	21,05	8,09	2,819,696	Normal	Negative	100	70	20,2	Lean	3,773,702,196	75,7	Yes
-MI_107_H	Bogota	Female	27	18_40	3	49	99	154	62	1,1	84	5,3	9,15	7,45	7,306,932,667	Normal	Negative	108	65	24,9	Lean	3,696,507,624	81,1	Yes
-MI_108_H	Bogota	Female	18	18_40	1	43	60	109	35	1,2	88	5,1	5,58	12,99	7,535,617,333	Normal	Negative	118	82	28,4	Overweight	3,368,156,378	88,6	No
-MI_109_H	Bogota	Female	39	18_40	3	35	86	139	174	4,4	83	5,7	5,18	35,69	1,405,753,333	Normal	Negative	110	78	32,6	Obese	4,102,678,406	100,6	Yes
-MI_110_H	Bogota	Female	36	18_40	3	38	107	159	129	3,9	103	6,3	4,4	29,66	0,880797333	Normal	Positive	135	94	36,9	Obese	4,298,735,715	102,7	No
-MI_111_H	Bogota	Female	45	41_62	2	53	136	203	57	2	82	5,3	15,9	6,95	0,852973333	Normal	Negative	137	96	25,9	Overweight	3,581,659,971	83,2	Yes
-MI_112_H	Bogota	Female	59	41_62	3	63	120	194	69	3,2	79	5,3	6,88	4,52	404,928	Hard	Negative	99	70	31,4	Obese	4,285,838,791	103,8	No
-MI_113_H	Bogota	Female	44	41_62	3	51	125	198	127	3,7	76	5,6	8,06	4,55	229,992	Normal	Positive	101	64	22,1	Lean	3,632,074,665	81	Yes
-MI_114_H	Bogota	Female	32	18_40	4	66	127	203	136	1,6	76	5,1	12,49	21,6	1,414,732	Normal	Negative	105	71	28,3	Overweight	3,620,111,271	85,4	No
-MI_115_H	Bogota	Female	50	41_62	3	44	146	223	266	1	90	5,8	8,06	10,36	1,321,936	Normal	Negative	114	74	32,8	Obese	4,621,540,332	101,3	No
-MI_116_H	Bogota	Female	33	18_40	3	55	144	219	100	1,3	79	5,3	5,74	7,26	140,267	Normal	Negative	96	59	24,3	Lean	3,769,398,936	85,7	No
-MI_117_H	Bogota	Female	42	41_62	3	28	109	177	295	13	84	5,7	5,89	6,38	0,796930667	Normal	Negative	118	82	26,4	Overweight	3,886,736,648	85,9	Yes
-MI_118_H	Bogota	Female	52	41_62	3	61	97	178	99	1,5	85	6	7,29	6,69	0,997026667	Normal	Positive	102	67	23	Lean	3,811,655,401	78,3	Yes
-MI_119_H	Bogota	Female	43	41_62	3	63	115	184	93	1,3	82	5,7	22,57	3,94	2,761,088	Normal	Negative	117	75	21,3	Lean	3,474,737,273	69,4	No
-MI_120_H	Bogota	Male	47	41_62	3	40	123	176	129	5,2	86	6	5,39	4,7	1,942,746,667	Normal	Negative	151	95	26,5	Overweight	3,712,101,619	96,4	No
-MI_122_H	Bogota	Female	41	41_62	1	42	171	234	205	1,2	88	5,9	7,6	8,95	1,632,341,333	Normal	Negative	118	79	26	Overweight	4,100,993,849	97,4	Yes
-MI_123_H	Bogota	Female	56	41_62	2	63	121	196	104	6	88	5,9	6,45	7,52	2,109,888	Normal	Positive	133	87	32,6	Obese	4,338,772,157	107,9	Yes
-MI_124_H	Bogota	Female	39	18_40	2	45	112	169	100	5,9	99	5,6	8,71	8,64	2,583,488	Normal	Negative	131	97	31,7	Obese	4,137,044,993	101,5	Yes
-MI_125_H	Bogota	Male	32	18_40	2	39	114	169	139	2,2	96	5,7	3,97	10,91	7,979,740,667	Normal	Positive	123	82	28,3	Overweight	3,365,894,833	100,6	No
-MI_126_H	Bogota	Male	59	41_62	3	35	156	216	187	1,6	101	6,3	3,72	32,03	1,763,272	Normal	Negative	130	76	31,4	Obese	4,533,197,599	102,3	Yes
-MI_127_H	Bogota	Male	29	18_40	3	50	159	223	92	6,1	74	4,8	6,01	9,66	1,706,292	Normal	Negative	118	72	27,1	Overweight	3,666,389,024	88,7	Yes
-MI_128_H	Bogota	Male	22	18_40	3	34	131	207	353	4	81	5,7	5,86	8,54	492,507	Normal	Negative	106	81	26,3	Overweight	3,251,441,563	89,4	No
-MI_129_H	Bogota	Female	24	18_40	3	40	101	163	156	40,4	85	5,8	5,43	23,49	2,088,058	Normal	Negative	121	70	37,5	Obese	4,349,249,673	92,8	Yes
-MI_130_H1	Bogota	Female	57	41_62	3	53	119	182	115	1,3	87	5,6	14,38	9,73	1,991,167,333	Normal	Negative	122	83	33	Obese	4,351,710,628	107,6	Yes
-MI_130_H2	Bogota	Female	57	41_62	3	53	119	182	115	1,3	87	5,6	14,38	9,73	2,114,895,333	Normal	Negative	122	83	33	Obese	4,351,710,628	107,6	Yes
-MI_131_H	Bogota	Male	49	41_62	3	30	146	190	118	1	89	5,4	4,53	9,07	2,848,704	Normal	Negative	156	99	27,5	Overweight	3,680,661,013	97,1	Yes
-MI_132_H	Bogota	Female	35	18_40	2	54	107	164	65	1,1	83	5,2	5,7	10,33	3,444,848	Normal	Negative	96	64	21,3	Lean	3,190,904,846	74,2	No
-MI_133_H	Bogota	Male	26	18_40	3	53	109	176	131	0,7	96	5,4	6,42	12,03	2,020,890,667	Normal	Negative	130	88	22,1	Lean	3,127,915,905	83,8	No
-MI_134_H	Bogota	Male	35	18_40	2	25	113	172	229	1,4	92	5,7	1,46	15,18	1,306,396	Normal	Negative	130	86	25,4	Overweight	2,435,919,603	86,8	No
-MI_135_H	Bogota	Male	56	41_62	3	42	120	175	89	3	154	10,6	3,97	5,32	1,111,285,133	Normal	Negative	132	81	28,3	Overweight	3,902,347,384	96,7	Yes
-MI_136_H	Bogota	Male	38	18_40	2	38	137	186	61	5	91	5,9	5,49	5,82	2,570,069,333	Normal	Negative	108	80	22,2	Lean	308,445,613	91	Yes
-MI_137_H	Bogota	Male	58	41_62	4	46	108	173	151	0,9	257	8,4	6,57	17,53	1,744,624	Normal	Negative	165	104	30,9	Obese	4,414,737,956	111	Yes
-MI_138_H	Bogota	Female	51	41_62	3	59	134	205	118	2,2	88	5,8	8,8	11,84	165,612	Normal	Negative	127	83	30,4	Obese	4,642,823,324	90,4	Yes
-MI_139_H	Bogota	Male	28	18_40	3	36	130	182	148	3,8	84	5,6	7,56	8,42	18,981	Normal	Negative	118	73	31,5	Obese	3,402,258,709	100,2	No
-MI_140_H	Bogota	Male	47	41_62	3	23	87	184	466	1,5	90	5,7	3,44	7,46	3,576,864	Normal	Positive	133	99	25,4	Overweight	3,648,466,471	90,6	No
-MI_141_H	Bogota	Male	57	41_62	3	55	128	197	96	0,9	90	5,6	14,79	8,55	6,934,096	Normal	Negative	135	86	29,1	Overweight	3,970,980,393	104,2	Yes
-MI_142_H	Bogota	Male	42	41_62	1	30	93	150	201	5,4	106	5,8	4,9	13,68	2,913,232	Normal	Positive	127	93	29,3	Overweight	3,787,631,221	109,5	Yes
-MI_143_H	Bogota	Female	34	18_40	3	54	92	155	102	1,6	102	5,5	4,06	27,56	1,943,881,333	Normal	Negative	119	80	38,1	Obese	4,181,761,078	115,5	Yes
-MI_144_H	Bogota	Male	29	18_40	2	30	165	223	227	4,6	84	5,3	5,43	14,06	2,427,693,333	Normal	Negative	136	72	28,8	Overweight	3,420,129,395	97,1	No
-MI_145_H	Bogota	Female	50	41_62	3	57	100	165	73	0,6	91	5,3	10,11	8,66	3,556,834,667	Normal	Negative	94	50	26,2	Overweight	465,335,094	84,2	Yes
-MI_146_H	Bogota	Male	29	18_40	3	53	171	242	73	0,7	95	5,3	9,33	10,36	2,280,581,333	Normal	Negative	161	102	25,8	Overweight	3,231,522,959	84,6	No
-MI_147_H	Bogota	Male	53	41_62	4	38	131	200	158	3	94	5,8	7,53	15,34	5,939,733,333	Normal	Negative	122	81	24,5	Lean	3,674,141,533	96,8	No
-MI_148_H	Bogota	Male	41	41_62	2	32	114	191	334	2,6	91	5,5	5,64	10,16	3,116,633,333	Normal	Negative	129	76	23,5	Lean	3,417,874,897	87,7	No
-MI_149_H	Bogota	Male	48	41_62	3	28	171	253	337	2	100	5,8	3,41	24,08	1,612,805,333	Normal	Negative	126	83	30,4	Obese	4,041,400,085	104,2	Yes
-MI_150_H	Bogota	Male	56	41_62	2	33	140	203	216	6,6	95	5,5	6,2	13,3	1,801,850,667	Normal	Negative	159	104	31,9	Obese	4,144,406,548	104,4	Yes
-MI_151_H	Bogota	Female	28	18_40	2	46	163	227	107	3	88	5,4	8,34	7,43	3,604,934,667	Normal	Negative	100	60	23,1	Lean	3,539,842,497	82,2	No
-MI_152_H	Bogota	Male	42	41_62	1	51	146	221	87	1,1	92	5,7	7,22	7,94	1,694,427,333	Mushy	Negative	128	82	26,3	Overweight	3,757,925,739	91,4	No
-MI_153_H	Bogota	Male	41	41_62	3	38	164	245	406	2,5	91	5,7	5,43	16,06	1,808,856	Normal	Negative	134	86	28,7	Overweight	3,581,659,971	94,4	Yes
-MI_154_H	Bogota	Male	39	18_40	2	41	153	216	134	0,5	73	5,1	3,57	9,41	2,430,456	Normal	Negative	108	63	27,2	Overweight	2,625,690,783	96,6	No
-MI_155_H	Bogota	Female	31	18_40	3	90	102	189	73	0,6	84	5,3	14,76	8,73	2,074,442	Normal	Negative	102	63	20,2	Lean	3,328,666,944	67,7	Yes
-MI_156_H	Bogota	Female	54	41_62	3	60	145	222	210	1,2	84	4,7	3,63	11,73	2,282,752	Normal	Negative	121	82	27,9	Overweight	4,083,727,404	96,6	No
-MI_157_H	Bogota	Male	47	41_62	2	35	114	177	160	0,7	97	6	3,47	8,67	1,095,126	Normal	Negative	133	80	24,7	Lean	3,757,925,739	99,1	Yes
-MI_158_H	Bogota	Male	41	41_62	1	65	166	241	173	0,7	96	5,8	7,29	9,64	1,747,485,333	Normal	Negative	107	75	21,3	Lean	3,680,661,013	80,4	Yes
-MI_159_H	Bogota	Male	38	18_40	2	48	170	256	283	0,9	90	5,8	4,43	49,33	6,072,218	Normal	Negative	131	87	30,4	Obese	378,358,527	109,9	No
-MI_160_H	Bogota	Female	39	18_40	3	50	219	302	114	0,9	89	5,7	9,24	7,96	2,377,102	Hard	Negative	113	63	22,9	Lean	352,328,753	84,5	No
-MI_161_H	Bogota	Female	32	18_40	2	34	122	184	176	3,2	93	5,8	5,64	26,47	2,830,574	Normal	Negative	116	79	29,7	Overweight	4,007,290,332	89,4	No
-MI_162_H	Bogota	Female	41	41_62	2	43	131	200	313	4,6	91	5,9	8,93	10,59	1,980,116,667	Normal	Negative	141	94	31,8	Obese	4,077,467,625	98	No
-MI_163_H	Bogota	Male	43	41_62	3	48	121	178	79	1,2	87	5,6	4,93	13,19	1,743,538,667	Normal	Negative	117	77	27,7	Overweight	361,547,984	98,4	No
-MI_164_H	Bogota	Female	43	41_62	3	44	168	232	125	1,1	95	5,5	11,25	8,45	8,232,253,333	Normal	Negative	132	85	26,6	Overweight	411,260,678	83,4	Yes
-MI_165_H	Bogota	Female	44	41_62	2	58	149	214	106	0,9	82	5,4	11,13	8,62	267,177	Normal	Negative	99	67	22,2	Lean	3,456,052,054	78,2	Yes
-MI_166_H	Bogota	Male	24	18_40	2	31	119	211	477	2,7	82	6,1	4,37	40,7	2,886,345,333	Normal	Positive	169	109	33,9	Obese	4,214,507,155	113,4	Yes
-MI_167_H	Bogota	Female	49	41_62	3	40	156	215	195	4	83	5,8	13,73	13,05	5,037,846	Normal	Positive	111	68	30,1	Obese	4,169,237,299	93,5	Yes
-MI_168_H	Bogota	Male	30	18_40	3	34	93	159	246	0,8	82	5,4	4,46	14,27	3,923,060,667	Normal	Negative	115	72	23	Lean	3,384,182,176	84,4	No
-MI_169_H	Bogota	Male	37	18_40	3	35	129	183	93	4,1	99	5,7	6,2	20,63	5,242,678	Normal	Negative	106	83	36,2	Obese	4,407,874,214	130,4	No
-MI_170_H	Bogota	Female	28	18_40	2	36	191	231	103	2	89	5,6	9,55	17,87	51,504	Normal	Negative	124	86	29	Overweight	3,839,102,213	93,5	No
-MI_171_H	Bogota	Male	29	18_40	3	48	140	192	73	1,9	87	5,4	6,48	24,43	3,565,912	Normal	Negative	137	87	28,5	Overweight	343,779,902	95	No
-MI_172_H	Bogota	Male	52	41_62	4	32	143	193	167	1,5	87	5,9	4,77	24	1,830,612	Normal	Negative	132	84	27,9	Overweight	3,589,137,073	92,9	No
-MI_173_H	Bogota	Female	35	18_40	2	65	135	212	124	2,1	84	5,4	9,73	17,21	46,657	Normal	Negative	128	88	28,1	Overweight	3,994,959,946	90,8	No
-MI_174_H	Bogota	Male	41	41_62	2	42	157	218	142	1,6	93	5,8	4,74	7,98	3,539,839,333	Normal	Negative	123	84	28,1	Overweight	3,696,473,283	95,7	No
-MI_175_H	Bogota	Female	42	41_62	2	42	81	137	74	3,1	97	5,7	8,15	19,5	200,688	Normal	Negative	146	93	32,5	Obese	4,705,051,992	105,2	No
-MI_176_H	Bogota	Female	28	18_40	4	39	103	158	61	1,6	83	5,6	4,99	17,29	3,263,301,333	Normal	Negative	120	65	29,6	Overweight	3,905,892,932	94,7	No
-MI_177_H	Bogota	Female	33	18_40	2	51	153,4	230	128	0,9	80	5,4	7,97	10,17	2,487,214	Mushy	Negative	126	84	27,2	Overweight	3,588,490,959	89,7	No
-MI_178_H	Bogota	Female	47	41_62	4	70	136	207	99	3,7	92	5,9	7,94	14,38	110,556	Normal	Negative	134	74	31,7	Obese	4,326,328,144	103,2	Yes
-MI_179_H	Bogota	Female	22	18_40	3	44	95	155	77	2,5	87	5,3	8,96	11,59	1,633,303,333	Normal	Negative	111	80	27,4	Overweight	3,769,398,936	89,2	Yes
-MI_180_H	Bogota	Male	18	18_40	2	134	36	175	28	0,5	83	5,5	6,17	5,4	5,621,977,333	Normal	Negative	116	71	20,9	Lean	2,375,507,063	72	Yes
-MI_181_H	Bogota	Female	52	41_62	4	56	135	214	141	0,5	85	5,6	15,04	7,79	2,265,584	Normal	Negative	120	73	24,7	Lean	4,216,844,511	84,8	No
-MI_182_H	Bogota	Female	34	18_40	2	36	173	231	119	2,6	83	5,5	8,31	27,46	2,773,224	Normal	Negative	102	69	27,6	Overweight	3,892,755,779	93,6	Yes
-MI_183_H	Bogota	Female	32	18_40	3	59	115	183	90	5,8	86	5,6	13,08	10,68	0,840812667	Normal	Negative	115	75	21,3	Lean	3,347,391,535	69,4	Yes
-MI_184_H	Bogota	Female	32	18_40	3	43	112	165	90	6,2	81	5,4	6,29	13,88	1,647,733,333	Normal	Negative	113	83	31,3	Obese	3,982,534,354	100,4	No
-MI_185_H	Bogota	Male	30	18_40	4	46	87	142	44	0,5	89	5,4	8,53	3,83	1,416,902,667	Normal	Negative	118	87	23	Lean	2,970,143,344	78,7	No
-MI_186_H	Barranquilla	Female	60	41_62	4	57	114	190	96	1,8	80	5,1	8,28	8,35	1,387,204	Normal	Negative	153	94	26,8	Overweight	43	96,3	Yes
-MI_187_H	Barranquilla	Female	34	18_40	4	48	72	142	109	2,6	77	4,6	8,4	7,46	2,423,574	Mushy	Negative	130	77	31	Obese	38,9	93,9	Yes
-MI_188_H	Barranquilla	Male	44	41_62	3	50	125	194	95	1,3	91	5,4	6,51	6,18	1,304,768	Mushy	Negative	117	79	32,1	Obese	31,5	104,5	No
-MI_189_H	Barranquilla	Female	51	41_62	4	58	53	145	172	39,7	81	5,5	7,81	12,13	4,207,196	Mushy	Negative	107	83	38,1	Obese	47	111	Yes
-MI_190_H	Barranquilla	Male	26	18_40	2	34	123	182	127	3,3	76	5	3,16	6,96	2,170,321,333	Mushy	Negative	128	83	26,1	Overweight	24,4	90,4	No
-MI_191_H	Barranquilla	Female	35	18_40	3	56	115	188	83	3,8	93	5,2	4,34	18,34	1,728,393,333	Mushy	Negative	118	84	31,8	Obese	39,8	90,8	No
-MI_192_H	Barranquilla	Female	31	18_40	3	42	119	180	93	8,2	82	5,2	4,65	10,73	119,584	Hard	Negative	120	77	30,8	Obese	39,8	102,5	Yes
-MI_193_H	Barranquilla	Female	48	41_62	4	42	113	182	134	4,1	91	5,4	8,8	7,7	412,698	Normal	Negative	108	65	35,5	Obese	42,1	107,6	Yes
-MI_194_H	Barranquilla	Female	37	18_40	3	53	92	157	62	1	80	5,1	6,14	6,06	0,578482667	Mushy	Negative	97	61	23,3	Lean	34	73,1	No
-MI_195_H	Barranquilla	Female	28	18_40	4	35	97	173	203	16	90	5,5	3,84	18,59	3,176,573,333	Normal	Negative	127	78	37,6	Obese	41,3	104,8	Yes
-MI_196_H	Barranquilla	Female	44	41_62	3	47	109	174	86	1,3	82	5,3	11,41	2,86	249,084	Hard	Negative	112	77	21,9	Lean	35,1	73,6	Yes
-MI_197_H	Barranquilla	Female	44	41_62	3	53	102	174	93	4,9	94	5,5	7,41	13,7	2,151,032	Hard	Negative	152	92	34,2	Obese	44,6	94,8	Yes
-MI_198_H1	Barranquilla	Male	41	41_62	1	43	118	214	266	1,4	110	5	5,98	9,18	1,880,463,333	Mushy	Negative	150	99	21,5	Lean	24,6	83,2	Yes
-MI_198_H2	Barranquilla	Male	41	41_62	1	43	118	214	266	1,4	110	5	5,98	9,18	4,400,928	Mushy	Negative	150	99	21,5	Lean	24,6	83,2	Yes
-MI_199_H	Barranquilla	Female	39	18_40	3	58	123	191	51	13,3	86	5,5	6,51	10,14	3,181,383,333	Normal	Negative	113	82	38	Obese	41,4	119	No
-MI_200_H	Barranquilla	Female	49	41_62	1	52	101	169	76	1,5	79	5,2	21,3	9,65	5,169,344	Mushy	Negative	135	96	36,7	Obese	43,1	101,3	Yes
-MI_201_H	Barranquilla	Male	32	18_40	3	34	155	239	249	3,8	84	5,1	3,75	21,24	3,007,853,333	Mushy	Negative	121	80	32,4	Obese	30,9	104,5	Yes
-MI_202_H	Barranquilla	Female	24	18_40	4	45	88	152	96	2	77	4,9	4,68	16,75	1,715,221,333	Hard	Negative	98	66	24,5	Lean	34	78,4	Yes
-MI_203_H	Barranquilla	Female	57	41_62	2	41	96	168	159	5,8	96	5,4	10,7	21,83	1,993,264	Mushy	Negative	107	68	28,9	Overweight	43,8	89,4	Yes
-MI_204_H	Barranquilla	Female	41	41_62	2	43	156	214	76	7,7	91	5	6,14	13,4	0,763236	Normal	Negative	117	81	31	Obese	45,4	95,4	Yes
-MI_205_H	Barranquilla	Female	51	41_62	3	61	145	236	148	6,2	82	5,4	12,34	8,48	1,694,994,667	Mushy	Negative	142	86	27,6	Overweight	41,3	90,8	Yes
-MI_206_H	Barranquilla	Female	32	18_40	3	30	145	186	57	0,9	74	5,2	4,22	10,92	343,212	Normal	Negative	113	69	28,5	Overweight	39,1	88,5	Yes
-MI_207_H	Barranquilla	Female	46	41_62	3	95	78	187	71	3,5	81	5,4	19,19	3,82	149,147	Mushy	Negative	107	78	25,7	Overweight	37,3	81,5	No
-MI_208_H	Barranquilla	Female	54	41_62	3	45	143	209	104	4,7	82	5,3	7,32	8,38	0,905982	Mushy	Negative	98	66	24,3	Lean	40,5	85,2	Yes
-MI_209_H	Barranquilla	Male	35	18_40	3	30	131	217	282	2,9	90	5,1	1,95	15,46	1,588,928	Mushy	Negative	116	74	28,9	Overweight	30,1	97,4	Yes
-MI_210_H	Barranquilla	Female	32	18_40	2	51	107	177	95	16,3	87	5,2	8,18	6,95	4,558,178	Mushy	Negative	111	81	31,8	Obese	36,8	90,3	No
-MI_211_H	Barranquilla	Female	38	18_40	4	57	120	193	79	1,5	77	5,2	14,23	4,77	5,115,866,667	Mushy	Negative	92	57	22	Lean	33,3	79,1	Yes
-MI_212_H	Barranquilla	Female	51	41_62	1	57	185	260	89	2,1	88	5,2	10,57	7,32	4,293,036	Mushy	Negative	135	86	22,6	Lean	37,1	75,7	No
-MI_213_H	Barranquilla	Male	41	41_62	3	35	125	206	233	2,5	93	5,6	3,75	19,87	1,323,835,333	Normal	Negative	134	94	33,6	Obese	38,4	106,4	Yes
-MI_214_H	Barranquilla	Male	57	41_62	2	37	117	182	139	3,1	85	5,1	1,52	24,4	2,042,153,333	Normal	Negative	169	103	27,8	Overweight	39,9	106	Yes
-MI_215_H	Barranquilla	Female	44	41_62	3	50	158	226	91	8,7	99	6,1	3,72	17,58	1,993,856	Normal	Negative	137	93	31,5	Obese	44,9	99	No
-MI_216_H	Barranquilla	Female	45	41_62	3	40	156	231	179	1,7	77	4,7	5,95	6,97	5,655,178,667	Mushy	Negative	152	101	26,1	Overweight	41	89	No
-MI_217_H	Barranquilla	Female	33	18_40	3	50	56	119	66	4,3	85	5,1	4,56	9,74	3,465,765,333	Mushy	Negative	101	61	24,4	Lean	37,8	81,8	No
-MI_218_H	Barranquilla	Male	45	41_62	3	38	124	180	93	13,4	96	5,2	6,14	8,42	0,999345333	Mushy	Negative	100	69	26,2	Overweight	30,6	89,5	No
-MI_219_H	Barranquilla	Male	49	41_62	2	34	73	281	869	2	184	7,4	4,03	12,46	1,128,204	Mushy	Negative	144	100	36	Obese	35,9	112,5	Yes
-MI_220_H	Barranquilla	Male	41	41_62	3	40	98	151	66	1,3	91	5,1	3,26	15,44	4,944,433,333	Mushy	Negative	125	84	29,2	Overweight	31,3	96,8	No
-MI_221_H	Barranquilla	Male	42	41_62	2	29	122	170	95	2,7	94	5,2	2,42	4,31	1,547,241,333	Mushy	Negative	131	80	23,6	Lean	29,7	87,9	No
-MI_222_H	Barranquilla	Male	26	18_40	3	55	125	194	72	2,9	77	5,4	7,25	5,94	2,286,797,333	Mushy	Negative	126	77	22,6	Lean	18,9	75,1	No
-MI_223_H	Barranquilla	Female	30	18_40	2	38	139	220	216	1,8	95	5,7	3,07	21,1	4,842,708	Mushy	Negative	143	99	39,4	Obese	42,3	113,5	No
-MI_224_H	Barranquilla	Female	31	18_40	2	40	105	160	74	1,8	79	5	5,05	7,94	3,355,949,333	Hard	Negative	107	88	25,7	Overweight	36,4	80	Yes
-MI_225_H	Barranquilla	Female	57	41_62	2	41	108	166	84	10,5	98	5,7	13,3	9,46	4,750,701,333	Mushy	Negative	94	66	33,6	Obese	44,6	109,2	No
-MI_226_H	Barranquilla	Female	57	41_62	2	49	109	182	119	4,5	117	6,6	10,82	16,78	1,240,684	Mushy	Negative	152	95	37	Obese	45,2	110,4	No
-MI_227_H	Barranquilla	Female	23	18_40	1	39	163	218	80	0,8	86	5,1	8,31	15,82	0,6586	Mushy	Negative	108	66	20,6	Lean	33,1	74,4	Yes
-MI_228_H	Barranquilla	Female	24	18_40	3	66	106	183	54	3,5	89	4,9	7,47	21,64	2,606,576	Mushy	Negative	104	69	25	Lean	37,3	81,3	No
-MI_229_H	Barranquilla	Male	55	41_62	2	45	68	122	46	2	83	5,5	8,74	6,06	123,395	Hard	Negative	116	85	23,4	Lean	34,1	93,8	Yes
-MI_230_H	Barranquilla	Male	52	41_62	3	55	103	172	70	1,4	89	5,2	6,26	3	2,488,743,333	Normal	Negative	138	89	20,9	Lean	22,9	81	No
-MI_232_H	Barranquilla	Male	30	18_40	1	63	88	162	54	0,9	87	4,9	6,82	5,75	3,304,494,667	Mushy	Negative	117	79	22,6	Lean	21,7	79,8	No
-MI_233_H	Barranquilla	Female	18	18_40	3	45	78	139	78	0,8	85	5,1	9,49	11,87	3,644,352	Normal	Negative	102	59	20,8	Lean	29,9	74	No
-MI_234_H	Barranquilla	Male	38	18_40	3	34	119	242	443	3	98	5,5	2,54	13,67	3,881,078	Normal	Negative	162	91	29,2	Overweight	27,4	97,7	No
-MI_235_H	Barranquilla	Male	45	41_62	3	37	165	240	189	6,4	96	5,4	1,83	15,39	1,543,344	Mushy	Negative	128	74	28	Overweight	29,9	101	Yes
-MI_236_H	Barranquilla	Female	57	41_62	2	36	134	200	149	8,8	179	9	6,01	8,79	104,377	Mushy	Negative	151	92	25,8	Overweight	41,3	90,8	Yes
-MI_237_H	Barranquilla	Female	48	41_62	3	59	140	216	85	1,5	88	5,1	6,05	7,11	177,378	Mushy	Negative	134	102	33	Obese	41,2	108	Yes
-MI_238_H	Barranquilla	Female	49	41_62	3	95	84	188	44	2,7	91	5,4	9,7	4,65	1,690,234	Mushy	Negative	129	75	20,1	Lean	33,4	70	No
-MI_239_H	Barranquilla	Male	21	18_40	2	40	75	131	81	44,3	94	5,1	3,53	7,65	0,495454667	Mushy	Negative	123	90	29,8	Overweight	28,6	95,8	No
-MI_240_H	Barranquilla	Male	31	18_40	3	50	96	162	81	1,8	91	4,9	4	7,53	1,968,942,667	Hard	Negative	126	72	31,1	Obese	29,5	106,5	No
-MI_241_H	Barranquilla	Male	30	18_40	3	42	75	130	64	1,3	83	5	4,06	2,42	1,026,725,333	Mushy	Negative	119	68	24,8	Lean	24,2	81,2	No
-MI_242_H	Barranquilla	Male	49	41_62	3	43	209	289	187	2,2	107	5,7	3,81	7,46	2,909,482,667	Mushy	Negative	196	126	26,8	Overweight	26,9	88,8	No
-MI_243_H	Barranquilla	Female	27	18_40	3	45	85	143	64	1,7	86	4,7	9,77	4,84	2,558,328	Mushy	Negative	95	59	26,7	Overweight	39,1	88,2	No
-MI_244_H	Barranquilla	Male	50	41_62	1	25	131	190	169	4,7	97	4,8	3,94	12,16	1,974,961,333	Mushy	Negative	185	117	26,2	Overweight	33,3	94,7	Yes
-MI_245_H	Barranquilla	Female	46	41_62	3	56	140	224	139	2,3	86	5,2	8,06	12,06	2,936,024	Hard	Negative	139	92	25,6	Overweight	36,2	81,8	No
-MI_246_H	Barranquilla	Male	48	41_62	3	37	126	208	224	0,5	86	5,2	5,12	9,31	291,856	Mushy	Negative	134	87	25	Overweight	28,4	93,4	No
-MI_247_H	Barranquilla	Female	46	41_62	1	40	169	245	181	1,7	91	4,9	12,12	13,08	2,216,250,667	Mushy	Negative	151	79	24,1	Lean	40,7	83,1	No
-MI_248_H	Barranquilla	Male	43	41_62	3	33	158	241	248	7,5	87	5,3	3,84	13,6	2,683,116,667	Mushy	Positive	142	86	37,8	Obese	38,3	123,5	Yes
-MI_249_H	Barranquilla	Male	35	18_40	3	36	128	195	157	3,2	88	4,9	3,5	10,21	1,232,701,867	Hard	Negative	139	90	29,9	Overweight	27	99,4	Yes
-MI_250_H	Barranquilla	Male	49	41_62	3	30	117	187	200	1	95	5,6	3,69	11,45	2,193,064	Mushy	Negative	142	89	27	Overweight	30	98,3	No
-MI_251_H	Barranquilla	Male	30	18_40	3	42	125	183	78	5,4	92	6	2,2	54,32	2,957,212,667	Mushy	Negative	150	100	42,7	Obese	32	130,5	Yes
-MI_252_H	Barranquilla	Male	44	41_62	3	53	135	211	114	1,1	93	5,5	10,51	9,56	1,325,093,333	Mushy	Negative	131	94	28,4	Overweight	35,9	95,6	Yes
-MI_253_H	Barranquilla	Male	50	41_62	3	37	135	210	188	2,1	101	5,1	4,53	11,87	1,392,384	Mushy	Negative	149	93	28,5	Overweight	34	100,6	Yes
-MI_254_H	Barranquilla	Male	59	41_62	3	34	50	102	89	0,7	136	6,3	5,05	3,95	5,887,094,667	Mushy	Negative	125	89	24,5	Lean	29,7	101,3	Yes
-MI_255_H	Barranquilla	Male	49	41_62	3	42	114	189	166	1,3	84	4,8	8	6,72	1,252,672	Mushy	Negative	120	75	27,7	Overweight	31,5	101,1	Yes
-MI_256_H	Barranquilla	Male	39	18_40	3	28	142	207	185	5,6	94	4,9	2,64	25,39	8,348,976	Normal	Negative	132	77	36	Obese	30,7	118,4	Yes
-MI_257_H	Barranquilla	Male	59	41_62	2	34	64	129	155	14,2	96	5,6	5,61	5,29	101,269	Mushy	Negative	140	97	29,2	Overweight	35,6	103,6	Yes
-MI_258_H	Barranquilla	Female	36	18_40	2	59	119	191	67	0,8	108	5,2	5,98	31,34	5,268,652	Hard	Negative	131	89	29,9	Overweight	39,9	92,8	Yes
-MI_259_H	Barranquilla	Male	25	18_40	4	39	77	130	72	1,6	85	5,2	8,34	4,83	1,713,198,667	Mushy	Negative	107	59	28,1	Overweight	21,3	88,8	No
-MI_260_H	Barranquilla	Male	59	41_62	3	41	121	191	146	2	97	5,7	5,95	22,02	18,241	Mushy	Negative	135	76	32,2	Obese	41,4	102,9	Yes
-MI_261_H	Barranquilla	Male	43	41_62	3	26	93	146	136	16,3	82	5,4	6,32	8,47	2,834,890,667	Hard	Negative	122	70	33,1	Obese	34,3	114,5	No
-MI_262_H	Barranquilla	Male	58	41_62	2	34	112	168	111	5,9	102	5,3	5,15	7,25	3,737	Mushy	Negative	144	81	30,9	Obese	35,6	106,7	Yes
-MI_263_H	Barranquilla	Female	28	18_40	3	35	110	167	112	7,9	88	4,7	4,77	13,06	2,350,832	Normal	Negative	123	87	30,2	Obese	42,1	87,3	Yes
-MI_264_H	Barranquilla	Male	33	18_40	2	33	141	215	206	2,6	100	5,2	3,75	15,15	7,890,373,333	Mushy	Negative	136	82	25,3	Overweight	25,6	91,2	No
-MI_265_H	Barranquilla	Female	48	41_62	3	64	112	190	71	0,9	88	5,1	6,85	10,83	0,706404	Mushy	Negative	115	69	28,8	Overweight	35,6	86,5	No
-MI_266_H	Barranquilla	Male	60	41_62	2	30	100	155	123	1,8	110	5,6	2,79	29,08	4,185,193,333	Hard	Negative	125	79	36,4	Obese	42,6	119,1	No
-MI_267_H	Barranquilla	Male	38	18_40	3	58	60	126	41	4,9	74	5,1	9,27	3,87	353,017	Mushy	Negative	106	67	21,5	Lean	22,1	79,8	Yes
-MI_269_H	Barranquilla	Male	40	18_40	1	40	184	254	152	3,1	105	5,3	1,67	13,63	1,524,474	Mushy	Negative	138	84	26,8	Overweight	34,3	97,4	No
-MI_270_H	Barranquilla	Female	34	18_40	3	45	73	132	69	0,7	81	5,5	7,07	7,63	159,766	Hard	Negative	105	74	24,5	Lean	35,4	78,7	No
-MI_271_H	Barranquilla	Female	44	41_62	2	43	117	185	124	6,5	85	5,1	8,59	7,62	111,962	Mushy	Negative	111	67	30,4	Obese	40,7	90,9	No
-MI_273_H	Barranquilla	Female	48	41_62	3	55	175	260	151	4,5	88	5,5	12	7,16	1,554,197,333	Mushy	Negative	119	81	28,8	Overweight	43,2	90	Yes
-MI_274_H	Barranquilla	Male	57	41_62	4	30	93	162	195	5,1	93	5,5	2,6	19,02	4,363,188	Mushy	Negative	152	100	33,6	Obese	40,1	107	Yes
-MI_275_H	Barranquilla	Male	59	41_62	2	80	197	292	73	1,4	131	5	12,09	10,57	3,415,519,333	Mushy	Negative	120	81	23,2	Lean	28,1	94,4	Yes
-MI_276_H	Barranquilla	Male	38	18_40	2	31	153	208	117	4,9	97	5,4	2,26	23,99	5,740,007,333	Hard	Negative	127	83	29,5	Overweight	26,8	101,8	No
-MI_277_H	Barranquilla	Male	28	18_40	2	34	114	178	149	0,9	88	5,4	3,13	13,09	2,841,402,667	Mushy	Negative	114	73	26,8	Overweight	24	86,6	No
-MI_278_H	Bucaramanga	Female	29	18_40	3	35	89	134	79	3,2	78	5,4	5,02	17,47	3,361,228	Normal	Negative	110	79	31,5	Obese	3,879,510,028	94	No
-MI_279_H	Bucaramanga	Male	22	18_40	1	43	111	162	105	0,7	77	5,2	5,02	12,12	2,301,992	Normal	Negative	126	75	22	Lean	3,190,904,846	80,7	No
-MI_280_H	Bucaramanga	Male	32	18_40	3	31	80	141	334	0,7	82	5,3	3,41	19,58	3,960,381,333	Normal	Negative	139	92	25,2	Overweight	3,039,740,996	89,2	No
-MI_281_H	Bucaramanga	Female	55	41_62	5	46	155	213	127	1,5	86	6	6,73	8,71	1,847,681,333	Normal	Negative	104	81	25,3	Overweight	4,427,023,945	87,4	Yes
-MI_282_H	Bucaramanga	Male	53	41_62	3	32	53	99	121	1,9	94	5,7	5,18	20,81	4,825,145,333	Normal	Negative	144	87	35,7	Obese	4,325,717,924	117,7	Yes
-MI_283_H	Bucaramanga	Female	47	41_62	3	56	171	235	121	6	107	6,7	6,08	21,8	5,753,746,667	Normal	Negative	132	77	31,7	Obese	3,940,271,864	101,7	Yes
-MI_284_H	Bucaramanga	Female	57	41_62	1	42	146	215	269	2,8	86	5,9	6,7	14,49	3,073,812	Normal	Positive	124	85	27,3	Overweight	4,020,385,235	88	Yes
-MI_285_H	Bucaramanga	Male	33	18_40	3	35	110	162	166	2,2	83	5,5	3,32	14,05	2,876,503,333	Hard	Negative	122	75	24,2	Lean	3,290,531,504	83,8	Yes
-MI_286_H	Bucaramanga	Male	26	18_40	4	41	165	223	159	0,9	86	5,4	3,19	10,93	2,318,617,333	Normal	Negative	107	67	25,8	Overweight	3,290,531,504	80,9	No
-MI_287_H	Bucaramanga	Male	34	18_40	2	54	90	181	113	1,1	87	5,5	6,67	4,01	0,860546	Normal	Negative	100	64	18,6	Lean	2,054,093,112	75	No
-MI_288_H	Bucaramanga	Female	32	18_40	3	44	135	184	91	0,6	69	5,2	4,62	6,64	1,130,128	Hard	Negative	99	66	24,2	Lean	308,445,613	77,5	No
-MI_289_H	Bucaramanga	Female	28	18_40	5	47	213	276	157	8,2	88	5,2	4,28	20,04	4,350,016	Diarrheic	Negative	123	79	30,1	Obese	3,604,380,071	87,2	Yes
-MI_290_H	Bucaramanga	Female	56	41_62	4	39	191	240	124	1,2	84	5,6	4,84	15,44	3,199,168	Hard	Negative	120	70	27,5	Overweight	4,299,253,489	88,6	Yes
-MI_291_H	Bucaramanga	Male	47	41_62	3	52	147	203	74	0,8	82	5,6	8,9	5,11	1,033,582,667	Normal	Negative	136	77	22,8	Lean	3,253,117,309	84,9	No
-MI_292_H	Bucaramanga	Female	49	41_62	3	45	164	221	122	1,9	78	4,9	7,22	1,95	0,37518	Diarrheic	Negative	137	85	24,1	Lean	3,757,925,739	85,5	Yes
-MI_293_H	Bucaramanga	Male	30	18_40	2	54	112	170	71	1	83	5	7,19	8,16	1,670,624	Normal	Negative	138	87	24,2	Lean	3,106,338,372	83,1	No
-MI_294_H	Bucaramanga	Female	44	41_62	3	33	155	235	208	1	91	5,4	3,6	18,43	4,136,920,667	Diarrheic	Negative	136	87	25,6	Overweight	3,632,074,665	83,6	Yes
-MI_295_H	Bucaramanga	Male	39	18_40	5	36	135	179	127	0,5	77	5,3	3,91	6,22	1,181,385,333	Normal	Negative	104	71	20,6	Lean	2,684,009,309	78,4	No
-MI_296_H	Bucaramanga	Male	28	18_40	2	31	115	158	96	1,7	85	4,8	5,12	8,67	181,781	Normal	Negative	114	69	28,6	Overweight	3,455,272,204	99,3	No
-MI_297_H	Bucaramanga	Male	29	18_40	2	28	121	167	138	1,9	90	5,8	4	26,12	579,864	Normal	Negative	146	94	31,5	Obese	3,852,685,193	112,5	No
-MI_298_H	Bucaramanga	Male	38	18_40	3	38	138	223	193	6,4	114	5,8	2,7	56,94	16,011,528	Normal	Negative	117	80	39,2	Obese	4,473,718,125	119	Yes
-MI_299_H	Bucaramanga	Male	46	41_62	3	30	127	186	259	2,1	72	4,8	3,47	8,03	1,426,128	Hard	Negative	160	96	23	Lean	290,330,011	82,5	Yes
-MI_300_H	Bucaramanga	Female	34	18_40	4	46	89	146	85	5,4	75	5,3	6,57	6,3	11,655	Normal	Negative	105	74	30,8	Obese	3,651,112,683	105	No
-MI_301_H	Bucaramanga	Male	37	18_40	3	46	113	210	201	1,9	89	5,3	4,28	20,38	4,474,089,333	Normal	Negative	129	82	28,8	Overweight	3,866,153,807	87,5	No
-MI_302_H	Bucaramanga	Female	27	18_40	3	51	69	129	51	2,1	85	5,4	9,39	6,9	14,467	Normal	Negative	99	61	26,3	Overweight	3,931,848,698	81,7	No
-MI_303_H	Bucaramanga	Female	37	18_40	3	63	96	163	51	6	91	5,3	4,81	17,25	387,205	Normal	Negative	108	63	36,5	Obese	4,436,417,413	106,8	No
-MI_304_H	Bucaramanga	Female	32	18_40	4	41	68	114	51	0,7	70	5,3	4,81	6,49	1,120,606,667	Diarrheic	Negative	115	75	21,4	Lean	3,106,338,372	70,5	Yes
-MI_305_H	Bucaramanga	Female	45	41_62	3	44	115	175	153	0,9	77	5,2	3,97	12,78	2,427,348	Normal	Negative	107	63	25,1	Overweight	3,598,676,758	86,9	No
-MI_306_H	Bucaramanga	Male	50	41_62	3	44	162	231	231	2,9	88	5,6	4,46	16,45	3,570,746,667	Normal	Positive	169	106	26,6	Overweight	393,707,426	93,3	No
-MI_307_H	Bucaramanga	Male	51	41_62	3	48	92	151	92	1,3	85	5,3	4,22	7,32	153,476	Normal	Negative	100	61	27,6	Overweight	3,884,663,164	101	No
-MI_308_H	Bucaramanga	Male	48	41_62	2	26	107	176	299	1,2	97	5,3	4	16,98	4,062,748	Normal	Negative	117	82	32,6	Obese	3,886,736,648	112,3	Yes
-MI_309_H	Bucaramanga	Female	24	18_40	3	38	101	155	102	1,8	90	5,7	0,68	15,23	338,106	Normal	Negative	104	68	29,7	Overweight	4,091,058,637	97,5	No
-MI_310_H	Bucaramanga	Female	36	18_40	4	32	109	167	210	1,2	83	5,5	2,95	18,95	3,879,696,667	Normal	Negative	95	63	24,4	Lean	3,839,102,213	82,9	No
-MI_311_H	Bucaramanga	Female	39	18_40	2	42	120	177	92	4,3	102	6	5,52	15,19	3,821,804	Diarrheic	Negative	110	79	29,9	Overweight	3,651,112,683	84,7	No
-MI_312_H	Bucaramanga	Female	35	18_40	4	15	89	142	77	0,5	76	5,6	7,72	6,96	1,304,768	Normal	Negative	96	54	20,9	Lean	3,271,108,924	73,6	No
-MI_313_H	Bucaramanga	Male	29	18_40	1	34	65	115	115	2,9	84	5,9	3,97	11,53	2,389,016	Diarrheic	Positive	121	78	24,8	Lean	3,572,440,624	92,2	No
-MI_314_H	Bucaramanga	Female	30	18_40	4	108	134	234	52	6,4	79	5,6	10,6	9,65	1,880,463,333	Hard	Negative	112	80	29,1	Overweight	3,455,272,204	80,5	Yes
-MI_315_H	Bucaramanga	Female	44	41_62	4	27	98	291	1090	0,4	290	9,4	7,44	13,12	9,385,173,333	Hard	Negative	115	81	23,3	Lean	3,953,331,969	86,9	Yes
-MI_316_H	Bucaramanga	Female	34	18_40	1	26	137	188	187	1,4	80	5,5	4,81	11,71	2,310,773,333	Diarrheic	Negative	102	67	29,9	Overweight	4,043,725,043	94,4	No
-MI_317_H	Bucaramanga	Male	37	18_40	3	20	101	167	374	5,6	95	6,3	3,5	41,67	976,467	Normal	Negative	125	86	34,2	Obese	3,726,065,978	106	No
-MI_318_H	Bucaramanga	Female	24	18_40	2	65	86	164	115	6,5	76	5,6	4,31	9,11	1,707,821,333	Hard	Negative	115	77	25,3	Overweight	3,696,507,624	77,5	Yes
-MI_319_H	Bucaramanga	Female	23	18_40	3	52	59	115	39	1,7	84	5,9	5,02	11,18	2,316,496	Normal	Negative	106	70	24,1	Lean	3,455,272,204	81,2	No
-MI_320_H	Bucaramanga	Female	54	41_62	4	67	98	178	74	2,4	85	5,9	11,35	13,13	2,752,923,333	Normal	Negative	127	80	25,1	Overweight	4,173,817,605	81,5	No
-MI_321_H	Bucaramanga	Male	46	41_62	3	42	125	184	152	4,6	73	6	3,97	4,6	0,828306667	Hard	Negative	128	78	27,8	Overweight	3,772,860,312	95,3	No
-MI_322_H	Bucaramanga	Female	51	41_62	1	39	131	195	198	4,5	86	5,8	5,64	20,95	4,444,193,333	Normal	Negative	146	88	27,1	Overweight	4,475,162,879	94,4	No
-MI_323_H	Bucaramanga	Female	48	41_62	5	50	156	217	89	1	86	5,7	4,68	11,04	2,341,952	Normal	Negative	142	101	26,1	Overweight	3,598,676,758	82,1	No
-MI_324_H	Bucaramanga	Female	28	18_40	1	44	130	194	161	2,2	84	6	3,35	21,78	4,512,816	Diarrheic	Negative	111	72	29,9	Overweight	382,540,284	95,9	No
-MI_325_H	Bucaramanga	Male	29	18_40	4	37	89	141	80	1,2	80	5,6	3,91	11	2,170,666,667	Normal	Negative	137	98	27	Overweight	3,635,687,771	90,9	No
-MI_326_H	Bucaramanga	Male	24	18_40	2	52	151	215	68	2,9	70	5,1	4,4	6,11	1,054,993,333	Normal	Negative	127	72	23,3	Lean	3,039,740,996	75,2	No
-MI_327_H	Bucaramanga	Female	43	41_62	3	45	109	173	149	0,7	77	5,6	6,36	19,06	3,620,129,333	Hard	Negative	102	61	22,8	Lean	3,664,660,302	79,8	No
-MI_328_H	Bucaramanga	Female	27	18_40	3	37	150	194	72	1,8	64	5,4	4,87	10,21	1,611,818,667	Normal	Negative	118	76	23,2	Lean	3,106,338,372	74	No
-MI_329_H	Bucaramanga	Female	23	18_40	4	46	116	167	52	0,5	75	5,3	5,24	6,17	114,145	Normal	Negative	110	70	21,2	Lean	3,039,740,996	70	No
-MI_330_H	Bucaramanga	Male	27	18_40	3	29	105	152	156	4,7	85	6	3,91	24,09	505,087	Hard	Negative	112	71	34,4	Obese	3,944,670,824	108,5	Yes
-MI_331_H	Bucaramanga	Male	32	18_40	3	49	140	202	81	0,5	82	5,5	4,4	4,58	0,926381333	Normal	Negative	129	86	21	Lean	1,868,840,957	75,7	No
-MI_332_H	Bucaramanga	Male	50	41_62	1	37	124	180	160	0,6	87	5,9	3,81	9,34	2,004,364	Normal	Negative	136	96	32,1	Obese	4,642,823,324	103,5	No
-MI_333_H	Bucaramanga	Male	35	18_40	4	28	109	165	202	3,6	79	5,2	3,81	11,72	2,283,837,333	Normal	Negative	139	93	27,5	Overweight	3,556,225,647	97,7	Yes
-MI_334_H	Bucaramanga	Male	33	18_40	3	43	102	161	162	1,1	79	5,4	6,94	4,91	0,956795333	Normal	Negative	107	71	21,6	Lean	287,216,575	75,5	No
-MI_335_H	Bucaramanga	Female	21	18_40	1	51	75	133	55	1	87	5,9	7,41	8,85	189,921	Normal	Negative	114	67	25,3	Overweight	3,635,687,771	83,5	No
-MI_336_H	Bucaramanga	Male	44	41_62	3	29	106	165	235	0,9	89	5,6	5,92	31,36	6,884,565,333	Diarrheic	Negative	126	84	30,4	Obese	3,859,154,295	103,6	No
-MI_337_H	Bucaramanga	Male	34	18_40	4	36	143	202	174	2,5	83	6	4,31	13,8	282,532	Normal	Negative	136	81	34,6	Obese	3,970,012,023	117,2	No
-MI_338_H	Bucaramanga	Female	31	18_40	3	32	98	141	92	5,6	110	6,3	4,28	36,38	9,871,106,667	Diarrheic	Negative	114	70	33,6	Obese	4,417,443,975	105,7	No
-MI_339_H	Bucaramanga	Male	28	18_40	3	45	73	127	103	1,1	88	5,6	5,33	13,06	2,834,890,667	Normal	Negative	125	78	28	Overweight	3,489,646,946	96,9	No
-MI_340_H	Bucaramanga	Female	30	18_40	3	44	73	123	53	2,7	75	5,7	9,42	5,53	102,305	Normal	Negative	114	75	20,6	Lean	3,062,260,151	71,2	Yes
-MI_341_H	Bucaramanga	Male	51	41_62	2	38	160	259	428	0,6	90	6	4,43	7,9	17,538	Normal	Negative	122	73	22,5	Lean	3,451,196,024	88,3	Yes
-MI_342_H	Bucaramanga	Female	51	41_62	4	53	130	190	80	0,9	82	6,2	10,57	6,37	1,288,438,667	Normal	Negative	121	68	21,9	Lean	3,653,363,761	80,3	No
-MI_343_H	Bucaramanga	Male	59	41_62	1	38	137	187	126	6,4	76	6,1	13,58	10,73	2,011,517,333	Diarrheic	Negative	135	65	29,3	Overweight	4,114,385,371	117,3	Yes
-MI_344_H	Bucaramanga	Male	47	41_62	3	39	122	179	214	0,6	109	6,8	4,43	28,02	7,533,644	Diarrheic	Negative	158	100	32,5	Obese	4,169,237,299	116,5	Yes
-MI_345_H	Bucaramanga	Female	28	18_40	2	54	94	155	67	0,7	82	5,8	5,74	9,66	1,953,896	Normal	Positive	94	70	22,2	Lean	3,347,391,535	76,7	Yes
-MI_346_H	Bucaramanga	Male	21	18_40	4	42	81	128	42	0,5	85	5,6	7,94	6,26	1,312,513,333	Normal	Negative	119	53	20,9	Lean	2,469,250,659	75	No
-MI_347_H	Bucaramanga	Female	26	18_40	3	36	109	164	188	4,1	86	5,6	6,08	24,13	5,118,777,333	Diarrheic	Positive	129	91	35,3	Obese	3,866,153,807	108,2	Yes
-MI_348_H	Bucaramanga	Female	30	18_40	4	30	63	100	38	5	83	5,7	16,31	6,48	1,326,672	Normal	Negative	99	67	24,7	Lean	3,271,108,924	77	No
-MI_349_H	Bucaramanga	Male	53	41_62	4	33	78	117	50	7,3	91	6,2	2,29	8,52	1,912,456	Normal	Negative	166	100	23,8	Lean	3,811,655,401	84	No
-MI_350_H	Bucaramanga	Male	49	41_62	4	51	150	203	81	0,8	80	5,7	8,87	3,22	0,635413333	Normal	Negative	138	98	24,5	Lean	3,064,785,509	85	No
-MI_351_H	Bucaramanga	Male	50	41_62	1	45	124	186	148	2,7	84	5,6	5,8	8,01	1,659,672	Diarrheic	Negative	166	86	28,1	Overweight	3,830,259,998	98	No
-MI_352_H	Bucaramanga	Male	33	18_40	2	33	158	235	344	0,8	95	5,9	2,57	15,72	368,372	Diarrheic	Negative	126	94	29	Overweight	3,588,490,959	98,6	No
-MI_353_H	Bucaramanga	Female	29	18_40	3	43	83	128	46	4,1	69	5,3	6,05	11,51	1,959,002	Normal	Positive	109	70	27	Overweight	3,755,085,213	88,9	No
-MI_354_H	Bucaramanga	Male	22	18_40	4	44	100	155	103	5,4	94	5,6	5,89	14,42	3,343,517,333	Diarrheic	Negative	NA	110	46,5	Obese	4,455,173,771	139,7	No
-MI_355_H	Bucaramanga	Male	51	41_62	4	22	112	213	466	1,4	86	6,1	4,46	14,32	3,037,749,333	Normal	Negative	135	87	28	Overweight	3,866,757,749	101,1	Yes
-MI_356_H	Bucaramanga	Male	57	41_62	5	52	129	200	134	5,1	76	5,9	6,05	9,29	1,741,565,333	Normal	Negative	173	88	22,2	Lean	3,830,259,998	92,3	No
-MI_357_H	Cali	Female	30	18_40	2	35	106	160	100	2,9	75	5,3	3,13	18,81	347,985	Normal	Negative	123	68	28,7	Overweight	3,711,355,483	94,4	Yes
-MI_358_H	Cali	Male	55	41_62	1	54	73	136	45	0,6	88	5,5	8,09	11,3	2,452,853,333	Normal	Negative	173	103	24,2	Lean	4,173,817,605	88,9	No
-MI_359_H	Cali	Female	29	18_40	2	43	104	159	61	2,6	77	5,5	3,66	10,41	1,977,206	Hard	Negative	109	70	27,4	Overweight	378,358,527	82,6	No
-MI_360_H	Cali	Male	30	18_40	2	30	84	142	144	1,3	86	5,3	2,64	15,39	3,264,732	Normal	Negative	154	94	28,4	Overweight	3,635,687,771	97,8	Yes
-MI_361_H	Cali	Female	43	41_62	5	56	80	144	40	2,3	80	5,5	4,74	6,28	1,239,253,333	Hard	Negative	99	64	24	Lean	3,456,052,054	80,8	Yes
-MI_363_H	Cali	Male	37	18_40	4	50	128	194	78	5,4	80	5,7	6,6	7,43	3,975,921,333	Hard	Negative	92	62	27	Overweight	3,588,490,959	97,9	No
-MI_364_H	Cali	Male	34	18_40	3	31	111	166	121	2	81	5,5	8,65	7,26	1,466,186,667	Normal	Negative	120	71	23,5	Lean	3,062,260,151	86,6	No
-MI_365_H	Cali	Male	52	41_62	2	50	124	220	228	0,9	82	5,7	6,26	15,36	1,450,548	Normal	Negative	153	95	22,6	Lean	3,866,757,749	86,6	Yes
-MI_366_H	Cali	Female	47	41_62	3	52	127	202	113	2,2	76	5,4	6,98	11,49	3,106,816	Normal	Negative	132	75	36,5	Obese	4,124,121,905	104,8	No
-MI_367_H	Cali	Female	23	18_40	4	54	111	189	118	1,3	80	5,2	4,4	5,91	2,153,992	Normal	Negative	104	76	19,6	Lean	2,820,727,562	66,5	No
-MI_368_H	Cali	Female	54	41_62	4	49	161	227	86	0,9	92	5,5	9,36	16,43	116,624	Normal	Negative	106	64	25,7	Overweight	4,463,275,512	89,5	Yes
-MI_369_H	Cali	Male	28	18_40	3	38	139	207	152	0,9	74	5,2	4,53	12,72	3,728,514,667	Normal	Negative	130	94	27,8	Overweight	3,604,380,071	95,9	No
-MI_370_H	Cali	Male	41	41_62	3	41	150	266	375	5,5	83	5,4	2,14	15,16	2,321,824	Normal	Negative	141	97	24,8	Lean	3,581,659,971	91,4	No
-MI_371_H	Cali	Female	49	41_62	4	48	117	178	63	0,7	82	5,7	9,86	7,87	3,103,757,333	Hard	Negative	116	81	26,4	Overweight	3,742,823,727	84,3	Yes
-MI_372_H	Cali	Male	50	41_62	4	29	82	152	205	6,9	82	5,1	5,77	26,38	1,591,838,667	Normal	Negative	136	84	39,8	Obese	4,265,627,515	121,5	Yes
-MI_373_H	Cali	Male	43	41_62	3	58	133	209	92	0,4	77	5,4	7,25	3,87	5,335,794,667	Normal	Negative	129	84	23,6	Lean	3,317,329,786	77,8	No
-MI_374_H	Cali	Female	54	41_62	2	52	115	180	60	3,1	84	5,4	18,29	5,26	0,735042	Normal	Negative	138	75	28	Overweight	4,272,299,333	94,4	No
-MI_375_H	Cali	Male	47	41_62	5	36	165	252	257	3,2	98	6,1	1,21	21,74	1,089,872	Normal	Positive	137	81	31,3	Obese	3,927,084,881	106,7	Yes
-MI_376_H	Cali	Female	44	41_62	5	53	143	218	107	0,9	83	5,7	4,31	13,63	5,255,282,667	Normal	Negative	126	84	30,1	Obese	4,041,400,085	83,5	No
-MI_377_H	Cali	Female	33	18_40	6	58	79	145	42	4,9	79	5,7	7,41	12,4	2,790,515,333	Normal	Negative	76	60	24,3	Lean	3,892,755,779	79	Yes
-MI_380_H	Cali	Female	55	41_62	3	58	111	196	140	1,1	96	5,6	24,61	11,54	2,416,346,667	Normal	Negative	151	99	37,3	Obese	4,272,299,333	106,2	Yes
-MI_381_H	Cali	Male	32	18_40	3	30	114	181	185	8,8	101	5,8	2,95	34,55	3,196,232,667	Normal	Negative	134	84	39,8	Obese	4,537,023,035	129,2	Yes
-MI_382_H	Cali	Male	45	41_62	4	34	66	137	187	1,4	82	5,1	2,57	8,21	1,705,428,667	Normal	Negative	126	88	29,7	Overweight	3,913,768,459	106,5	Yes
-MI_383_H	Cali	Female	41	41_62	4	77	110	198	57	1,9	86	5,8	15,87	9,57	2,732,672	Hard	Negative	91	56	23,2	Lean	3,830,997,828	75	Yes
-MI_384_H	Cali	Female	54	41_62	4	56	116	210	187	2,5	86	5,3	5,95	16,77	8,607,556,667	Normal	Negative	93	70	32,9	Obese	4,802,895,265	98,7	Yes
-MI_385_H	Cali	Male	22	18_40	3	30	117	181	165	0,6	83	5,7	3,72	9,88	1,660,609,333	Hard	Negative	128	77	26,7	Overweight	343,779,902	89,3	No
-MI_386_H	Cali	Female	35	18_40	2	48	156	234	150	2,3	76	5,2	14,26	5,6	2,030,116	Normal	Negative	105	75	20,2	Lean	3,309,715,518	69,9	No
-MI_388_H	Cali	Female	51	41_62	3	65	146	233	112	2,3	80	5,2	10,51	9,96	3,557,476	Normal	Negative	120	72	25,3	Overweight	3,884,663,164	81,4	Yes
-MI_389_H	Cali	Female	26	18_40	3	49	93	159	89	10,9	87	5,7	7,16	23	2,022,765,333	Normal	Negative	124	82	33,5	Obese	4,159,557,271	93,4	No
-MI_390_H	Cali	Female	38	18_40	3	46	112	177	91	3	82	5,3	6,45	9,48	1,049,813,333	Hard	Negative	106	66	33,1	Obese	4,225,277,384	103,5	No
-MI_391_H	Cali	Male	32	18_40	1	38	83	138	82	0,9	87	5,3	7,04	7,57	3,988,106,667	Normal	Negative	99	65	20,1	Lean	2,179,238,122	73,4	Yes
-MI_392_H	Cali	Male	28	18_40	2	35	101	153	82	0,5	82	5,3	4,87	5,5	196,544	Normal	Negative	108	70	20,6	Lean	265,512,977	73,6	No
-MI_393_H	Cali	Male	56	41_62	2	39	101	191	257	0,3	88	5,5	6,85	6,71	49,358	Diarrheic	Negative	122	77	25,4	Overweight	3,970,980,393	89,6	No
-MI_394_H	Cali	Female	27	18_40	3	37	124	183	111	3,9	89	5,5	0	22,99	1,917,488	Hard	Negative	125	85	37,4	Obese	4,319,129,349	114,2	No
-MI_395_H	Cali	Male	21	18_40	3	30	59	139	251	1,5	97	5,6	6,32	20,22	1,624,522	Normal	Negative	130	77	27,8	Overweight	3,696,507,624	95,8	No
-MI_396_H	Cali	Female	41	41_62	3	51	116	195	136	0,5	81	5,3	13,86	11,92	1,112,466,667	Hard	Negative	111	71	22,3	Lean	3,398,366,753	73,8	No
-MI_397_H	Cali	Female	28	18_40	3	33	79	134	109	8,9	113	6,2	3,57	28,44	1,456,517,333	Normal	Negative	117	75	46,3	Obese	4,745,132,351	118,5	No
-MI_398_H	Cali	Female	50	41_62	5	59	115	196	109	1,8	84	5,6	15,9	8,44	5,047,071,333	Normal	Negative	130	76	24,2	Lean	4,004,352,249	85,2	No
-MI_399_H	Cali	Female	56	41_62	3	45	132	226	246	6,1	94	5,9	7,94	13,97	4,837,972	Normal	Negative	149	96	30,2	Obese	4,272,299,333	102	Yes
-MI_400_H	Cali	Female	37	18_40	3	64	79	178	175	5,5	91	5	5,43	33,33	2,381,616	Normal	Negative	110	75	28,4	Overweight	4,031,671,437	87,5	Yes
-MI_401_H	Cali	Male	31	18_40	4	61	88	200	259	2,4	84	5,1	8,8	5,66	7,927,176	Normal	Negative	139	99	29,2	Overweight	3,231,522,959	89,8	Yes
-MI_403_H	Cali	Male	49	41_62	3	38	89	146	99	1,7	96	5,8	4,53	33,6	1,748,768	Hard	Negative	168	104	27,1	Overweight	3,564,423,812	95,6	Yes
-MI_404_H	Cali	Male	40	18_40	4	37	124	180	100	1,8	92	5,8	6,36	12,29	3,239,177,333	Hard	Negative	113	83	31,6	Obese	4,135,540,904	110,9	No
-MI_405_H	Cali	Male	33	18_40	2	53	101	177	113	0,5	90	5,3	7,47	4,29	7,481,474	Normal	Negative	119	75	19,6	Lean	2,257,177,368	69	No
-MI_406_H	Cali	Female	38	18_40	3	46	120	189	111	2,9	88	5	5,27	10,84	1,172,752	Normal	Negative	113	77	28,9	Overweight	3,755,085,213	92,4	No
-MI_408_H	Cali	Female	45	41_62	2	59	102	174	69	0,6	80	5,5	9,42	9,47	0,701125333	Hard	Negative	124	86	26,9	Overweight	3,979,081,416	82,4	Yes
-MI_409_H	Cali	Female	44	41_62	4	39	62	164	314	2,8	86	5	5,83	16,8	795,648	Normal	Negative	149	103	34,3	Obese	3,979,081,416	97,9	No
-MI_410_H	Cali	Female	49	41_62	3	44	153	229	162	2,9	86	5,9	3,13	18,41	2,789,010,667	Normal	Negative	160	103	28,4	Overweight	3,979,081,416	94,8	Yes
-MI_411_H	Cali	Female	51	41_62	5	37	98	177	209	8,3	100	6,6	2,91	18,64	0,95238	Normal	Negative	125	86	33,3	Obese	4,188,302,216	98,2	No
-MI_412_H	Cali	Female	44	41_62	4	42	134	201	126	1,4	136	7	4,25	20,75	2,353,002,667	Normal	Negative	127	75	31,8	Obese	3,913,768,459	90,6	Yes
-MI_413_H	Cali	Female	49	41_62	2	55	137	213	104	0,4	82	5,3	13,45	5,7	1,722,818,667	Normal	Negative	97	65	20,9	Lean	3,039,221,607	72	Yes
-MI_414_H	Cali	Female	54	41_62	3	51	83	170	180	3,5	92	5,4	7,41	5,13	1,868,746,667	Normal	Negative	135	95	20,4	Lean	3,694,619,425	73,1	Yes
-MI_415_H	Cali	Male	54	41_62	5	45	101	171	124	1,5	93	5,7	6,01	9,1	356,384	Hard	Negative	160	99	24,1	Lean	3,674,141,533	91,4	Yes
-MI_416_H	Cali	Male	43	41_62	5	41	96	195	292	0,8	77	5,6	3,32	7,97	3,905,374,667	Hard	Negative	129	78	32,1	Obese	4,029,162,417	101,3	No
-MI_417_H	Cali	Male	54	41_62	3	33	72	193	439	3,3	80	5,5	4,22	9,15	4,597,866,667	Normal	Negative	135	85	26,7	Overweight	3,773,702,196	99,6	No
-MI_418_H	Cali	Male	59	41_62	4	35	138	205	163	1,8	94	5,7	5,3	10,21	6,960,933,333	Normal	Negative	140	90	24,4	Lean	3,694,619,425	104	Yes
-MI_419_H	Cali	Male	52	41_62	2	45	117	203	205	1,1	93	5,9	7,5	8,11	115,292	Normal	Negative	131	90	24,1	Lean	3,954,127,415	94,1	No
-MI_420_H	Cali	Female	54	41_62	3	40	141	215	169	0,7	96	5,8	13,61	11,69	1,164,168	Normal	Negative	112	69	47,4	Obese	4,544,534,576	119,4	Yes
-MI_421_H	Cali	Female	24	18_40	1	40	77	127	48	3	77	4,9	6,17	10,97	208,754	Hard	Negative	113	63	27,4	Overweight	3,944,670,824	83	No
-MI_423_H	Cali	Female	21	18_40	3	59	73	153	103	1,9	78	5,2	7,38	14,98	1,513,768,667	Hard	Negative	110	71	24,4	Lean	3,620,111,271	78,4	No
-MI_424_H	Cali	Female	44	41_62	3	40	104	190	232	1,3	83	5,5	11,84	12,21	18,056	Normal	Negative	122	85	34,8	Obese	4,467,342,694	106,7	Yes
-MI_425_H	Cali	Male	43	41_62	4	35	107	166	122	2,2	105	6,9	3,53	46,44	2,367,358,667	Normal	Negative	143	92	37,8	Obese	411,260,678	118,4	Yes
-MI_426_H	Cali	Female	57	41_62	2	56	206	280	88	2,4	89	5,6	19,62	9,71	1,860,434	Normal	Negative	116	59	22,9	Lean	4,216,844,511	77,5	Yes
-MI_427_H	Cali	Female	60	41_62	3	60	118	207	145	1,2	88	5,9	8,99	14,91	2,768,192	Normal	Negative	110	81	24,7	Lean	3,902,347,384	92,5	Yes
-MI_430_H	Cali	Female	38	18_40	4	40	96	166	146	2,5	81	5,7	8,46	12,65	2,083,568,667	Normal	Negative	113	67	29,7	Overweight	4,278,083,685	93,1	No
-MI_431_H	Cali	Female	26	18_40	3	49	88	149	62	0,3	83	5,2	6,2	15,2	2,229,546	Hard	Negative	105	74	26,4	Overweight	378,358,527	82,2	No
-MI_433_H	Cali	Female	53	41_62	3	73	138	227	82	0,8	73	5,6	16,12	3,1	2,882,152	Normal	Negative	120	80	22,5	Lean	3,426,832,221	70,3	No
-MI_434_H	Cali	Female	61	41_62	3	38	124	187	128	1	83	5,5	8,34	11,86	2,499,794	Normal	Negative	124	87	31,5	Obese	4,202,643,555	97	Yes
-MI_435_H	Cali	Female	29	18_40	2	35	80	173	290	2	94	5,9	4,34	22,83	1,202,796	Normal	Negative	115	74	28,2	Overweight	3,365,894,833	83,3	No
-MI_436_H	Cali	Male	28	18_40	3	30	89	141	112	8,8	92	5,7	5,95	18,81	2,131,668,667	Diarrheic	Negative	132	84	35	Obese	4,455,173,771	110,9	No
-MI_437_H	Cali	Male	27	18_40	2	38	118	229	360	6,4	82	5,8	5,43	18,57	3,236,464	Normal	Negative	138	87	32,3	Obese	4,031,671,437	103,5	No
-MI_438_H	Cali	Female	24	18_40	3	47	133	194	72	4,5	89	5,2	5,92	14,41	9,338,676,667	Normal	Negative	124	65	28,2	Overweight	3,604,380,071	82,8	No
-MI_439_H	Cali	Female	50	41_62	3	52	127	195	78	2,1	98	5,8	2,33	15,7	2,289,066,667	Normal	Negative	131	88	27,1	Overweight	3,873,015,727	93,5	No
-MI_440_H	Cali	Male	51	41_62	3	33	105	175	186	2	81	5,5	5,43	9,44	252,747	Normal	Negative	134	85	26,8	Overweight	3,811,655,401	89,6	No
-MI_442_H	Cali	Female	33	18_40	3	51	116	182	78	1,3	84	5	3,66	9,12	3,111,946,667	Hard	Negative	114	66	26,3	Overweight	3,696,507,624	84,6	Yes
-MI_444_H	Cali	Female	41	41_62	5	53	93	163	84	0,6	82	4,9	23,16	14,55	420,468	Normal	Negative	116	77	28,9	Overweight	3,830,997,828	93	Yes
-MI_445_H	Cali	Female	39	18_40	5	38	106	184	203	3,4	87	5,2	4,96	9,79	0,558206667	Normal	Negative	106	80	23,2	Lean	3,506,556,977	80,5	No
-MI_446_H	Cali	Female	33	18_40	5	43	111	175	105	1	75	5,4	6,26	19,87	2,428,137,333	Normal	Negative	101	67	26,4	Overweight	3,328,666,944	83,3	Yes
-MI_447_H	Cali	Male	47	41_62	3	46	167	235	108	2	89	5,5	8,59	6,14	5,293,516	Normal	Negative	131	82	23,3	Lean	3,185,616,748	83,9	Yes
-MI_449_H	Cali	Male	41	41_62	2	29	75	126	108	2,3	116	7	5,98	17,5	4,268,616	Normal	Negative	149	98	35,8	Obese	4,316,395,223	113,7	No
-MI_450_H	Cali	Female	23	18_40	3	37	106	173	151	3	77	5,6	6,54	18,87	3,756,092	Normal	Negative	114	77	37,9	Obese	4,267,658,637	107	Yes
-MI_451_H	Cali	Male	61	41_62	2	37	113	190	203	2,9	83	5,6	5,83	6,94	3,163,475,333	Hard	Negative	204	123	32,2	Obese	4,144,406,548	111,2	Yes
-MI_452_H	Cali	Male	34	18_40	3	27	96	144	105	7,8	79	5,4	3,29	11,1	3,795,213,333	Normal	Negative	135	88	26,8	Overweight	3,740,641,712	101,4	Yes
-MI_453_H	Cali	Male	32	18_40	3	39	100	158	98	0,5	81	5,4	4,28	12,9	1,886,112	Hard	Negative	116	79	24,5	Lean	3,271,108,924	86,4	No
-MI_454_H	Cali	Male	60	41_62	3	51	94	166	105	1	86	5,4	7,1	13,36	5,207,873,333	Normal	Negative	116	82	27,5	Overweight	3,754,339,737	100,1	Yes
-MI_455_H	Cali	Male	60	41_62	5	28	82	188	389	1,6	81	5,9	2,39	23,3	1,889,664	Hard	Negative	145	83	33,7	Obese	4,020,385,235	126,8	Yes
-MI_456_H	Cali	Female	46	41_62	3	60	150	234	121	1,2	87	5,7	12,25	10,55	213,564	Normal	Negative	94	53	24,5	Lean	3,648,466,471	82,2	Yes
-MI_458_H1	Cali	Male	40	18_40	3	51	78	186	282	3,1	91	5,1	6,98	11,25	294,298	Normal	Negative	131	90	33,4	Obese	3,927,084,881	107,6	Yes
-MI_458_H2	Cali	Male	40	18_40	3	51	78	186	282	3,1	91	5,1	6,98	11,25	2,100,934	Normal	Negative	131	90	33,4	Obese	3,927,084,881	107,6	Yes
-MI_459_H	Cali	Female	49	41_62	3	49	110	191	163	1	80	5,1	17,33	7,38	367,595	Normal	Negative	129	88	25,4	Overweight	333,805,873	81,4	Yes
+ID	city	sex	age_range	bmi_class	socioeconomic
+MI_001_H	Medellin	Male	18_40	Overweight	3
+MI_002_H	Medellin	Female	18_40	Obese	2
+MI_003_H	Medellin	Male	41_62	Lean	3
+MI_004_H	Medellin	Male	41_62	Lean	5
+MI_005_H	Medellin	Female	41_62	Lean	3
+MI_006_H	Medellin	Male	41_62	Overweight	2
+MI_007_H	Medellin	Male	18_40	Lean	4
+MI_008_H1	Medellin	Male	18_40	Obese	5
+MI_008_H2	Medellin	Male	18_40	Obese	5
+MI_009_H	Medellin	Male	41_62	Overweight	3
+MI_010_H	Medellin	Male	41_62	Overweight	2
+MI_011_H	Medellin	Female	18_40	Overweight	3
+MI_012_H	Medellin	Male	41_62	Obese	3
+MI_013_H	Medellin	Male	41_62	Obese	3
+MI_014_H	Medellin	Female	18_40	Overweight	2
+MI_015_H	Medellin	Male	18_40	Overweight	2
+MI_016_H	Medellin	Female	41_62	Overweight	2
+MI_017_H	Medellin	Male	18_40	Obese	2
+MI_018_H	Medellin	Female	41_62	Obese	2
+MI_019_H	Medellin	Male	18_40	Obese	3
+MI_020_H	Medellin	Female	41_62	Obese	3
+MI_021_H	Medellin	Female	41_62	Overweight	2
+MI_022_H	Medellin	Female	18_40	Lean	3
+MI_023_H	Medellin	Female	41_62	Obese	2
+MI_024_H	Medellin	Female	41_62	Obese	3
+MI_025_H	Medellin	Male	18_40	Overweight	4
+MI_026_H	Medellin	Female	41_62	Overweight	3
+MI_027_H	Medellin	Male	41_62	Overweight	3
+MI_028_H	Medellin	Female	18_40	Lean	5
+MI_029_H	Medellin	Female	18_40	Obese	5
+MI_030_H	Medellin	Male	41_62	Obese	3
+MI_031_H	Medellin	Male	41_62	Lean	3
+MI_032_H	Medellin	Male	18_40	Overweight	2
+MI_033_H	Medellin	Female	18_40	Lean	3
+MI_034_H	Medellin	Male	41_62	Lean	3
+MI_035_H	Medellin	Male	41_62	Obese	4
+MI_036_H	Medellin	Female	41_62	Lean	4
+MI_037_H	Medellin	Female	41_62	Lean	3
+MI_038_H	Medellin	Male	41_62	Overweight	6
+MI_039_H	Medellin	Female	41_62	Obese	4
+MI_040_H	Medellin	Female	41_62	Overweight	2
+MI_041_H	Medellin	Male	41_62	Obese	5
+MI_042_H	Medellin	Male	41_62	Overweight	4
+MI_043_H	Medellin	Female	41_62	Obese	3
+MI_044_H	Medellin	Female	41_62	Obese	3
+MI_045_H	Medellin	Male	18_40	Overweight	2
+MI_046_H	Medellin	Female	41_62	Obese	3
+MI_047_H	Medellin	Male	41_62	Lean	1
+MI_048_H	Medellin	Female	18_40	Lean	6
+MI_049_H	Medellin	Female	18_40	Lean	3
+MI_050_H	Medellin	Female	18_40	Overweight	3
+MI_051_H	Medellin	Male	18_40	Overweight	3
+MI_052_H	Medellin	Male	18_40	Obese	4
+MI_053_H	Medellin	Male	41_62	Overweight	4
+MI_054_H	Medellin	Female	41_62	Lean	3
+MI_055_H	Medellin	Male	18_40	Obese	5
+MI_056_H	Medellin	Female	18_40	Overweight	2
+MI_057_H	Medellin	Male	41_62	Overweight	3
+MI_058_H	Medellin	Female	41_62	Lean	2
+MI_059_H	Medellin	Male	18_40	Lean	3
+MI_060_H	Medellin	Female	18_40	Overweight	3
+MI_061_H	Medellin	Male	18_40	Lean	2
+MI_062_H	Medellin	Female	41_62	Lean	3
+MI_063_H	Medellin	Male	18_40	Overweight	4
+MI_064_H	Medellin	Male	41_62	Obese	5
+MI_065_H	Medellin	Male	41_62	Obese	3
+MI_066_H	Medellin	Male	18_40	Overweight	2
+MI_067_H	Medellin	Male	41_62	Lean	3
+MI_068_H	Medellin	Male	18_40	Overweight	2
+MI_069_H	Medellin	Male	41_62	Overweight	3
+MI_070_H	Medellin	Female	41_62	Overweight	3
+MI_071_H	Medellin	Female	18_40	Obese	2
+MI_072_H	Medellin	Female	41_62	Obese	3
+MI_073_H	Medellin	Male	18_40	Lean	6
+MI_074_H	Medellin	Male	18_40	Obese	3
+MI_075_H	Medellin	Female	41_62	Overweight	6
+MI_076_H	Medellin	Male	18_40	Obese	2
+MI_077_H	Medellin	Male	41_62	Overweight	5
+MI_078_H	Medellin	Male	18_40	Obese	3
+MI_079_H	Medellin	Female	41_62	Obese	3
+MI_080_H	Medellin	Female	41_62	Overweight	3
+MI_081_H	Medellin	Female	41_62	Lean	3
+MI_082_H	Medellin	Female	41_62	Overweight	5
+MI_083_H	Medellin	Female	18_40	Lean	3
+MI_084_H	Medellin	Male	41_62	Lean	5
+MI_085_H	Medellin	Male	18_40	Lean	4
+MI_086_H	Medellin	Male	41_62	Overweight	3
+MI_087_H	Medellin	Male	41_62	Lean	3
+MI_088_H	Medellin	Male	41_62	Obese	5
+MI_089_H	Medellin	Female	41_62	Overweight	3
+MI_090_H	Medellin	Female	18_40	Lean	3
+MI_091_H	Medellin	Female	41_62	Obese	2
+MI_092_H	Medellin	Female	18_40	Obese	3
+MI_093_H1	Medellin	Female	41_62	Lean	4
+MI_093_H12	Medellin	Female	41_62	Lean	4
+MI_094_H	Medellin	Female	18_40	Lean	2
+MI_095_H	Medellin	Male	41_62	Lean	3
+MI_096_H	Medellin	Female	18_40	Obese	6
+MI_097_H	Medellin	Female	41_62	Overweight	6
+MI_098_H	Medellin	Male	41_62	Lean	2
+MI_099_H	Medellin	Male	41_62	Overweight	4
+MI_100_H	Bogota	Female	41_62	Overweight	3
+MI_101_H	Bogota	Female	18_40	Lean	2
+MI_102_H	Bogota	Female	18_40	Lean	1
+MI_103_H	Bogota	Female	41_62	Lean	4
+MI_104_H	Bogota	Female	18_40	Overweight	4
+MI_105_H	Bogota	Female	41_62	Lean	4
+MI_106_H	Bogota	Female	41_62	Lean	3
+MI_107_H	Bogota	Female	18_40	Lean	3
+MI_108_H	Bogota	Female	18_40	Overweight	1
+MI_109_H	Bogota	Female	18_40	Obese	3
+MI_110_H	Bogota	Female	18_40	Obese	3
+MI_111_H	Bogota	Female	41_62	Overweight	2
+MI_112_H	Bogota	Female	41_62	Obese	3
+MI_113_H	Bogota	Female	41_62	Lean	3
+MI_114_H	Bogota	Female	18_40	Overweight	4
+MI_115_H	Bogota	Female	41_62	Obese	3
+MI_116_H	Bogota	Female	18_40	Lean	3
+MI_117_H	Bogota	Female	41_62	Overweight	3
+MI_118_H	Bogota	Female	41_62	Lean	3
+MI_119_H	Bogota	Female	41_62	Lean	3
+MI_120_H	Bogota	Male	41_62	Overweight	3
+MI_122_H	Bogota	Female	41_62	Overweight	1
+MI_123_H	Bogota	Female	41_62	Obese	2
+MI_124_H	Bogota	Female	18_40	Obese	2
+MI_125_H	Bogota	Male	18_40	Overweight	2
+MI_126_H	Bogota	Male	41_62	Obese	3
+MI_127_H	Bogota	Male	18_40	Overweight	3
+MI_128_H	Bogota	Male	18_40	Overweight	3
+MI_129_H	Bogota	Female	18_40	Obese	3
+MI_130_H1	Bogota	Female	41_62	Obese	3
+MI_130_H2	Bogota	Female	41_62	Obese	3
+MI_131_H	Bogota	Male	41_62	Overweight	3
+MI_132_H	Bogota	Female	18_40	Lean	2
+MI_133_H	Bogota	Male	18_40	Lean	3
+MI_134_H	Bogota	Male	18_40	Overweight	2
+MI_135_H	Bogota	Male	41_62	Overweight	3
+MI_136_H	Bogota	Male	18_40	Lean	2
+MI_137_H	Bogota	Male	41_62	Obese	4
+MI_138_H	Bogota	Female	41_62	Obese	3
+MI_139_H	Bogota	Male	18_40	Obese	3
+MI_140_H	Bogota	Male	41_62	Overweight	3
+MI_141_H	Bogota	Male	41_62	Overweight	3
+MI_142_H	Bogota	Male	41_62	Overweight	1
+MI_143_H	Bogota	Female	18_40	Obese	3
+MI_144_H	Bogota	Male	18_40	Overweight	2
+MI_145_H	Bogota	Female	41_62	Overweight	3
+MI_146_H	Bogota	Male	18_40	Overweight	3
+MI_147_H	Bogota	Male	41_62	Lean	4
+MI_148_H	Bogota	Male	41_62	Lean	2
+MI_149_H	Bogota	Male	41_62	Obese	3
+MI_150_H	Bogota	Male	41_62	Obese	2
+MI_151_H	Bogota	Female	18_40	Lean	2
+MI_152_H	Bogota	Male	41_62	Overweight	1
+MI_153_H	Bogota	Male	41_62	Overweight	3
+MI_154_H	Bogota	Male	18_40	Overweight	2
+MI_155_H	Bogota	Female	18_40	Lean	3
+MI_156_H	Bogota	Female	41_62	Overweight	3
+MI_157_H	Bogota	Male	41_62	Lean	2
+MI_158_H	Bogota	Male	41_62	Lean	1
+MI_159_H	Bogota	Male	18_40	Obese	2
+MI_160_H	Bogota	Female	18_40	Lean	3
+MI_161_H	Bogota	Female	18_40	Overweight	2
+MI_162_H	Bogota	Female	41_62	Obese	2
+MI_163_H	Bogota	Male	41_62	Overweight	3
+MI_164_H	Bogota	Female	41_62	Overweight	3
+MI_165_H	Bogota	Female	41_62	Lean	2
+MI_166_H	Bogota	Male	18_40	Obese	2
+MI_167_H	Bogota	Female	41_62	Obese	3
+MI_168_H	Bogota	Male	18_40	Lean	3
+MI_169_H	Bogota	Male	18_40	Obese	3
+MI_170_H	Bogota	Female	18_40	Overweight	2
+MI_171_H	Bogota	Male	18_40	Overweight	3
+MI_172_H	Bogota	Male	41_62	Overweight	4
+MI_173_H	Bogota	Female	18_40	Overweight	2
+MI_174_H	Bogota	Male	41_62	Overweight	2
+MI_175_H	Bogota	Female	41_62	Obese	2
+MI_176_H	Bogota	Female	18_40	Overweight	4
+MI_177_H	Bogota	Female	18_40	Overweight	2
+MI_178_H	Bogota	Female	41_62	Obese	4
+MI_179_H	Bogota	Female	18_40	Overweight	3
+MI_180_H	Bogota	Male	18_40	Lean	2
+MI_181_H	Bogota	Female	41_62	Lean	4
+MI_182_H	Bogota	Female	18_40	Overweight	2
+MI_183_H	Bogota	Female	18_40	Lean	3
+MI_184_H	Bogota	Female	18_40	Obese	3
+MI_185_H	Bogota	Male	18_40	Lean	4
+MI_186_H	Barranquilla	Female	41_62	Overweight	4
+MI_187_H	Barranquilla	Female	18_40	Obese	4
+MI_188_H	Barranquilla	Male	41_62	Obese	3
+MI_189_H	Barranquilla	Female	41_62	Obese	4
+MI_190_H	Barranquilla	Male	18_40	Overweight	2
+MI_191_H	Barranquilla	Female	18_40	Obese	3
+MI_192_H	Barranquilla	Female	18_40	Obese	3
+MI_193_H	Barranquilla	Female	41_62	Obese	4
+MI_194_H	Barranquilla	Female	18_40	Lean	3
+MI_195_H	Barranquilla	Female	18_40	Obese	4
+MI_196_H	Barranquilla	Female	41_62	Lean	3
+MI_197_H	Barranquilla	Female	41_62	Obese	3
+MI_198_H1	Barranquilla	Male	41_62	Lean	1
+MI_198_H2	Barranquilla	Male	41_62	Lean	1
+MI_199_H	Barranquilla	Female	18_40	Obese	3
+MI_200_H	Barranquilla	Female	41_62	Obese	1
+MI_201_H	Barranquilla	Male	18_40	Obese	3
+MI_202_H	Barranquilla	Female	18_40	Lean	4
+MI_203_H	Barranquilla	Female	41_62	Overweight	2
+MI_204_H	Barranquilla	Female	41_62	Obese	2
+MI_205_H	Barranquilla	Female	41_62	Overweight	3
+MI_206_H	Barranquilla	Female	18_40	Overweight	3
+MI_207_H	Barranquilla	Female	41_62	Overweight	3
+MI_208_H	Barranquilla	Female	41_62	Lean	3
+MI_209_H	Barranquilla	Male	18_40	Overweight	3
+MI_210_H	Barranquilla	Female	18_40	Obese	2
+MI_211_H	Barranquilla	Female	18_40	Lean	4
+MI_212_H	Barranquilla	Female	41_62	Lean	1
+MI_213_H	Barranquilla	Male	41_62	Obese	3
+MI_214_H	Barranquilla	Male	41_62	Overweight	2
+MI_215_H	Barranquilla	Female	41_62	Obese	3
+MI_216_H	Barranquilla	Female	41_62	Overweight	3
+MI_217_H	Barranquilla	Female	18_40	Lean	3
+MI_218_H	Barranquilla	Male	41_62	Overweight	3
+MI_219_H	Barranquilla	Male	41_62	Obese	2
+MI_220_H	Barranquilla	Male	41_62	Overweight	3
+MI_221_H	Barranquilla	Male	41_62	Lean	2
+MI_222_H	Barranquilla	Male	18_40	Lean	3
+MI_223_H	Barranquilla	Female	18_40	Obese	2
+MI_224_H	Barranquilla	Female	18_40	Overweight	2
+MI_225_H	Barranquilla	Female	41_62	Obese	2
+MI_226_H	Barranquilla	Female	41_62	Obese	2
+MI_227_H	Barranquilla	Female	18_40	Lean	1
+MI_228_H	Barranquilla	Female	18_40	Lean	3
+MI_229_H	Barranquilla	Male	41_62	Lean	2
+MI_230_H	Barranquilla	Male	41_62	Lean	3
+MI_232_H	Barranquilla	Male	18_40	Lean	1
+MI_233_H	Barranquilla	Female	18_40	Lean	3
+MI_234_H	Barranquilla	Male	18_40	Overweight	3
+MI_235_H	Barranquilla	Male	41_62	Overweight	3
+MI_236_H	Barranquilla	Female	41_62	Overweight	2
+MI_237_H	Barranquilla	Female	41_62	Obese	3
+MI_238_H	Barranquilla	Female	41_62	Lean	3
+MI_239_H	Barranquilla	Male	18_40	Overweight	2
+MI_240_H	Barranquilla	Male	18_40	Obese	3
+MI_241_H	Barranquilla	Male	18_40	Lean	3
+MI_242_H	Barranquilla	Male	41_62	Overweight	3
+MI_243_H	Barranquilla	Female	18_40	Overweight	3
+MI_244_H	Barranquilla	Male	41_62	Overweight	1
+MI_245_H	Barranquilla	Female	41_62	Overweight	3
+MI_246_H	Barranquilla	Male	41_62	Overweight	3
+MI_247_H	Barranquilla	Female	41_62	Lean	1
+MI_248_H	Barranquilla	Male	41_62	Obese	3
+MI_249_H	Barranquilla	Male	18_40	Overweight	3
+MI_250_H	Barranquilla	Male	41_62	Overweight	3
+MI_251_H	Barranquilla	Male	18_40	Obese	3
+MI_252_H	Barranquilla	Male	41_62	Overweight	3
+MI_253_H	Barranquilla	Male	41_62	Overweight	3
+MI_254_H	Barranquilla	Male	41_62	Lean	3
+MI_255_H	Barranquilla	Male	41_62	Overweight	3
+MI_256_H	Barranquilla	Male	18_40	Obese	3
+MI_257_H	Barranquilla	Male	41_62	Overweight	2
+MI_258_H	Barranquilla	Female	18_40	Overweight	2
+MI_259_H	Barranquilla	Male	18_40	Overweight	4
+MI_260_H	Barranquilla	Male	41_62	Obese	3
+MI_261_H	Barranquilla	Male	41_62	Obese	3
+MI_262_H	Barranquilla	Male	41_62	Obese	2
+MI_263_H	Barranquilla	Female	18_40	Obese	3
+MI_264_H	Barranquilla	Male	18_40	Overweight	2
+MI_265_H	Barranquilla	Female	41_62	Overweight	3
+MI_266_H	Barranquilla	Male	41_62	Obese	2
+MI_267_H	Barranquilla	Male	18_40	Lean	3
+MI_269_H	Barranquilla	Male	18_40	Overweight	1
+MI_270_H	Barranquilla	Female	18_40	Lean	3
+MI_271_H	Barranquilla	Female	41_62	Obese	2
+MI_273_H	Barranquilla	Female	41_62	Overweight	3
+MI_274_H	Barranquilla	Male	41_62	Obese	4
+MI_275_H	Barranquilla	Male	41_62	Lean	2
+MI_276_H	Barranquilla	Male	18_40	Overweight	2
+MI_277_H	Barranquilla	Male	18_40	Overweight	2
+MI_278_H	Bucaramanga	Female	18_40	Obese	3
+MI_279_H	Bucaramanga	Male	18_40	Lean	1
+MI_280_H	Bucaramanga	Male	18_40	Overweight	3
+MI_281_H	Bucaramanga	Female	41_62	Overweight	5
+MI_282_H	Bucaramanga	Male	41_62	Obese	3
+MI_283_H	Bucaramanga	Female	41_62	Obese	3
+MI_284_H	Bucaramanga	Female	41_62	Overweight	1
+MI_285_H	Bucaramanga	Male	18_40	Lean	3
+MI_286_H	Bucaramanga	Male	18_40	Overweight	4
+MI_287_H	Bucaramanga	Male	18_40	Lean	2
+MI_288_H	Bucaramanga	Female	18_40	Lean	3
+MI_289_H	Bucaramanga	Female	18_40	Obese	5
+MI_290_H	Bucaramanga	Female	41_62	Overweight	4
+MI_291_H	Bucaramanga	Male	41_62	Lean	3
+MI_292_H	Bucaramanga	Female	41_62	Lean	3
+MI_293_H	Bucaramanga	Male	18_40	Lean	2
+MI_294_H	Bucaramanga	Female	41_62	Overweight	3
+MI_295_H	Bucaramanga	Male	18_40	Lean	5
+MI_296_H	Bucaramanga	Male	18_40	Overweight	2
+MI_297_H	Bucaramanga	Male	18_40	Obese	2
+MI_298_H	Bucaramanga	Male	18_40	Obese	3
+MI_299_H	Bucaramanga	Male	41_62	Lean	3
+MI_300_H	Bucaramanga	Female	18_40	Obese	4
+MI_301_H	Bucaramanga	Male	18_40	Overweight	3
+MI_302_H	Bucaramanga	Female	18_40	Overweight	3
+MI_303_H	Bucaramanga	Female	18_40	Obese	3
+MI_304_H	Bucaramanga	Female	18_40	Lean	4
+MI_305_H	Bucaramanga	Female	41_62	Overweight	3
+MI_306_H	Bucaramanga	Male	41_62	Overweight	3
+MI_307_H	Bucaramanga	Male	41_62	Overweight	3
+MI_308_H	Bucaramanga	Male	41_62	Obese	2
+MI_309_H	Bucaramanga	Female	18_40	Overweight	3
+MI_310_H	Bucaramanga	Female	18_40	Lean	4
+MI_311_H	Bucaramanga	Female	18_40	Overweight	2
+MI_312_H	Bucaramanga	Female	18_40	Lean	4
+MI_313_H	Bucaramanga	Male	18_40	Lean	1
+MI_314_H	Bucaramanga	Female	18_40	Overweight	4
+MI_315_H	Bucaramanga	Female	41_62	Lean	4
+MI_316_H	Bucaramanga	Female	18_40	Overweight	1
+MI_317_H	Bucaramanga	Male	18_40	Obese	3
+MI_318_H	Bucaramanga	Female	18_40	Overweight	2
+MI_319_H	Bucaramanga	Female	18_40	Lean	3
+MI_320_H	Bucaramanga	Female	41_62	Overweight	4
+MI_321_H	Bucaramanga	Male	41_62	Overweight	3
+MI_322_H	Bucaramanga	Female	41_62	Overweight	1
+MI_323_H	Bucaramanga	Female	41_62	Overweight	5
+MI_324_H	Bucaramanga	Female	18_40	Overweight	1
+MI_325_H	Bucaramanga	Male	18_40	Overweight	4
+MI_326_H	Bucaramanga	Male	18_40	Lean	2
+MI_327_H	Bucaramanga	Female	41_62	Lean	3
+MI_328_H	Bucaramanga	Female	18_40	Lean	3
+MI_329_H	Bucaramanga	Female	18_40	Lean	4
+MI_330_H	Bucaramanga	Male	18_40	Obese	3
+MI_331_H	Bucaramanga	Male	18_40	Lean	3
+MI_332_H	Bucaramanga	Male	41_62	Obese	1
+MI_333_H	Bucaramanga	Male	18_40	Overweight	4
+MI_334_H	Bucaramanga	Male	18_40	Lean	3
+MI_335_H	Bucaramanga	Female	18_40	Overweight	1
+MI_336_H	Bucaramanga	Male	41_62	Obese	3
+MI_337_H	Bucaramanga	Male	18_40	Obese	4
+MI_338_H	Bucaramanga	Female	18_40	Obese	3
+MI_339_H	Bucaramanga	Male	18_40	Overweight	3
+MI_340_H	Bucaramanga	Female	18_40	Lean	3
+MI_341_H	Bucaramanga	Male	41_62	Lean	2
+MI_342_H	Bucaramanga	Female	41_62	Lean	4
+MI_343_H	Bucaramanga	Male	41_62	Overweight	1
+MI_344_H	Bucaramanga	Male	41_62	Obese	3
+MI_345_H	Bucaramanga	Female	18_40	Lean	2
+MI_346_H	Bucaramanga	Male	18_40	Lean	4
+MI_347_H	Bucaramanga	Female	18_40	Obese	3
+MI_348_H	Bucaramanga	Female	18_40	Lean	4
+MI_349_H	Bucaramanga	Male	41_62	Lean	4
+MI_350_H	Bucaramanga	Male	41_62	Lean	4
+MI_351_H	Bucaramanga	Male	41_62	Overweight	1
+MI_352_H	Bucaramanga	Male	18_40	Overweight	2
+MI_353_H	Bucaramanga	Female	18_40	Overweight	3
+MI_354_H	Bucaramanga	Male	18_40	Obese	4
+MI_355_H	Bucaramanga	Male	41_62	Overweight	4
+MI_356_H	Bucaramanga	Male	41_62	Lean	5
+MI_357_H	Cali	Female	18_40	Overweight	2
+MI_358_H	Cali	Male	41_62	Lean	1
+MI_359_H	Cali	Female	18_40	Overweight	2
+MI_360_H	Cali	Male	18_40	Overweight	2
+MI_361_H	Cali	Female	41_62	Lean	5
+MI_363_H	Cali	Male	18_40	Overweight	4
+MI_364_H	Cali	Male	18_40	Lean	3
+MI_365_H	Cali	Male	41_62	Lean	2
+MI_366_H	Cali	Female	41_62	Obese	3
+MI_367_H	Cali	Female	18_40	Lean	4
+MI_368_H	Cali	Female	41_62	Overweight	4
+MI_369_H	Cali	Male	18_40	Overweight	3
+MI_370_H	Cali	Male	41_62	Lean	3
+MI_371_H	Cali	Female	41_62	Overweight	4
+MI_372_H	Cali	Male	41_62	Obese	4
+MI_373_H	Cali	Male	41_62	Lean	3
+MI_374_H	Cali	Female	41_62	Overweight	2
+MI_375_H	Cali	Male	41_62	Obese	5
+MI_376_H	Cali	Female	41_62	Obese	5
+MI_377_H	Cali	Female	18_40	Lean	6
+MI_380_H	Cali	Female	41_62	Obese	3
+MI_381_H	Cali	Male	18_40	Obese	3
+MI_382_H	Cali	Male	41_62	Overweight	4
+MI_383_H	Cali	Female	41_62	Lean	4
+MI_384_H	Cali	Female	41_62	Obese	4
+MI_385_H	Cali	Male	18_40	Overweight	3
+MI_386_H	Cali	Female	18_40	Lean	2
+MI_388_H	Cali	Female	41_62	Overweight	3
+MI_389_H	Cali	Female	18_40	Obese	3
+MI_390_H	Cali	Female	18_40	Obese	3
+MI_391_H	Cali	Male	18_40	Lean	1
+MI_392_H	Cali	Male	18_40	Lean	2
+MI_393_H	Cali	Male	41_62	Overweight	2
+MI_394_H	Cali	Female	18_40	Obese	3
+MI_395_H	Cali	Male	18_40	Overweight	3
+MI_396_H	Cali	Female	41_62	Lean	3
+MI_397_H	Cali	Female	18_40	Obese	3
+MI_398_H	Cali	Female	41_62	Lean	5
+MI_399_H	Cali	Female	41_62	Obese	3
+MI_400_H	Cali	Female	18_40	Overweight	3
+MI_401_H	Cali	Male	18_40	Overweight	4
+MI_403_H	Cali	Male	41_62	Overweight	3
+MI_404_H	Cali	Male	18_40	Obese	4
+MI_405_H	Cali	Male	18_40	Lean	2
+MI_406_H	Cali	Female	18_40	Overweight	3
+MI_408_H	Cali	Female	41_62	Overweight	2
+MI_409_H	Cali	Female	41_62	Obese	4
+MI_410_H	Cali	Female	41_62	Overweight	3
+MI_411_H	Cali	Female	41_62	Obese	5
+MI_412_H	Cali	Female	41_62	Obese	4
+MI_413_H	Cali	Female	41_62	Lean	2
+MI_414_H	Cali	Female	41_62	Lean	3
+MI_415_H	Cali	Male	41_62	Lean	5
+MI_416_H	Cali	Male	41_62	Obese	5
+MI_417_H	Cali	Male	41_62	Overweight	3
+MI_418_H	Cali	Male	41_62	Lean	4
+MI_419_H	Cali	Male	41_62	Lean	2
+MI_420_H	Cali	Female	41_62	Obese	3
+MI_421_H	Cali	Female	18_40	Overweight	1
+MI_423_H	Cali	Female	18_40	Lean	3
+MI_424_H	Cali	Female	41_62	Obese	3
+MI_425_H	Cali	Male	41_62	Obese	4
+MI_426_H	Cali	Female	41_62	Lean	2
+MI_427_H	Cali	Female	41_62	Lean	3
+MI_430_H	Cali	Female	18_40	Overweight	4
+MI_431_H	Cali	Female	18_40	Overweight	3
+MI_433_H	Cali	Female	41_62	Lean	3
+MI_434_H	Cali	Female	41_62	Obese	3
+MI_435_H	Cali	Female	18_40	Overweight	2
+MI_436_H	Cali	Male	18_40	Obese	3
+MI_437_H	Cali	Male	18_40	Obese	2
+MI_438_H	Cali	Female	18_40	Overweight	3
+MI_439_H	Cali	Female	41_62	Overweight	3
+MI_440_H	Cali	Male	41_62	Overweight	3
+MI_442_H	Cali	Female	18_40	Overweight	3
+MI_444_H	Cali	Female	41_62	Overweight	5
+MI_445_H	Cali	Female	18_40	Lean	5
+MI_446_H	Cali	Female	18_40	Overweight	5
+MI_447_H	Cali	Male	41_62	Lean	3
+MI_449_H	Cali	Male	41_62	Obese	2
+MI_450_H	Cali	Female	18_40	Obese	3
+MI_451_H	Cali	Male	41_62	Obese	2
+MI_452_H	Cali	Male	18_40	Overweight	3
+MI_453_H	Cali	Male	18_40	Lean	3
+MI_454_H	Cali	Male	41_62	Overweight	3
+MI_455_H	Cali	Male	41_62	Obese	5
+MI_456_H	Cali	Female	41_62	Lean	3
+MI_458_H1	Cali	Male	18_40	Obese	3
+MI_458_H2	Cali	Male	18_40	Obese	3
+MI_459_H	Cali	Female	41_62	Overweight	3
